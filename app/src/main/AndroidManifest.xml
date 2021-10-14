@@ -54,5 +54,9 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+        <activity android:name=".AcercaDeActivity"
+            android:label="Acerca de ..."
+            android:theme="@style/Theme.AppCompat.Dialog"
+            />
 
 </manifest>

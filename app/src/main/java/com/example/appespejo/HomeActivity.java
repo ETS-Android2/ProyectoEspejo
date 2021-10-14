@@ -89,4 +89,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void lanzarAcercaDe(View view){
+        Intent i = new Intent(this, AcercaDeActivity.class);
+        startActivity(i);
+    }
+
 }
