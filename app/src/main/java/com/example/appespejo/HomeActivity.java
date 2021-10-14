@@ -22,16 +22,24 @@ public class HomeActivity extends AppCompatActivity {
    // private String[] nombres = new String[]{"Luces","Pestaña 2","Pestaña 3", "Pesataña 4", "Pesataña 5"};
 
 
-    private Button logout;
-    private BottomNavigationView bottomNavigationView;
-    private FirebaseAuth mAuth;
+     Button logout;
+     private BottomNavigationView bottomNavigationView;
+     FirebaseAuth mAuth;
+     TextView usuarioNombre;
+     FirebaseUser usuario;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-//        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        usuario = FirebaseAuth.getInstance().getCurrentUser();
+        logout = findViewById(R.id.logout);
+
+
+//        usuarioNombre.setText(usuario.getEmail());
+
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new Tab1()).commit();
@@ -48,6 +56,12 @@ public class HomeActivity extends AppCompatActivity {
                 }
         ).attach();*/
     }
+
+    private void logout() {
+        mAuth.signOut();
+        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+    }
+
     private NavigationBarView.OnItemSelectedListener bottomNavMethod = new
             NavigationBarView.OnItemSelectedListener(){
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
