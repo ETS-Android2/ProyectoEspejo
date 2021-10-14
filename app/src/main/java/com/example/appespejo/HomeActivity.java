@@ -15,50 +15,25 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class HomeActivity extends AppCompatActivity {
    // private String[] nombres = new String[]{"Luces","Pestaña 2","Pestaña 3", "Pesataña 4", "Pesataña 5"};
 
 
-    Button logout;
+    private Button logout;
     private BottomNavigationView bottomNavigationView;
-    FirebaseAuth mAuth;
-    TextView username;
-    FirebaseUser usuario;
+    private FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-
-        mAuth = FirebaseAuth.getInstance();
-        usuario = FirebaseAuth.getInstance().getCurrentUser();
-
-//  -------------------------Declaracion de botones-------------------------------
-//  ------------------------------------------------------------------------------
-
+//        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         bottomNavigationView = findViewById(R.id.bottomNav);
-
-//        username = findViewById(R.id.nombreUsuario);
-//        username.setText(usuario.getEmail());
-
-//        Button logout = findViewById(R.id.logout);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mAuth.signOut();
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
-//        setup();
-
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new Tab1()).commit();
 
         /*ViewPager2 viewPager = findViewById(R.id.viewpager);
@@ -73,19 +48,6 @@ public class HomeActivity extends AppCompatActivity {
                 }
         ).attach();*/
     }
-
-//     private void setup(){
-//
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mAuth.signOut();
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//     }
-
     private NavigationBarView.OnItemSelectedListener bottomNavMethod = new
             NavigationBarView.OnItemSelectedListener(){
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){

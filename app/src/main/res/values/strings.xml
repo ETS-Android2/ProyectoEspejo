@@ -6,7 +6,7 @@
 <!--    <string name="default_web_client_id" translatable="false">1:974130529147:android:f63b698ac9ff46895fb3de</string>-->
     <string name="facebook_app_id">1749306888593082</string>
     <string name="fb_login_protocol_scheme">fb1749306888593082</string>
-    <string name="cerrarsesion">Cerrar Sesión</string>
+<!--    <string name="cerrarsesion">Cerrar Sesión</string>-->
     <string name="login">Inicio Sesión</string>
     <string name="registro">Registrarse</string>
     <string name="recupecontra">Recuperar la contraseña</string>

@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CallbackManager callbackManager;
     private LoginButton loginButton;
-    FirebaseUser usuarioo;
+    private FirebaseUser usuarioo;
 
 //    ------------------------------Al empezar actividad---------------------------------
 //    -----------------------------------------------------------------------------------
@@ -92,7 +92,6 @@ public class LoginActivity extends AppCompatActivity {
         else
             {
             Log.d("Demo" , "No esta entrado ni un usuario");
-//            Toast.makeText(LoginActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
             setupbd();
 //          facebook();
             context = this;
