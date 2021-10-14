@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
    // private String[] nombres = new String[]{"Luces","Pestaña 2","Pestaña 3", "Pesataña 4", "Pesataña 5"};
 
 
-     Button logout;
+     ImageButton logout;
      private BottomNavigationView bottomNavigationView;
      FirebaseAuth mAuth;
      TextView usuarioNombre;
@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
 
-        logout = (Button) findViewById(R.id.logOut);
+        logout = (ImageButton) findViewById(R.id.logOut);
 
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
