@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,23 +79,18 @@ public class RegisterActivity extends AppCompatActivity {
                     if(pass.length() < 6 ||repetir.length() <6){
                         Toast.makeText(RegisterActivity.this, "La contrasena debe consistir al menos 6 caracteres", Toast.LENGTH_SHORT).show();
                     }
-
                     else if(!repetir.equals(pass)){
                         Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
                     }
-                    else if(name.equals(usuarioo.getEmail())){
-                        Toast.makeText(RegisterActivity.this, "El usuario ya esta registrado", Toast.LENGTH_SHORT).show();
-                    }
-
+//                    else if(name.equals(usuarioo.getEmail())){
+//                        Toast.makeText(RegisterActivity.this, "El usuario ya esta registrado", Toast.LENGTH_SHORT).show();
+//                    }
                     else{
 //                        verificamos correo
 //                        Toast.makeText(RegisterActivity.this, "El mensaje para verificar tu correo ha sido enviado correctamente", Toast.LENGTH_SHORT).show();
-
 //                        Si correo esta verificado registramos al usuario.
                         registerUser();
                     }
-
-
                 } else{
                     Toast.makeText(RegisterActivity.this, "Debe completar los campos", Toast.LENGTH_SHORT).show();
                 }
@@ -107,9 +103,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-//  ----------------------------------------------------------------------------------------
-//                    PARA ENVIAR DATOS A FIRESTORE
-//  ----------------------------------------------------------------------------------------
 /*
                     String id = mAuth.getCurrentUser().getUid();
         EditText usuario = this.findViewById(R.id.EditTextRegUsername);
@@ -148,44 +141,59 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
 
-*/
-//  ----------------------------------------------------------------------------------------
-//  ----------------------------------------------------------------------------------------
-//                        usuario.sendEmailVerification();
 
+//        mAuth.createUserWithEmailAndPassword(name,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful()){
+//
+///*                    Map<String,Object> map = new HashMap<>();
+//                    map.put("Usuario",name);
+//                    map.put("Contrasena",pass);
+//
+//
+//
+//                    String id = mAuth.getCurrentUser().getUid();
+//
+//                    mDataBase.child("Users").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> taskZ) {
+//                            if(taskZ.isSuccessful()){
+//*/
+                    //si está verificado pasa esto
                     login();
-//                    Intent intent = new Intent(RegisterActivity.this, VerificarActivity.class);
-//                    startActivity(intent);
+                    Log.d("Demo","El usuario ha sido registrado"+usuarioo.getEmail());
+//                    usuarioo.sendEmailVerification();
+//                    Toast.makeText(RegisterActivity.this, "Se ha enviado un correo de confirmación", Toast.LENGTH_LONG).show();
+                    Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent2);
 
-
-//                        Toast.makeText(RegisterActivity.this, "El email para verificar tu email ha sido enviado correctamente", Toast.LENGTH_SHORT).show();
-//                }startActivityForResult(AuthUI.getInstance()
-//                        .createSignInIntentBuilder().setAvailableProviders(Arrays.asList(
-//                                new AuthUI.IdpConfig.EmailBuilder().setAllowNewAccounts(true)
-//                                        .build(),
-//                                new AuthUI.IdpConfig.GoogleBuilder().build()
-//                        )).build(), RC_SIGN_IN);
+                }else{
+                    Toast.makeText(RegisterActivity.this,"No se pudo registrar el usuario "
+                            +task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                }
             }
-        }});
-
+        });
     }
 
     private void login() {
 
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
-        if (usuarioo.isEmailVerified() && usuarioo != null) {
-            Toast.makeText(this, "inicia sesión: "+usuarioo.getDisplayName()+
-                    " - "+ usuarioo.getEmail(),Toast.LENGTH_LONG).show();
-            Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
-            startActivity(i);
-        } else {
+//        if (usuarioo.isEmailVerified() && usuarioo != null) {
+//            Toast.makeText(this, "inicia sesión: "+usuarioo.getDisplayName()+
+//                    " - "+ usuarioo.getEmail(),Toast.LENGTH_LONG).show();
+//            Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
+//            startActivity(i);
+//        }
+//        else {
 
-            if (usuarioo != null) {
+//            if (usuarioo != null) {
                 usuarioo.sendEmailVerification();
+                Log.d("Demo", "El correo ha sido enviado");
                 Toast.makeText(this, "Se ha enviado un correo de confirmación", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
-            }
-        }
+//            }
+//        }
     }
 }

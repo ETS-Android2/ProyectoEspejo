@@ -30,31 +30,38 @@ public class HomeActivity extends AppCompatActivity {
     Button logout;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
+    private FirebaseUser usuario;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        usuario = FirebaseAuth.getInstance().getCurrentUser();
         setup();
     }
 
     private void setup(){
 
+        mAuth = FirebaseAuth.getInstance();
         logout = this.findViewById(R.id.logout);
         nombre = this.findViewById(R.id.textView);
         correo = this.findViewById(R.id.textView2);
-        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
 
-        if(signInAccount != null){
-//            nombre.setText(signInAccount.getIdToken());
-//            correo.setText(mAuth.getCurrentUser().getEmail());
-        } else{
-            nombre.setText("Nombre");
-            correo.setText("Correo");
-        }
+//        if(signInAccount != null){
+////            nombre.setText(signInAccount.getIdToken());
+////            correo.setText(mAuth.getCurrentUser().getEmail());
+//            nombre.setText("Usuario");
+//            Log.d("Demo", "El usuario entrado es: " + usuario.getEmail());
+//        Log.d("Demo", "Usuario tiene email verificado "+usuario.isEmailVerified());
+////            Toast.makeText(HomeActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+////            correo.setText("Chino");
+//        } else{
+//            nombre.setText("Nombre");
+//            correo.setText("Correo");
+//        }
 
 
 //        if(usuario !=null){
