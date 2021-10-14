@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.2265625" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_home.xml" value="0.4" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_recuperar_contr.xml" value="0.25" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_register.xml" value="0.264" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_splash_screen.xml" value="0.20923913043478262" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.1787037037037037" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_recuperar_contr.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
