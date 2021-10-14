@@ -1,7 +1,11 @@
 package com.example.appespejo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,23 +13,53 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class HomeActivity extends AppCompatActivity {
    // private String[] nombres = new String[]{"Luces","Pestaña 2","Pestaña 3", "Pesataña 4", "Pesataña 5"};
 
+
+    Button logout;
     private BottomNavigationView bottomNavigationView;
+    FirebaseAuth mAuth;
+    TextView username;
+    FirebaseUser usuario;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
+        mAuth = FirebaseAuth.getInstance();
+        usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+//  -------------------------Declaracion de botones-------------------------------
+//  ------------------------------------------------------------------------------
+
         bottomNavigationView = findViewById(R.id.bottomNav);
+
+//        username = findViewById(R.id.nombreUsuario);
+//        username.setText(usuario.getEmail());
+
+//        Button logout = findViewById(R.id.logout);
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mAuth.signOut();
+//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+//        setup();
 
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new Tab1()).commit();
-
 
         /*ViewPager2 viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new MiPagerAdapter(this));
@@ -39,6 +73,19 @@ public class HomeActivity extends AppCompatActivity {
                 }
         ).attach();*/
     }
+
+//     private void setup(){
+//
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mAuth.signOut();
+//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//     }
+
     private NavigationBarView.OnItemSelectedListener bottomNavMethod = new
             NavigationBarView.OnItemSelectedListener(){
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
