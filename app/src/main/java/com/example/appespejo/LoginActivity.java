@@ -81,19 +81,20 @@ public class LoginActivity extends AppCompatActivity {
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
-        if(usuarioo!=null && usuarioo.isEmailVerified() )
+        if(usuarioo!=null && usuarioo.isEmailVerified())
         {
             startActivity(new Intent(this, HomeActivity.class));
             Toast.makeText(LoginActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
             Log.d("Demo" , mAuth.getCurrentUser().getEmail());
         }
+
 //        ----------Else nos deja entrar a login activity y y ejecutar lo necesario----------
         else
             {
             Log.d("Demo" , "No esta entrado ni un usuario");
 //            Toast.makeText(LoginActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
             setupbd();
-//        facebook();
+//          facebook();
             context = this;
             createRequest();
             }
@@ -147,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //    -----------------------------------------------------------------------------------
 //    -----------------------------------------------------------------------------------
+
 
 
 //    --------------------------funciones de Google--------------------------------------
@@ -366,7 +368,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if(task.isSuccessful()){
-                                        if( usuarioo!=null && usuarioo.isEmailVerified()){
+                                        if( usuarioo!=null ){
                                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                             startActivity(intent);
                                         }

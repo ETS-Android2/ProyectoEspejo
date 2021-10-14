@@ -50,18 +50,8 @@ public class HomeActivity extends AppCompatActivity {
         GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
 
-//        if(signInAccount != null){
-////            nombre.setText(signInAccount.getIdToken());
-////            correo.setText(mAuth.getCurrentUser().getEmail());
-//            nombre.setText("Usuario");
-//            Log.d("Demo", "El usuario entrado es: " + usuario.getEmail());
-//        Log.d("Demo", "Usuario tiene email verificado "+usuario.isEmailVerified());
-////            Toast.makeText(HomeActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
-////            correo.setText("Chino");
-//        } else{
-//            nombre.setText("Nombre");
-//            correo.setText("Correo");
-//        }
+        correo.setText(usuario.getEmail());
+
 
 
 //        if(usuario !=null){
