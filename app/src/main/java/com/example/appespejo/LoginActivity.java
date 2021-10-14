@@ -367,14 +367,14 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if(task.isSuccessful()){
-                                        if( usuarioo!=null ){
+//                                        if( usuarioo!=null ){
                                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                             startActivity(intent);
-                                        }
-                                        else{
-                                            Log.d("Demo","Necesitas verificar tu email");
-//                                            Toast.makeText(LoginActivity.this, "Necesitas verificar tu email", Toast.LENGTH_SHORT).show();
-                                        }
+//                                        }
+//                                        else{
+//                                            Log.d("Demo","Necesitas verificar tu email");
+////                                            Toast.makeText(LoginActivity.this, "Necesitas verificar tu email", Toast.LENGTH_SHORT).show();
+//                                        }
 
                                     }else{
                                         Toast.makeText(LoginActivity.this, "Incorrecto usuario o/y contrasena", Toast.LENGTH_SHORT).show();

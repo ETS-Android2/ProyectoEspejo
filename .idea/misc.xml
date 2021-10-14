@@ -3,38 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/vigar/Desktop/GitHub/ProyectoEspejo/app/src/main/res/drawable/bottom_navigation_selector.xml" value="0.18385416666666668" />
-        <entry key="..\:/Users/vigar/Desktop/GitHub/ProyectoEspejo/app/src/main/res/layout-land/tab1.xml" value="0.1419753086419753" />
-        <entry key="..\:/Users/vigar/Desktop/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_home.xml" value="0.22" />
-        <entry key="..\:/Users/vigar/Desktop/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_main.xml" value="0.1308876811594203" />
-        <entry key="..\:/Users/vigar/Desktop/GitHub/ProyectoEspejo/app/src/main/res/layout/tab1.xml" value="0.1308876811594203" />
-        <entry key="..\:/Users/vigar/Desktop/GitHub/ProyectoEspejo/app/src/main/res/menu/bottom_nav_menu.xml" value="0.16770833333333332" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19583333333333333" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/drawable/ic_baseline_construction_24.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/drawable/ic_baseline_photo_24.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_home.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_recuperar_contr.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_register.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/roundedbutton.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/tab1.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/tab2.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/tab3.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/tab4.xml" value="0.1" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/layout/tab5.xml" value="0.15942028985507245" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1796875" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18385416666666668" />
-        <entry key="..\:/Users/vigar/Documents/GitHub/ProyectoEspejo/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.18385416666666668" />
-        <entry key="app/src/main/res/drawable/button_rounded.xml" value="0.18802083333333333" />
-        <entry key="app/src/main/res/drawable/gota.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/gotita.xml" value="0.12777777777777777" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1962962962962963" />
-        <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.14444444444444443" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.1787037037037037" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_recuperar_contr.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />

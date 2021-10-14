@@ -15,7 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -35,10 +34,25 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
-        logout = findViewById(R.id.logout);
 
+        logout = (Button) findViewById(R.id.logOut);
 
-//        usuarioNombre.setText(usuario.getEmail());
+        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
+
+        if(usuario != null){
+            usuarioNombre.setText(usuario.getEmail());
+        }
+        else{
+            usuarioNombre.setText("Usuario no logeado");
+        }
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
+
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
@@ -58,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        mAuth.signOut();
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
     }
 
