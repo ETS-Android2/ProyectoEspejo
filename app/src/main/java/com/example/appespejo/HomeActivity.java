@@ -1,16 +1,19 @@
 package com.example.appespejo;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
      FirebaseAuth mAuth;
      TextView usuarioNombre;
      FirebaseUser usuario;
+     ImageView fotoUsuario;
 
 
     @Override
@@ -34,14 +38,21 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
+        Uri photoUri = usuario.getPhotoUrl();
 
         logout = (ImageButton) findViewById(R.id.logOut);
+        fotoUsuario = findViewById(R.id.fotoUsuario);
 
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
         if(usuario != null){
             usuarioNombre.setText(usuario.getEmail());
+            Glide.with(this)
+                    .load(usuario.getPhotoUrl())
+                    .into(fotoUsuario);
+//            fotoUsuario.setImageURI(photoUri);
         }
+
         else{
             usuarioNombre.setText("Usuario no logeado");
         }

@@ -350,7 +350,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView recuperar = this.findViewById(R.id.Recuperar);
         TextInputEditText textLogin = this.findViewById(R.id.login);
         TextInputEditText textPassword = this.findViewById(R.id.textInputEditText);
-        ImageView logo = findViewById(R.id.imageView2);
+        ImageView logo = findViewById(R.id.fotoUsuario);
         mAuth = FirebaseAuth.getInstance();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
 
