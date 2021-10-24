@@ -25,7 +25,7 @@
 
     <Button
         android:id="@+id/enviar"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:background="#000000"
         android:fontFamily="@font/lucidagrande"

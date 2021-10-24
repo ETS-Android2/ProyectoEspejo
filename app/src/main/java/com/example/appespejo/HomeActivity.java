@@ -1,23 +1,33 @@
 package com.example.appespejo;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+
+import java.util.Objects;
 
 
 public class HomeActivity extends AppCompatActivity {
@@ -30,6 +40,12 @@ public class HomeActivity extends AppCompatActivity {
      TextView usuarioNombre;
      FirebaseUser usuario;
      ImageView fotoUsuario;
+     FirebaseFirestore db;
+     FirebaseStorage storage;
+     TextView perfilNombre;
+     TextView perfilApellido;
+     TextView perfilEmail;
+
 
 
     @Override
@@ -37,33 +53,66 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         usuario = FirebaseAuth.getInstance().getCurrentUser();
-        Uri photoUri = usuario.getPhotoUrl();
+        db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
+
 
         logout = (ImageButton) findViewById(R.id.logOut);
         fotoUsuario = findViewById(R.id.fotoUsuario);
+        perfilNombre = findViewById(R.id.perfilNombre);
+        perfilApellido = findViewById(R.id.perfilApellido);
+        perfilEmail = findViewById(R.id.perfilCorreo);
 
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
+        if(!usuario.isEmailVerified()){
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            Toast.makeText(HomeActivity.this, "Necesitas verificar tu correo", Toast.LENGTH_SHORT).show();
+        }
+
         if(usuario != null){
-            usuarioNombre.setText(usuario.getEmail());
-            Glide.with(this)
-                    .load(usuario.getPhotoUrl())
-                    .into(fotoUsuario);
-//            fotoUsuario.setImageURI(photoUri);
+
+//-----------------------------------------------------------------------------------------------
+//-------------Lo que queremos mostrar rollo datos del usuario se sacan apartir de aqui----------
+//-----------------------------------------------------------------------------------------------
+
+//            Glide.with(this)
+//                    .load(usuario.getPhotoUrl())
+//                    .into(fotoUsuario);
+
+            Glide.with(this).clear(fotoUsuario);
+
+
+            db.collection("Users")
+                    .document(Objects.requireNonNull(usuario.getEmail()))
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                String name = task.getResult().getString("Nombre");
+                                String correo = task.getResult().getString("Email");
+                                String apellido = task.getResult().getString("Apellido");
+                                usuarioNombre.setText("Hola, "+name);
+
+//      -----------------------------------------Tab4----------------------------------------------------
+//                                perfilNombre.setText(name);
+//                                perfilApellido.setText(apellido);
+//                                perfilEmail.setText(correo);
+
+//                                Glide.with(HomeActivity.this).load(usuario.getPhotoUrl()).into(fotoUsuario);
+                            } else {
+                                Log.e("Firestore", "Error al leer", task.getException());
+                            }
+                        }
+                    });
         }
 
         else{
             usuarioNombre.setText("Usuario no logeado");
         }
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
-
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
@@ -82,9 +131,10 @@ public class HomeActivity extends AppCompatActivity {
         ).attach();*/
     }
 
-    private void logout() {
+    public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     public void lanzarAcercaDe(View view){

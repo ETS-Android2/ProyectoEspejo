@@ -6,6 +6,7 @@
     <!--    <string name="default_web_client_id" translatable="false">123.apps.googleusercontent.com</string>-->
     <string name="facebook_app_id">1749306888593082</string>
     <string name="fb_login_protocol_scheme">fb1749306888593082</string>
+<!--    <string name="facebook_client_token">ab9101a7e44426b9cee97238bea4ab92</string>-->
     <string name="cerrarsesion">Log Out</string>
     <string name="login">Login</string>
     <string name="registro">Register</string>

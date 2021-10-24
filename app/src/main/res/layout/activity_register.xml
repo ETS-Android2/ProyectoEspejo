@@ -8,7 +8,7 @@
     tools:context=".RegisterActivity">
 
     <EditText
-        android:id="@+id/EditTextRegUsername"
+        android:id="@+id/Email"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#000000"
@@ -88,7 +88,7 @@
         android:inputType="textPersonName"
         android:textColor="@color/black"
         android:textColorHint="#7A7777"
-        app:layout_constraintBottom_toTopOf="@+id/EditTextRegUsername"
+        app:layout_constraintBottom_toTopOf="@+id/Email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,14 +129,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextRegUsername"
+        app:layout_constraintTop_toBottomOf="@+id/Email"
         app:layout_constraintVertical_chainStyle="spread"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="#8C8C8C">
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText"
+            android:id="@+id/password"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#000000"
@@ -148,7 +148,7 @@
             app:layout_constraintBottom_toTopOf="@+id/repitPass"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EditTextRegUsername" />
+            app:layout_constraintTop_toBottomOf="@+id/Email" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -36,15 +36,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.Arrays;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,14 +56,17 @@ public class LoginActivity extends AppCompatActivity {
 //    ----------------------------Definiciones de variables------------------------------
 //    -----------------------------------------------------------------------------------
     Context context;
-    public GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private final static int RC_SIGH_IN_GOOGLE = 2;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
+    FirebaseStorage storage;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CallbackManager callbackManager;
-    private LoginButton loginButton;
-    private FirebaseUser usuarioo;
+    CallbackManager callbackManager;
+    LoginButton loginButton;
+    FirebaseUser usuarioo;
+    CallbackManager mCallbackManager;
+//    private AccessTokenTracker accessTokenTracker;
 
 //    ------------------------------Al empezar actividad---------------------------------
 //    -----------------------------------------------------------------------------------
@@ -78,7 +84,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-        usuarioo = FirebaseAuth.getInstance().getCurrentUser();
+//        usuarioo = FirebaseAuth.getInstance().getCurrentUser();
+        storage = FirebaseStorage.getInstance();
+        mCallbackManager = CallbackManager.Factory.create();
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null && usuarioo.isEmailVerified())
@@ -93,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
             {
             Log.d("Demo" , "No esta entrado ni un usuario");
             setupbd();
-//          facebook();
             context = this;
             createRequest();
             }
@@ -108,11 +115,14 @@ public class LoginActivity extends AppCompatActivity {
             LoginButton loginButton = findViewById(R.id.login_button);
             loginButton.setPermissions(Arrays.asList("name,email,user_gender"));
 
-            loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
-                    Log.d("Demo","Login successfull");
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    Log.d("Facebook","Login successfull");
+//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    handleFacebookToken(loginResult.getAccessToken());
+//                    AccessTokenTracker token = accessTokenTracker;
+//                    AuthCredential credential = FacebookAuthProvider.getCredential(token.toString());
                 }
 
                 @Override
@@ -127,15 +137,34 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
 
+    private void handleFacebookToken(AccessToken token) {
+        Log.d("Facebook","habdleFacebookToken" + token);
 
-//    AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//    boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-    AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+        AuthCredential credential =  FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                if(currentAccessToken == null){
-                    LoginManager.getInstance().logOut();
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Log.d("Facebook", "Sign in with Facebook succesful");
+//                    FirebaseUser user = mAuth.getCurrentUser();
+//                    updateUI(user);
+                } else{
+                    Log.d("Facebook", "Sign in with Facebook fail");
                 }
+            }
+        });
+    }
+
+
+
+    //    AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//    boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+            AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+                    @Override
+                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                        if(currentAccessToken == null){
+                            LoginManager.getInstance().logOut();
+                        }
             }
         };
 
@@ -189,6 +218,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCompleted(@Nullable JSONObject object, @Nullable GraphResponse graphResponse) {
                 Log.d("Demo", object.toString());
+                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
             }
         });
 
@@ -200,109 +230,12 @@ public class LoginActivity extends AppCompatActivity {
 
     // GetContent creates an ActivityResultLauncher<String> to allow you to pass
     // in the mime type you'd like to allow the user to select
-    /**   ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-          new ActivityResultCallback<Uri>() {
-
-                @Override
-                public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-//     -------------------------------------------------------------------------------------------
-//     --------------------------------------facebook---------------------------------------------
-//     -------------------------------------------------------------------------------------------
-
-                    callbackManager.onActivityResult(requestCode, resultCode, data);
-
-                    GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(@Nullable JSONObject object, @Nullable GraphResponse graphResponse) {
-                            Log.d("Demo", object.toString());
-                        }
-                    });
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("fields","id, name, email, gender");
-                    graphRequest.setParameters(bundle);
-                    graphRequest.executeAsync();
-
-//      -------------------------------------------------------------------------------------------
-//      -------------------------------------------------------------------------------------------
-
-
-//      -------------------------------------------------------------------------------------------
-//      ----------------------------------------google---------------------------------------------
-//      -------------------------------------------------------------------------------------------
-
-                    // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-                    if (requestCode == RC_SIGN_IN) {
-                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                        try {
-                            // Google Sign In was successful, authenticate with Firebase
-                            GoogleSignInAccount account = task.getResult(ApiException.class);
-//                            Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                            firebaseAuthWithGoogle(account.getIdToken());
-                        } catch (ApiException e) {
-                            // Google Sign In failed, update UI appropriately
-//                            Log.w(TAG, "Google sign in failed", e);
-                        }
-                    }
-                }
-            });
-
-//      -------------------------------------------------------------------------------------------
-//      -------------------------------------------------------------------------------------------
-
-
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-//            @Override
-//            public void onCompleted(@Nullable JSONObject object, @Nullable GraphResponse graphResponse) {
-//                Log.d("Demo", object.toString());
-//            }
-//        });
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putString("fields","id, name, email, gender");
-//        graphRequest.setParameters(bundle);
-//        graphRequest.executeAsync();
-//    }
-
-          **/
 
         private void signInGoogle() {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGH_IN_GOOGLE);
         }
 
-//    ActivityResultLauncher<Intent> activityResultLaunch = registerForActivityResult(
-//            new ActivityResultContracts.StartActivityForResult(),
-//            new ActivityResultCallback<ActivityResult>() {
-//                @Override
-//                public void onActivityResult(ActivityResult result) {
-//                    int requestCode, resultCode;
-//                    Intent data = new Intent();
-//                    if (result.getResultCode() == 123) {
-//                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//                        try {
-//                            // Google Sign In was successful, authenticate with Firebase
-//                            GoogleSignInAccount account = task.getResult(ApiException.class);
-////                                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-//                            firebaseAuthWithGoogle(account.getIdToken());
-//                        } catch (ApiException e) {
-//                            // Google Sign In failed, update UI appropriately
-////                                Log.w(TAG, "Google sign in failed", e);
-//                        }
-//
-//                    } else if (result.getResultCode() == 321) {
-//                        // ToDo : Do your stuff...
-//                    }
-//                }
-//            });
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -338,6 +271,7 @@ public class LoginActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
+
 //    ------------------Funcion main donde definimos todos onClick-----------------------
 //    -----------------------------------------------------------------------------------
 
@@ -346,10 +280,11 @@ public class LoginActivity extends AppCompatActivity {
         Button signUpButton = this.findViewById(R.id.signUpButton);
         TextView register = this.findViewById(R.id.register);
         ImageButton google = this.findViewById(R.id.googleLogin);
-        ImageButton facebook = this.findViewById(R.id.facebook);
+        LoginButton facebookLB = this.findViewById(R.id.login_button);
+        ImageView facebookIV = this.findViewById(R.id.facebook);
         TextView recuperar = this.findViewById(R.id.Recuperar);
         TextInputEditText textLogin = this.findViewById(R.id.login);
-        TextInputEditText textPassword = this.findViewById(R.id.textInputEditText);
+        TextInputEditText textPassword = this.findViewById(R.id.password);
         ImageView logo = findViewById(R.id.fotoUsuario);
         mAuth = FirebaseAuth.getInstance();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
@@ -359,7 +294,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String inputName = textLogin.getText().toString();
-                String inputPassword = textPassword.getText().toString();
+                String inputPassword = Objects.requireNonNull(textPassword.getText()).toString();
 
                 if(!inputName.isEmpty() || !inputPassword.isEmpty()){
                         mAuth.signInWithEmailAndPassword(inputName,inputPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
@@ -367,13 +302,16 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
                                     if(task.isSuccessful()){
-//                                        if( usuarioo!=null ){
-                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                                        if(!usuarioo.isEmailVerified()){
+//                                            Toast.makeText(LoginActivity.this, "Necesitas verificar tu email", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                        if( usuarioo.isEmailVerified() ){
                                             startActivity(intent);
 //                                        }
 //                                        else{
 //                                            Log.d("Demo","Necesitas verificar tu email");
-////                                            Toast.makeText(LoginActivity.this, "Necesitas verificar tu email", Toast.LENGTH_SHORT).show();
 //                                        }
 
                                     }else{
@@ -404,8 +342,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signInGoogle();
-//                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//                startActivity(intent);
             }
         });
 
@@ -414,6 +350,24 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RecuperarContr.class);
                 startActivity(intent);
+            }
+        });
+
+        facebookIV.setOnClickListener(new View.OnClickListener() {
+            LoginResult loginResult;
+            @Override
+            public void onClick(View view) {
+                facebook();
+            }
+        });
+
+        facebookLB.setOnClickListener(new View.OnClickListener() {
+
+            LoginResult loginResult;
+            @Override
+            public void onClick(View view) {
+
+                handleFacebookToken(loginResult.getAccessToken());
             }
         });
 
