@@ -97,10 +97,6 @@ public class HomeActivity extends AppCompatActivity {
                                 String apellido = task.getResult().getString("Apellido");
                                 usuarioNombre.setText("Hola, "+name);
 
-//      -----------------------------------------Tab4----------------------------------------------------
-//                                perfilNombre.setText(name);
-//                                perfilApellido.setText(apellido);
-//                                perfilEmail.setText(correo);
 
 //                                Glide.with(HomeActivity.this).load(usuario.getPhotoUrl()).into(fotoUsuario);
                             } else {

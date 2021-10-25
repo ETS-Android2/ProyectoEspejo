@@ -34,19 +34,11 @@ public class Tab5 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view=inflater.inflate(R.layout.tab1, container, false);
+        View v = inflater.inflate(R.layout.tab5, container, false);
 
         mAuth = FirebaseAuth.getInstance();
-//        logout = (Button) view.findViewById(R.id.logOut);
 
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                logOut();
-//            }
-//        });
-
-        return inflater.inflate(R.layout.tab5, container, false);
+        return v;
     }
 
     private void logOut(){

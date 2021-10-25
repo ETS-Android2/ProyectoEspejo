@@ -10,29 +10,11 @@
     tools:context=".HomeActivity">
 
     <Button
-        android:id="@+id/logOut"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:background="#000000"
-        android:fontFamily="@font/lucidagrande"
-        android:onClick="setup"
-        android:text="LogOut"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.499"
-        tools:ignore="TouchTargetSizeCheck" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="89dp" />
+        android:text="Button"
+        tools:layout_editor_absoluteX="139dp"
+        tools:layout_editor_absoluteY="258dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
