@@ -9,30 +9,48 @@
     android:background="#FFFFFF"
     tools:context=".HomeActivity">
 
-    <Button
-        android:id="@+id/logOut"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:background="#000000"
-        android:fontFamily="@font/lucidagrande"
-        android:onClick="setup"
-        android:text="LogOut"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:layout_constraintVertical_bias="0.499"
-        tools:ignore="TouchTargetSizeCheck" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="89dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Política"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sobre Nosotros"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ayuda"
+        app:layout_constraintBottom_toTopOf="@+id/button11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Condiciones de uso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="435dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
