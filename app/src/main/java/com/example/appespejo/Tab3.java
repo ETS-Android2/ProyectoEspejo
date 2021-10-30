@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 public class Tab3 extends Fragment {
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }*/
+
+
     public Tab3(){
         // require a empty public constructor
     }
@@ -20,6 +18,7 @@ public class Tab3 extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.tab3, container, false);
+
 
 
         return v;

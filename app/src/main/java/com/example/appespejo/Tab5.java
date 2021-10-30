@@ -41,8 +41,8 @@ public class Tab5 extends Fragment {
         return v;
     }
 
-    private void logOut(){
-        FirebaseAuth.getInstance().signOut();
+    private void prueba(){
+//        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
     }
 

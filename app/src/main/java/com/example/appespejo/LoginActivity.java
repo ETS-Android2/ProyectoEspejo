@@ -47,6 +47,8 @@ import java.util.Arrays;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -89,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
-        if(usuarioo!=null && usuarioo.isEmailVerified())
+        if(usuarioo!=null)
         {
             startActivity(new Intent(this, HomeActivity.class));
             Toast.makeText(LoginActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
@@ -146,8 +148,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Log.d("Facebook", "Sign in with Facebook succesful");
-//                    FirebaseUser user = mAuth.getCurrentUser();
-//                    updateUI(user);
                 } else{
                     Log.d("Facebook", "Sign in with Facebook fail");
                 }
@@ -196,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager = CallbackManager.Factory.create();
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -249,13 +250,10 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("Demo", mAuth.getCurrentUser().getEmail() + " Ha entrado");
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                            FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
-//                            Toast.makeText(LoginActivity.this, "signInWithCredential:failure", Toast.LENGTH_SHORT).show();
                             Log.w("Demo", "signInWithCredential:failure", task.getException());
-//                            updateUI(null);
                         }
                     }
                 });
@@ -368,7 +366,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                facebook();
+//                facebook();
                 handleFacebookToken(loginResult.getAccessToken());
             }
         });

@@ -18,5 +18,7 @@
     <string name="apellido">Last name</string>
     <string name="nombre">Name:</string>
     <string name="repitcontra">Repit password</string>
+    <string name="cambiarnombre">Change email address</string>
+    <string name="guardarcambios">Save changes</string>
 
 </resources>

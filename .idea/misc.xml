@@ -4,16 +4,26 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.19270833333333334" />
+        <entry key="app/src/main/res/drawable/bordes_redondos.xml" value="0.19166666666666668" />
+        <entry key="app/src/main/res/drawable/bordes_redondos_arriba.xml" value="0.45" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_construction_24.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_highlight_24.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_music_note_24.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_photo_24.xml" value="0.2875" />
         <entry key="app/src/main/res/layout/acercade.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.1787037037037037" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_prueba.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/activity_recuperar_contr.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_verificar.xml" value="0.29375" />
+        <entry key="app/src/main/res/layout/cambiarnombre.xml" value="0.335" />
         <entry key="app/src/main/res/layout/tab1.xml" value="0.25" />
         <entry key="app/src/main/res/layout/tab2.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/tab3.xml" value="0.31614583333333335" />
