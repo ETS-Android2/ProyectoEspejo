@@ -10,7 +10,7 @@
     android:layout_gravity="bottom|center"
     android:background="@drawable/bordes_redondos_arriba"
     android:orientation="vertical">
-<!--    tools:context=".HomeActivity"-->
+    <!--    tools:context=".HomeActivity"-->
 
 
     <TextView
@@ -30,7 +30,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/direccionActual"
+            android:id="@+id/apellidoActual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lucidagrande"
@@ -42,7 +42,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/cambiarCorreo"
+        android:id="@+id/cambiarApellido"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
@@ -54,7 +54,7 @@
         android:drawableLeft="@drawable/correo24"
         android:ems="10"
         android:fontFamily="@font/lucidagrande"
-        android:hint="Correo"
+        android:hint="@string/nombre"
         android:inputType="textPersonName"
         android:textColor="#000000"
         android:textColorHint="#000000"

@@ -17,8 +17,10 @@
     <string name="enviar">Enviar</string>
     <string name="registrarme">Registrarme</string>
     <string name="apellido">Apellido</string>
-    <string name="nombre">Nombre:</string>
+    <string name="nombre">Nombre</string>
     <string name="repitcontra">Repetir contraseña</string>
-    <string name="cambiarnombre">Cambiar correo electronico</string>
+    <string name="cambiarcorreo">Cambiar correo electronico</string>
+    <string name="cambiarnombre">Cambiar nombre</string>
+    <string name="cambiarapellido">Cambiar apellido</string>
     <string name="guardarcambios">Guardar cambios</string>
 </resources>

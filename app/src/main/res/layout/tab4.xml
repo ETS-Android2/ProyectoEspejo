@@ -101,4 +101,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/correoNoVerificado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/perfilCorreo"
+        tools:layout_editor_absoluteX="-16dp">
+
+        <ImageView
+            android:id="@+id/alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/alert_mini24"
+            app:tint="#FA0707" />
+
+        <TextView
+            android:id="@+id/correoVerificado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lucidagrandebold"
+            android:text="  Verifica tu correo"
+            android:textColor="#FA0707"
+            app:layout_constraintBottom_toBottomOf="@+id/alert"
+            app:layout_constraintStart_toEndOf="@+id/alert"
+            app:layout_constraintTop_toTopOf="@+id/alert" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

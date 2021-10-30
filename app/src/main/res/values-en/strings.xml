@@ -16,9 +16,11 @@
     <string name="enviar">Send</string>
     <string name="registrarme">Register</string>
     <string name="apellido">Last name</string>
-    <string name="nombre">Name:</string>
+    <string name="nombre">Name</string>
     <string name="repitcontra">Repit password</string>
-    <string name="cambiarnombre">Change email address</string>
+    <string name="cambiarcorreo">Change email address</string>
+    <string name="cambiarnombre">Change name</string>
+    <string name="cambiarapellido">Chande surname</string>
     <string name="guardarcambios">Save changes</string>
 
 </resources>
