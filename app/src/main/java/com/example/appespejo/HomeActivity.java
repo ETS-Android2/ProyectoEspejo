@@ -72,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
 
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
+
 //        if(!usuario.isEmailVerified()){
 //            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
 //            Toast.makeText(HomeActivity.this, "Necesitas verificar tu correo", Toast.LENGTH_SHORT).show();

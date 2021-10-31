@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //    ----------------------------Definiciones de variables------------------------------
 //    -----------------------------------------------------------------------------------
+
     Context context;
     GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
@@ -68,16 +69,12 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton loginButton;
     FirebaseUser usuarioo;
     CallbackManager mCallbackManager;
-//    private AccessTokenTracker accessTokenTracker;
 
-//    ------------------------------Al empezar actividad---------------------------------
-//    -----------------------------------------------------------------------------------
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
 
     @Override
@@ -86,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-//        usuarioo = FirebaseAuth.getInstance().getCurrentUser();
+        usuarioo = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
 
@@ -110,73 +107,68 @@ public class LoginActivity extends AppCompatActivity {
 
 //    -------------------------funciones de facebook-------------------------------------
 //    -----------------------------------------------------------------------------------
+//
+//        private void facebook(){
+//            callbackManager = CallbackManager.Factory.create();
+//
+//            LoginButton loginButton = findViewById(R.id.login_button);
+//            loginButton.setPermissions(Arrays.asList("name,email,user_gender"));
+//
+//            loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+//                @Override
+//                public void onSuccess(LoginResult loginResult) {
+//                    Log.d("Facebook","Login successfull");
+////                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                    handleFacebookToken(loginResult.getAccessToken());
+////                    AccessTokenTracker token = accessTokenTracker;
+////                    AuthCredential credential = FacebookAuthProvider.getCredential(token.toString());
+//                }
+//
+//                @Override
+//                public void onCancel() {
+//                    Log.d("Demo","Login onCancel");
+//                }
+//
+//                @Override
+//                public void onError(@NonNull FacebookException e) {
+//                    Log.d("Demo","Login onError");
+//                }
+//            });
+//        }
 
-        private void facebook(){
-            callbackManager = CallbackManager.Factory.create();
+//    private void handleFacebookToken(AccessToken token) {
+//        Log.d("Facebook","habdleFacebookToken" + token);
+//
+//        AuthCredential credential =  FacebookAuthProvider.getCredential(token.getToken());
+//        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful()){
+//                    Log.d("Facebook", "Sign in with Facebook succesful");
+//                } else{
+//                    Log.d("Facebook", "Sign in with Facebook fail");
+//                }
+//            }
+//        });
+//    }
 
-            LoginButton loginButton = findViewById(R.id.login_button);
-            loginButton.setPermissions(Arrays.asList("name,email,user_gender"));
-
-            loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    Log.d("Facebook","Login successfull");
-//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    handleFacebookToken(loginResult.getAccessToken());
-//                    AccessTokenTracker token = accessTokenTracker;
-//                    AuthCredential credential = FacebookAuthProvider.getCredential(token.toString());
-                }
-
-                @Override
-                public void onCancel() {
-                    Log.d("Demo","Login onCancel");
-                }
-
-                @Override
-                public void onError(@NonNull FacebookException e) {
-                    Log.d("Demo","Login onError");
-                }
-            });
-        }
-
-    private void handleFacebookToken(AccessToken token) {
-        Log.d("Facebook","habdleFacebookToken" + token);
-
-        AuthCredential credential =  FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d("Facebook", "Sign in with Facebook succesful");
-                } else{
-                    Log.d("Facebook", "Sign in with Facebook fail");
-                }
-            }
-        });
-    }
+//          AccessToken accessToken = AccessToken.getCurrentAccessToken();
+//          boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+//            AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+//                    @Override
+//                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+//                        if(currentAccessToken == null){
+//                            LoginManager.getInstance().logOut();
+//                        }
+//                    }
+//            };
 
 
-
-    //    AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//    boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-            AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
-                    @Override
-                    protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                        if(currentAccessToken == null){
-                            LoginManager.getInstance().logOut();
-                        }
-            }
-        };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        accessTokenTracker.startTracking();
-    }
-
-//    -----------------------------------------------------------------------------------
-//    -----------------------------------------------------------------------------------
-
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        accessTokenTracker.startTracking();
+//    }
 
 
 //    --------------------------funciones de Google--------------------------------------
@@ -196,8 +188,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager = CallbackManager.Factory.create();
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+//        callbackManager = CallbackManager.Factory.create();
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -214,19 +206,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
-//        ---------------------------------------------
-        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(@Nullable JSONObject object, @Nullable GraphResponse graphResponse) {
-                Log.d("Demo", object.toString());
-                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-            }
-        });
-
-        Bundle bundle = new Bundle();
-        bundle.putString("fields","id, name, email, gender");
-        graphRequest.setParameters(bundle);
-        graphRequest.executeAsync();
+//        -----------------------------------------------------------------------------------
+//        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//            @Override
+//            public void onCompleted(@Nullable JSONObject object, @Nullable GraphResponse graphResponse) {
+//                Log.d("Demo", object.toString());
+//                startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+//            }
+//        });
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putString("fields","id, name, email, gender");
+//        graphRequest.setParameters(bundle);
+//        graphRequest.executeAsync();
     }
 
     // GetContent creates an ActivityResultLauncher<String> to allow you to pass
@@ -246,10 +238,28 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-//                            Toast.makeText(LoginActivity.this, "signInWithCredential:success", Toast.LENGTH_SHORT).show();
-                            // Sign in success, update UI with the signed-in user's information
+
+                            if(mAuth.getUid() == null){
+                                String[] prueba = mAuth.getCurrentUser().getDisplayName().split(" ");
+                                Log.d("Demo", "Nombre " + prueba[0]);
+                                Log.d("Demo", "Apellidos " + prueba[1]);
+
+
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("Apellido", prueba[1]);
+                                user.put("Email", mAuth.getCurrentUser().getEmail());
+                                user.put("Nombre", prueba[0]);
+                                user.put("photoUrl", mAuth.getCurrentUser().getPhotoUrl().toString());
+
+                                db.collection("Users")
+                                        .document(mAuth.getCurrentUser().getUid())
+                                        .set(user);
+
+                            }
+
                             Log.d("Demo", mAuth.getCurrentUser().getEmail() + " Ha entrado");
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -303,15 +313,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
 
                                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//                                        if(!usuarioo.isEmailVerified()){
-//                                            Toast.makeText(LoginActivity.this, "Necesitas verificar tu email", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                        if( usuarioo.isEmailVerified() ){
-                                            startActivity(intent);
-//                                        }
-//                                        else{
-//                                            Log.d("Demo","Necesitas verificar tu email");
-//                                        }
+                                        startActivity(intent);
 
                                     }else{
                                         Toast.makeText(LoginActivity.this, "Incorrecto usuario o/y contrasena", Toast.LENGTH_SHORT).show();
@@ -356,7 +358,7 @@ public class LoginActivity extends AppCompatActivity {
             LoginResult loginResult;
             @Override
             public void onClick(View view) {
-                facebook();
+//                facebook();
             }
         });
 
@@ -367,7 +369,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 //                facebook();
-                handleFacebookToken(loginResult.getAccessToken());
+//                handleFacebookToken(loginResult.getAccessToken());
             }
         });
 

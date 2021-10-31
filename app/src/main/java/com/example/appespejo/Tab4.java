@@ -37,6 +37,7 @@ public class Tab4 extends Fragment {
 
     FirebaseFirestore db;
     FirebaseUser usuario;
+    FirebaseAuth mAuth;
     private TextView perfilDelNombre,perfilDelApellido, perfilDelCorreo;
     private TextView prueba;
     private String name,correo,apellido,foto,fotoGoogle;
@@ -54,10 +55,13 @@ public class Tab4 extends Fragment {
 
         View v = inflater.inflate(R.layout.tab4, container, false);
 
+
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-        perfilDelNombre = (TextView) v.findViewById(R.id.perfilNombre);
+
+        perfilDelNombre = v.findViewById(R.id.perfilNombre);
         perfilDelApellido = v.findViewById(R.id.perfilApellido);
         perfilDelCorreo = v.findViewById(R.id.perfilCorreo);
         perfilDelFoto = v.findViewById(R.id.perfilFoto);
@@ -76,6 +80,8 @@ public class Tab4 extends Fragment {
 
         setOnClick(v);
 
+
+
         db.collection("Users")
                 .document(Objects.requireNonNull(usuario.getUid()))
                 .get()
@@ -83,6 +89,7 @@ public class Tab4 extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
+
                             name = task.getResult().getString("Nombre");
                             correo = task.getResult().getString("Email");
                             apellido = task.getResult().getString("Apellido");

@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String repetir="";
     private String nombree = "";
     private String apellido = "";
+    private boolean isActivatedButton;
     FirebaseUser usuarioo;
     RadioButton radioButton;
     private final static int RC_SIGN_IN = 123;
@@ -69,6 +70,22 @@ public class RegisterActivity extends AppCompatActivity {
         TextInputEditText repit = this.findViewById(R.id.repitPassword);
         radioButton = findViewById(R.id.radioButton);
 
+//        -----------------------------------------------------------------------------------
+//        PARA ACTIVAR Y DESACTIVAR BOTON
+//        -----------------------------------------------------------------------------------
+        isActivatedButton = radioButton.isChecked(); //DESACTIVADO
+
+        radioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//        ACTIVADO
+                if(isActivatedButton){radioButton.setChecked(false);}
+                isActivatedButton = radioButton.isChecked();
+             }
+        });
+
+//        -----------------------------------------------------------------------------------
+//        -----------------------------------------------------------------------------------
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
