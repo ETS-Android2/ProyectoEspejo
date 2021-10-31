@@ -77,6 +77,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser==null){
+
+        }
     }
 
     @Override
@@ -249,15 +253,15 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d("Demo", "Apellidos " + prueba[1]);
 
 
-                                Map<String, Object> user = new HashMap<>();
-                                user.put("Apellido", prueba[1]);
-                                user.put("Email", mAuth.getCurrentUser().getEmail());
-                                user.put("Nombre", prueba[0]);
-                                user.put("photoUrl", mAuth.getCurrentUser().getPhotoUrl().toString());
+                                Map<String, Object> userGoogle = new HashMap<>();
+                                userGoogle.put("Apellido", prueba[1]);
+                                userGoogle.put("Email", mAuth.getCurrentUser().getEmail());
+                                userGoogle.put("Nombre", prueba[0]);
+                                userGoogle.put("photoUrl", mAuth.getCurrentUser().getPhotoUrl().toString());
 
                                 db.collection("Users")
                                         .document(mAuth.getCurrentUser().getUid())
-                                        .set(user);
+                                        .set(userGoogle);
 
                             }
 
@@ -380,42 +384,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//
-//        facebookIV.setOnClickListener(new View.OnClickListener() {
-//            LoginResult loginResult;
-//            @Override
-//            public void onClick(View view) {
-////                facebook();
-//            }
-//        });
-
-//        facebookIV.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//
-//                callbackManager = CallbackManager.Factory.create();
-//
-//                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("id, name, email"));
-//                LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//                    @Override
-//                    public void onSuccess(LoginResult loginResult) {
-//                        handleFacebookAccessToken(loginResult.getAccessToken());
-//                    }
-//
-//                    @Override
-//                    public void onCancel() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(@NonNull FacebookException e) {
-//
-//                    }
-//                });
-//            }
-//
-//        });
 
         facebookLB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -458,6 +426,29 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d("Demo", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
+                            if(mAuth.getUid() == null){
+                                String[] prueba = mAuth.getCurrentUser().getDisplayName().split(" ");
+                                Log.d("Demo", "Nombre " + prueba[0]);
+                                Log.d("Demo", "Apellidos " + prueba[1]);
+
+
+                                Map<String, Object> userFacebook = new HashMap<>();
+                                userFacebook.put("Apellido", prueba[1]);
+                                userFacebook.put("Email", mAuth.getCurrentUser().getEmail().toString());
+                                userFacebook.put("Nombre", prueba[0]);
+                                userFacebook.put("photoUrl", mAuth.getCurrentUser().getPhotoUrl().toString());
+
+                                db.collection("Users")
+                                        .document(mAuth.getCurrentUser().getUid())
+                                        .set(userFacebook);
+
+                            }
+
+                            Log.d("Demo", "Email " + mAuth.getCurrentUser().getEmail());
+                            Log.d("Demo", "Name " + mAuth.getCurrentUser().getDisplayName());
+                            Log.d("Demo", "UID " + mAuth.getCurrentUser().getUid());
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("Demo", "signInWithCredential:failure", task.getException());
@@ -477,21 +468,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
-    private void handleFacebookAccessToken2(AccessToken token) {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-//                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                            Toast.makeText(LoginActivity.this, "Ingreso correctamente", Toast.LENGTH_SHORT).show();
-
-                        }else{
-                            Toast.makeText(LoginActivity.this, "Error en ingreso", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
 }

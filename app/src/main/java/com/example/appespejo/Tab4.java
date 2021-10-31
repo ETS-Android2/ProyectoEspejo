@@ -1,6 +1,7 @@
 package com.example.appespejo;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class Tab4 extends Fragment {
     Dialog dialog;
     Animation animacion2;
     Button guardarCambios;
-    EditText nuevoApellido,nuevoCorreo;
+    EditText nuevoApellido,nuevoCorreo,nuevoNombre;
 
 
     @Override
@@ -130,8 +131,8 @@ public class Tab4 extends Fragment {
                 bottomSheetDialog.show();
 
                 Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
-                TextView direccionActual = bottomSheetView.findViewById(R.id.apellidoActual);
-                nuevoCorreo = bottomSheetView.findViewById(R.id.cambiarApellido);
+                TextView direccionActual = bottomSheetView.findViewById(R.id.nombreActual);
+                nuevoCorreo = bottomSheetView.findViewById(R.id.cambiarNombre);
 
                 direccionActual.setText("Tu direccion de correo electronico actual es \n" + usuario.getEmail() + " \n¿Por cual te gustaria cambiarla?");
 
@@ -148,6 +149,7 @@ public class Tab4 extends Fragment {
 
                         login();
                         bottomSheetDialog.cancel();
+                        updateUI(mAuth.getCurrentUser());
                     }
                 });
             }
@@ -165,8 +167,8 @@ public class Tab4 extends Fragment {
 
                 Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
 
-                TextView nombreActual = bottomSheetView.findViewById(R.id.apellidoActual);
-                nuevoApellido = bottomSheetView.findViewById(R.id.cambiarApellido);
+                TextView nombreActual = bottomSheetView.findViewById(R.id.nombreActual);
+                nuevoNombre = bottomSheetView.findViewById(R.id.cambiarNombre);
 
                 nombreActual.setText("Tu nombre debe contene no mas que 50 caracteres");
 
@@ -176,13 +178,13 @@ public class Tab4 extends Fragment {
 
                         db.collection("Users")
                                 .document(usuario.getUid())
-                                .update("Nombre", nuevoApellido.getText().toString());
+                                .update("Nombre", nuevoNombre.getText().toString());
 
                         Toast.makeText(getContext(), "Tu nombre ha sido cambiado correstamente", Toast.LENGTH_SHORT).show();
-                        Log.d("Demo", "El nombre nuevo es: " + nuevoApellido.getText().toString());
+                        Log.d("Demo", "El nombre nuevo es: " + nuevoNombre.getText().toString());
 
                         bottomSheetDialog.cancel();
-
+                        updateUI(mAuth.getCurrentUser());
                     }
                 });
 
@@ -201,8 +203,8 @@ public class Tab4 extends Fragment {
 
                 Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
 
-                TextView apellidoActual = bottomSheetView.findViewById(R.id.apellidoActual);
-                nuevoApellido = bottomSheetView.findViewById(R.id.cambiarApellido);
+                TextView apellidoActual = bottomSheetView.findViewById(R.id.nombreActual);
+                nuevoApellido = bottomSheetView.findViewById(R.id.cambiarNombre);
 
                 apellidoActual.setText("Tu apellido debe contene no mas que 50 caracteres");
 
@@ -218,7 +220,7 @@ public class Tab4 extends Fragment {
                         Log.d("Demo", "El nombre nuevo es: " + nuevoApellido.getText().toString());
 
                         bottomSheetDialog.cancel();
-
+                        updateUI(mAuth.getCurrentUser());
                     }
                 });
 
@@ -240,5 +242,14 @@ public class Tab4 extends Fragment {
         Toast.makeText(getContext().getApplicationContext(), "Se ha enviado un correo de confirmación", Toast.LENGTH_LONG).show();
 
     }
+
+    private void updateUI(FirebaseUser user) {
+        if(user!=null){
+            startActivity(new Intent(getContext().getApplicationContext(), getContext().getClass()));
+        }else{
+            Toast.makeText(getContext(), "Sign in to continue", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 }

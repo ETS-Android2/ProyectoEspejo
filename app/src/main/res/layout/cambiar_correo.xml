@@ -30,7 +30,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/apellidoActual"
+            android:id="@+id/nombreActual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lucidagrande"
@@ -42,7 +42,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/cambiarApellido"
+        android:id="@+id/cambiarNombre"
         android:layout_width="300dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
