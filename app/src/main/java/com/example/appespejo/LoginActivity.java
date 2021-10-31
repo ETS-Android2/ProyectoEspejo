@@ -21,6 +21,8 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -86,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
+        FacebookSdk.sdkInitialize(LoginActivity.this);
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null)
@@ -107,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //    -------------------------funciones de facebook-------------------------------------
 //    -----------------------------------------------------------------------------------
-//
+
 //        private void facebook(){
 //            callbackManager = CallbackManager.Factory.create();
 //
@@ -135,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
 //                }
 //            });
 //        }
-
+//
 //    private void handleFacebookToken(AccessToken token) {
 //        Log.d("Facebook","habdleFacebookToken" + token);
 //
@@ -151,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
 //            }
 //        });
 //    }
-
+//
 //          AccessToken accessToken = AccessToken.getCurrentAccessToken();
 //          boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 //            AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
@@ -188,9 +191,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        callbackManager = CallbackManager.Factory.create();
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager = CallbackManager.Factory.create();
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGH_IN_GOOGLE) {
@@ -224,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
     // GetContent creates an ActivityResultLauncher<String> to allow you to pass
     // in the mime type you'd like to allow the user to select
 
-        private void signInGoogle() {
+    private void signInGoogle() {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGH_IN_GOOGLE);
         }
@@ -298,6 +302,29 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
 
+
+        // Initialize Facebook Login button
+        mCallbackManager = CallbackManager.Factory.create();
+        facebookLB.setReadPermissions("email", "public_profile");
+        facebookLB.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("Demo", "facebook:onSuccess:" + loginResult);
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("Demo", "facebook:onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("Demo", "facebook:onError", error);
+            }
+        });
+
+
         signUpButton.setOnClickListener(new View.OnClickListener(){ //para logear
 
             @Override
@@ -353,25 +380,118 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+//
+//        facebookIV.setOnClickListener(new View.OnClickListener() {
+//            LoginResult loginResult;
+//            @Override
+//            public void onClick(View view) {
+////                facebook();
+//            }
+//        });
 
-        facebookIV.setOnClickListener(new View.OnClickListener() {
-            LoginResult loginResult;
-            @Override
-            public void onClick(View view) {
-//                facebook();
-            }
-        });
+//        facebookIV.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//
+//                callbackManager = CallbackManager.Factory.create();
+//
+//                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("id, name, email"));
+//                LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//                    @Override
+//                    public void onSuccess(LoginResult loginResult) {
+//                        handleFacebookAccessToken(loginResult.getAccessToken());
+//                    }
+//
+//                    @Override
+//                    public void onCancel() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull FacebookException e) {
+//
+//                    }
+//                });
+//            }
+//
+//        });
 
         facebookLB.setOnClickListener(new View.OnClickListener() {
-
-            LoginResult loginResult;
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
-//                facebook();
-//                handleFacebookToken(loginResult.getAccessToken());
+                // Initialize Facebook Login button
+                mCallbackManager = CallbackManager.Factory.create();
+                facebookLB.setReadPermissions("email", "public_profile");
+                facebookLB.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d("Demo", "facebook:onSuccess:" + loginResult);
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("Demo", "facebook:onCancel");
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.d("Demo", "facebook:onError", error);
+                    }
+                });
             }
         });
+    }
 
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d("Demo", "handleFacebookAccessToken: " + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("Demo", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("Demo", "signInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if(user!=null){
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        }else{
+            Toast.makeText(LoginActivity.this, "Sign in to continue", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void handleFacebookAccessToken2(AccessToken token) {
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+//                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            Toast.makeText(LoginActivity.this, "Ingreso correctamente", Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            Toast.makeText(LoginActivity.this, "Error en ingreso", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.19270833333333334" />
+        <entry key="../../../../.gradle/caches/transforms-3/7fdb8d95fa27dc75c4828707cb6ebda6/transformed/jetified-facebook-share-4.42.0/res/drawable/com_facebook_button_send_background.xml" value="0.3765625" />
         <entry key="app/src/main/res/drawable/bordes_redondos.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/drawable/bordes_redondos_arriba.xml" value="0.45" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2875" />
