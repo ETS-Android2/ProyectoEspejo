@@ -70,7 +70,6 @@ public class HomeActivity extends AppCompatActivity {
         perfilEmail = findViewById(R.id.perfilCorreo);
 
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
-        Log.d("Demo", "El proveedor es: "+usuario.getEmail());
 
 
 //        if(!usuario.isEmailVerified()){

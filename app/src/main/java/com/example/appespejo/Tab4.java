@@ -41,8 +41,8 @@ public class Tab4 extends Fragment {
     FirebaseFirestore db;
     FirebaseUser usuario;
     FirebaseAuth mAuth;
-    TextView perfilDelNombre,perfilDelApellido, perfilDelCorreo;
-    String name,correo,apellido,foto;
+    TextView perfilDelNombre,perfilDelApellido, perfilDelCorreo, perfilDelAccount;
+    String name,correo,apellido,foto,account;
     ImageView perfilDelFoto;
     Dialog dialog;
     Animation animacion2;
@@ -64,6 +64,7 @@ public class Tab4 extends Fragment {
         perfilDelNombre = v.findViewById(R.id.perfilNombre);
         perfilDelApellido = v.findViewById(R.id.perfilApellido);
         perfilDelCorreo = v.findViewById(R.id.perfilCorreo);
+        perfilDelAccount = v.findViewById(R.id.perfilAccount);
         perfilDelFoto = v.findViewById(R.id.perfilFoto);
 
 
@@ -76,15 +77,22 @@ public class Tab4 extends Fragment {
 //        Para mostrar por la pantalla los datos del usuario
 //        -----------------------------------------------------------------------------------
 
+        if(mAuth.getCurrentUser() == null){
+
+        }
 
         if(mAuth.getCurrentUser().getEmail().equals("")){
 //    El codigo para mostrar el dialog window
             perfilDelNombre.setText("Name");
             perfilDelApellido.setText("Apellido");
             perfilDelCorreo.setText("Correo");
+            perfilDelAccount.setText("Account");
 
             Dialog dialogSheetDialog = new Dialog(requireContext());
-            View dialogSheetView = LayoutInflater.from(getContext())
+
+            Log.d("Demo", this.getContext().getClass().toString());
+
+            View dialogSheetView = LayoutInflater.from(this.getContext())
                     .inflate(R.layout.dialog_anonimo,null);
             dialogSheetDialog.setContentView(dialogSheetView);
 
@@ -105,12 +113,14 @@ public class Tab4 extends Fragment {
                                 name = task.getResult().getString("Nombre");
                                 correo = task.getResult().getString("Email");
                                 apellido = task.getResult().getString("Apellido");
+                                account = task.getResult().getString("Account");
                                 foto = task.getResult().getString("photoUrl");
 
 //      -------------------------------------Tab4-------------------------------------------
                                 perfilDelNombre.setText(name);
                                 perfilDelApellido.setText(apellido);
                                 perfilDelCorreo.setText(correo);
+                                perfilDelAccount.setText("@"+account);
                                 Glide.with(Tab4.this)
                                         .load(foto)
                                         .apply(RequestOptions.circleCropTransform())

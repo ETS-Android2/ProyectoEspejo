@@ -16,6 +16,7 @@
     <string name="registrarme">Registrarme</string>
     <string name="anonimo">Entrar como anonimo</string>
     <string name="apellido">Apellido</string>
+    <string name="account">Account</string>
     <string name="nombre">Nombre</string>
     <string name="repitcontra">Repetir contraseña</string>
     <string name="cambiarcorreo">Cambiar correo electronico</string>

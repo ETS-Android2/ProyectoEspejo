@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String repetir="";
     private String nombree = "";
     private String apellido = "";
+    private String accountt = "";
     private boolean isActivatedButton;
     FirebaseUser usuarioo;
     RadioButton radioButton;
@@ -66,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText usuario = this.findViewById(R.id.Email);
         EditText nombre = this.findViewById(R.id.Nombre);
         EditText apellidos = this.findViewById(R.id.Apellido);
+        EditText account = this.findViewById(R.id.Account);
         TextInputEditText contrasena = this.findViewById(R.id.password);
         TextInputEditText repit = this.findViewById(R.id.repitPassword);
         radioButton = findViewById(R.id.radioButton);
@@ -95,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                 repetir = repit.getText().toString();
                 nombree = nombre.getText().toString();
                 apellido = apellidos.getText().toString();
+                accountt = account.getText().toString();
 
 
                 if(!mail.isEmpty() || !pass.isEmpty()||!repetir.isEmpty()||!nombree.isEmpty()||!apellido.isEmpty()|| !radioButton.isChecked()){
@@ -142,6 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
                     user.put("Contrasena", pass);
                     user.put("Email", mail);
                     user.put("Nombre", nombree);
+                    user.put("Account", accountt);
 
                     login();
 
