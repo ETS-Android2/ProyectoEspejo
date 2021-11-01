@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AppEspejo</string>
+    <string name="welcome_home">Welcome home</string>
+    <!--    <string name="default_web_client_id" translatable="false">123.apps.googleusercontent.com</string>-->
+<!--    <string name="facebook_client_token">ab9101a7e44426b9cee97238bea4ab92</string>-->
+    <string name="cerrarsesion">Log Out</string>
+    <string name="login">Login</string>
+    <string name="registro">Register</string>
+    <string name="recupecontra">Recover password</string>
+    <string name="contrasenya">Password</string>
+    <string name="tuemail">Your email</string>
+    <string name="enviar">Send</string>
+    <string name="registrarme">Register</string>
+    <string name="apellido">Last name</string>
+    <string name="nombre">Name</string>
+    <string name="repitcontra">Repit password</string>
+    <string name="cambiarcorreo">Change email address</string>
+    <string name="cambiarnombre">Change name</string>
+    <string name="cambiarapellido">Chande surname</string>
+    <string name="guardarcambios">Save changes</string>
+
+</resources>

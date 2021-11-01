@@ -8,86 +8,206 @@
     tools:context=".RegisterActivity">
 
     <EditText
-        android:id="@+id/EditTextRegUsername"
-        android:layout_width="wrap_content"
+        android:id="@+id/Email"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
+        android:backgroundTint="#000000"
         android:ems="10"
-        android:hint="Username"
+        android:fontFamily="@font/lucidagrande"
+        android:hint="Email:"
         android:inputType="textPersonName"
         android:textColor="@color/black"
-        android:textColorHint="#7A7A7A"
-        app:layout_constraintBottom_toTopOf="@+id/editTextRegContras"
+        android:textColorHint="#7A7777"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/regnombre"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextRegContras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName"
-        android:password="true"
-        android:textColor="@color/black"
-        android:textColorHint="#777777"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/regContr"
-        app:layout_constraintTop_toBottomOf="@+id/EditTextRegUsername" />
-
-    <TextView
-        android:id="@+id/regnombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:text="Nombre:"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/regContr"
-        app:layout_constraintEnd_toStartOf="@+id/EditTextRegUsername"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/Apellido"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
-    <TextView
-        android:id="@+id/regContr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        android:text="Password"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/editTextRegContras"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regnombre" />
+    <!--    <EditText-->
+    <!--        android:id="@+id/editTextRegContras"-->
+    <!--        android:layout_width="300dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:backgroundTint="#34445B"-->
+    <!--        android:ems="10"-->
+    <!--        android:hint="Password:"-->
+    <!--        android:inputType="textPersonName"-->
+    <!--        android:password="true"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:textColorHint="#7A7777"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/repitPass"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.495"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/EditTextRegUsername"-->
+    <!--        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="512dp" />
+        app:layout_constraintGuide_end="166dp" />
 
     <Button
         android:id="@+id/registrarmeButton"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="40dp"
-        android:background="#71D3D6"
-        android:text="registrarme"
-        android:textColor="@color/black"
+        android:background="#000000"
+        android:fontFamily="@font/lucidagrande"
+        android:text="@string/registrarme"
+        android:textColor="#EBEBEB"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.361"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="278dp"
-        app:layout_constraintBottom_toTopOf="@+id/EditTextRegUsername"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        app:layout_constraintBottom_toTopOf="@+id/Nombre"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gota2" />
+        app:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/Apellido"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
+        android:ems="10"
+        android:fontFamily="@font/lucidagrande"
+        android:hint="@string/apellido"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="#7A7777"
+        app:layout_constraintBottom_toTopOf="@+id/Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Nombre"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/Nombre"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#000000"
+        android:ems="10"
+        android:fontFamily="@font/lucidagrande"
+        android:hint="@string/nombre"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHighlight="#34445B"
+        android:textColorHint="#7A7777"
+        android:textColorLink="#34445B"
+        app:layout_constraintBottom_toTopOf="@+id/Apellido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_chainStyle="spread"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColorHint="#7C7A7A"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:hintTextColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Email"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#8C8C8C">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#000000"
+            android:fontFamily="@font/lucidagrande"
+            android:hint="@string/contrasenya"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            android:textColorHint="#7D7B7B"
+            app:layout_constraintBottom_toTopOf="@+id/repitPass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Email" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#1B1C1E"
+        android:textColorHint="#7C7A7A"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:hintTextColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#8C8C8C">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/repitPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#000000"
+            android:fontFamily="@font/lucidagrande"
+            android:hint="@string/repitcontra"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            android:textColorHint="#7D7B7B"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="550dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:buttonTint="@color/black"
+        android:checked="false"
+        android:fontFamily="@font/lucidagrande"
+        android:text="He leido"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lucidagrande"
+        android:text=" la politica de privacidad"
+        android:textColor="#436FB8"
+        app:layout_constraintBottom_toBottomOf="@+id/radioButton"
+        app:layout_constraintStart_toEndOf="@+id/radioButton"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
