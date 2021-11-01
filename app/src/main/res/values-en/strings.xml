@@ -13,6 +13,7 @@
     <string name="tuemail">Your email</string>
     <string name="enviar">Send</string>
     <string name="registrarme">Register</string>
+    <string name="anonimo">Enter like an anonimus</string>
     <string name="apellido">Last name</string>
     <string name="nombre">Name</string>
     <string name="repitcontra">Repit password</string>

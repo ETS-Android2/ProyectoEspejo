@@ -14,6 +14,7 @@
     <string name="tuemail">Tu email</string>
     <string name="enviar">Enviar</string>
     <string name="registrarme">Registrarme</string>
+    <string name="anonimo">Entrar como anonimo</string>
     <string name="apellido">Apellido</string>
     <string name="nombre">Nombre</string>
     <string name="repitcontra">Repetir contraseña</string>

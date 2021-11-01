@@ -2,6 +2,7 @@ package com.example.appespejo;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -39,9 +41,8 @@ public class Tab4 extends Fragment {
     FirebaseFirestore db;
     FirebaseUser usuario;
     FirebaseAuth mAuth;
-    private TextView perfilDelNombre,perfilDelApellido, perfilDelCorreo;
-    private TextView prueba;
-    private String name,correo,apellido,foto,fotoGoogle;
+    TextView perfilDelNombre,perfilDelApellido, perfilDelCorreo;
+    String name,correo,apellido,foto;
     ImageView perfilDelFoto;
     Dialog dialog;
     Animation animacion2;
@@ -56,60 +57,71 @@ public class Tab4 extends Fragment {
 
         View v = inflater.inflate(R.layout.tab4, container, false);
 
-
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-
 
         perfilDelNombre = v.findViewById(R.id.perfilNombre);
         perfilDelApellido = v.findViewById(R.id.perfilApellido);
         perfilDelCorreo = v.findViewById(R.id.perfilCorreo);
         perfilDelFoto = v.findViewById(R.id.perfilFoto);
-        ConstraintLayout noVerificado = v.findViewById(R.id.correoNoVerificado);
 
-
-//        -----------------------------------------------------------------------------------
-//        Si el usuario al cambiar el correo no lo tiene verificado aparece Verifica tu correo
-//        -----------------------------------------------------------------------------------
-
-//        if(!usuario.isEmailVerified()){
-//            noVerificado.setVisibility(View.VISIBLE);
-//        }
 
         animacion2 = AnimationUtils.loadAnimation(getContext().getApplicationContext(),R.anim.desplazamiento_abajo);
 
         setOnClick(v);
 
 
-
-        db.collection("Users")
-                .document(Objects.requireNonNull(usuario.getUid()))
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-
-                            name = task.getResult().getString("Nombre");
-                            correo = task.getResult().getString("Email");
-                            apellido = task.getResult().getString("Apellido");
-                            foto = task.getResult().getString("photoUrl");
+//        -----------------------------------------------------------------------------------
+//        Para mostrar por la pantalla los datos del usuario
+//        -----------------------------------------------------------------------------------
 
 
-//      -----------------------------------------Tab4----------------------------------------------------
+        if(mAuth.getCurrentUser().getEmail().equals("")){
+//    El codigo para mostrar el dialog window
+            perfilDelNombre.setText("Name");
+            perfilDelApellido.setText("Apellido");
+            perfilDelCorreo.setText("Correo");
+
+            Dialog dialogSheetDialog = new Dialog(requireContext());
+            View dialogSheetView = LayoutInflater.from(getContext())
+                    .inflate(R.layout.dialog_anonimo,null);
+            dialogSheetDialog.setContentView(dialogSheetView);
+
+            dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialogSheetDialog.show();
+//            dialogSheetDialog.setCancelable(false);
+
+
+        } else{
+            db.collection("Users")
+                    .document(Objects.requireNonNull(usuario.getUid()))
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+
+                                name = task.getResult().getString("Nombre");
+                                correo = task.getResult().getString("Email");
+                                apellido = task.getResult().getString("Apellido");
+                                foto = task.getResult().getString("photoUrl");
+
+//      -------------------------------------Tab4-------------------------------------------
                                 perfilDelNombre.setText(name);
                                 perfilDelApellido.setText(apellido);
                                 perfilDelCorreo.setText(correo);
                                 Glide.with(Tab4.this)
                                         .load(foto)
+                                        .apply(RequestOptions.circleCropTransform())
                                         .into(perfilDelFoto);
 
-                        } else {
-                            Log.e("Firestore", "Error al leer", task.getException());
+                            } else {
+                                Log.e("Firestore", "Error al leer", task.getException());
+                            }
                         }
-                    }
-                });
+                    });
+        }
 
         return v;
     }
@@ -128,6 +140,7 @@ public class Tab4 extends Fragment {
                         .inflate(R.layout.cambiar_correo,null);
                 bottomSheetDialog.setContentView(bottomSheetView);
 
+                bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 bottomSheetDialog.show();
 
                 Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
@@ -163,6 +176,7 @@ public class Tab4 extends Fragment {
                         .inflate(R.layout.cambiar_nombre,null);
                 bottomSheetDialog.setContentView(bottomSheetView);
 
+                bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 bottomSheetDialog.show();
 
                 Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
@@ -199,6 +213,7 @@ public class Tab4 extends Fragment {
                         .inflate(R.layout.cambiar_apellido,null);
                 bottomSheetDialog.setContentView(bottomSheetView);
 
+                bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
                 bottomSheetDialog.show();
 
                 Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
@@ -229,7 +244,6 @@ public class Tab4 extends Fragment {
     }
 
 
-
 //        -----------------------------------------------------------------------------------
 //    Funcion para cambiar el correo y mandar el correo de verificacion
 //        -----------------------------------------------------------------------------------
@@ -250,6 +264,5 @@ public class Tab4 extends Fragment {
             Toast.makeText(getContext(), "Sign in to continue", Toast.LENGTH_SHORT).show();
         }
     }
-
 
 }

@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView register = this.findViewById(R.id.register);
         ImageButton google = this.findViewById(R.id.googleLogin);
         LoginButton facebookLB = this.findViewById(R.id.login_button);
-        ImageView facebookIV = this.findViewById(R.id.facebook);
+        TextView anonimo = this.findViewById(R.id.anonimo);
         TextView recuperar = this.findViewById(R.id.Recuperar);
         TextInputEditText textLogin = this.findViewById(R.id.login);
         TextInputEditText textPassword = this.findViewById(R.id.password);
@@ -409,6 +409,30 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("Demo", "facebook:onError", error);
                     }
                 });
+            }
+        });
+
+        anonimo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signInAnonymously()
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("Demo", "signInAnonymously:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    updateUI(user);
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("Demo", "signInAnonymously:failure", task.getException());
+                                    Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    updateUI(null);
+                                }
+                            }
+                        });
             }
         });
     }
