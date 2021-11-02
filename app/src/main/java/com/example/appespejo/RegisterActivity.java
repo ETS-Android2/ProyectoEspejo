@@ -2,14 +2,19 @@ package com.example.appespejo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.security.Policy;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText nombre = this.findViewById(R.id.Nombre);
         EditText apellidos = this.findViewById(R.id.Apellido);
         EditText account = this.findViewById(R.id.Account);
+        TextView politica = this.findViewById(R.id.politicaDePrivacidad);
         TextInputEditText contrasena = this.findViewById(R.id.password);
         TextInputEditText repit = this.findViewById(R.id.repitPassword);
         radioButton = findViewById(R.id.radioButton);
@@ -84,6 +91,22 @@ public class RegisterActivity extends AppCompatActivity {
                 if(isActivatedButton){radioButton.setChecked(false);}
                 isActivatedButton = radioButton.isChecked();
              }
+        });
+
+        politica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                Dialog dialogSheetDialog = new Dialog(requireContext());
+                Dialog dialogPolitica = new Dialog(RegisterActivity.this);
+
+                View dialogSheetView = LayoutInflater.from(RegisterActivity.this)
+                        .inflate(R.layout.politica_privacidad,null);
+                dialogPolitica.setContentView(dialogSheetView);
+
+                dialogPolitica.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialogPolitica.show();
+            }
         });
 
 //        -----------------------------------------------------------------------------------
@@ -146,6 +169,7 @@ public class RegisterActivity extends AppCompatActivity {
                     user.put("Email", mail);
                     user.put("Nombre", nombree);
                     user.put("Account", accountt);
+//                    user.put("Verificado", false);
 
                     login();
 

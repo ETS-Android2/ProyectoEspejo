@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,7 +64,6 @@ public class HomeActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo);
 
-
         fotoUsuario = findViewById(R.id.fotoUsuario);
         perfilNombre = findViewById(R.id.perfilNombre);
         perfilApellido = findViewById(R.id.perfilApellido);
@@ -72,12 +72,12 @@ public class HomeActivity extends AppCompatActivity {
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
 
-//        if(!usuario.isEmailVerified()){
+//        if(!usuario.isEmailVerified() && !usuario.isAnonymous()){
 //            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
 //            Toast.makeText(HomeActivity.this, "Necesitas verificar tu correo", Toast.LENGTH_SHORT).show();
+//            FirebaseAuth.getInstance().signOut();
 //        }
 
-//        Log.d("Demo", usuario.getEmail());
 
 
         bottomNavigationView = findViewById(R.id.bottomNav);
@@ -99,6 +99,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
@@ -115,7 +116,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()){
                         case R.id.ligth:
-                        fragment=new Tab1();
+                            fragment=new Tab1();
                         break;
 
                         case R.id.music:

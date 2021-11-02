@@ -141,10 +141,11 @@
 
     <Button
         android:id="@+id/cerrarSesion"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:background="#000000"
+        android:background="@drawable/bordes_redondos_botton"
+        android:backgroundTint="#555555"
         android:fontFamily="@font/lucidagrande"
         android:onClick="logout"
         android:text="Cerrar sesion"
