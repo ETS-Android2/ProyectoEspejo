@@ -22,7 +22,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -145,50 +147,81 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerUser(){
-        mAuth.createUserWithEmailAndPassword(mail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+
+//        if(mAuth.getCurrentUser().getEmail().equals("")){
+//
+//            EditText usuario = findViewById(R.id.Email);
+//            EditText nombre = findViewById(R.id.Nombre);
+//            EditText apellidos = findViewById(R.id.Apellido);
+//            TextInputEditText contrasena = findViewById(R.id.password);
+//
+//            mail = usuario.getText().toString().trim();
+//            pass = contrasena.getText().toString();
+//            nombree = nombre.getText().toString().trim();
+//            apellido = apellidos.getText().toString().trim();
+//
+//            AuthCredential credential = EmailAuthProvider.getCredential(mail, pass);
+//
+//            Map<String, Object> user = new HashMap<>();
+//            user.put("Apellido", apellido);
+//            user.put("Contrasena", pass);
+//            user.put("Email", mail);
+//            user.put("Nombre", nombree);
+//            user.put("Account", accountt);
+//
+//            db.collection("Users")
+//                    .document(usuarioo.getUid())
+//                    .set(user);
+//
+//
+//            Log.d("Demo","El usuario ha sido registrado "+usuarioo.getEmail());
+//            Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
+//            startActivity(intent2);
+//
+//        }else{
+            mAuth.createUserWithEmailAndPassword(mail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
 
 //                    String id = mAuth.getCurrentUser().getUid();
-                    EditText usuario = findViewById(R.id.Email);
-                    EditText nombre = findViewById(R.id.Nombre);
-                    EditText apellidos = findViewById(R.id.Apellido);
-                    TextInputEditText contrasena = findViewById(R.id.password);
+                        EditText usuario = findViewById(R.id.Email);
+                        EditText nombre = findViewById(R.id.Nombre);
+                        EditText apellidos = findViewById(R.id.Apellido);
+                        TextInputEditText contrasena = findViewById(R.id.password);
 
-                    mail = usuario.getText().toString().trim();
-                    pass = contrasena.getText().toString();
-                    nombree = nombre.getText().toString().trim();
-                    apellido = apellidos.getText().toString().trim();
+                        mail = usuario.getText().toString().trim();
+                        pass = contrasena.getText().toString();
+                        nombree = nombre.getText().toString().trim();
+                        apellido = apellidos.getText().toString().trim();
 
 
-                    // Create a new user with a first and last name
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("Apellido", apellido);
-                    user.put("Contrasena", pass);
-                    user.put("Email", mail);
-                    user.put("Nombre", nombree);
-                    user.put("Account", accountt);
+                        // Create a new user with a first and last name
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("Apellido", apellido);
+                        user.put("Contrasena", pass);
+                        user.put("Email", mail);
+                        user.put("Nombre", nombree);
+                        user.put("Account", accountt);
 //                    user.put("Verificado", false);
 
-                    login();
+                        login();
 
-                    db.collection("Users")
-                            .document(usuarioo.getUid())
-                            .set(user);
+                        db.collection("Users")
+                                .document(usuarioo.getUid())
+                                .set(user);
 
+                        Log.d("Demo","El usuario ha sido registrado "+usuarioo.getEmail());
+                        Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(intent2);
 
-
-                    Log.d("Demo","El usuario ha sido registrado "+usuarioo.getEmail());
-                    Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent2);
-
-                }else{
-                    Toast.makeText(RegisterActivity.this,"No se pudo registrar el usuario "
-                            +task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(RegisterActivity.this,"No se pudo registrar el usuario "
+                                +task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+//        }
     }
 
     private void login() {

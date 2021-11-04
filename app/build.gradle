@@ -72,6 +72,7 @@ dependencies {
     // All other dependencies for your app should also be here:
     implementation 'androidx.browser:browser:1.3.0'
     implementation "androidx.appcompat:appcompat:appCompatVersion"
+    implementation files ('../libs/spotify-app-remote-release-0.7.2.aar')
 
 
 }

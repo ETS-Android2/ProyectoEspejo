@@ -3,6 +3,7 @@ package com.example.appespejo;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +55,9 @@ public class Tab4 extends Fragment {
     ImageView perfilDelFoto;
     Dialog dialog;
     Animation animacion2;
-    Button guardarCambios;
+    ConstraintLayout dialogWindow;
+    NestedScrollView infoPersona;
+    Button cerrarSesion,registrarAnonimo;
     EditText nuevoApellido,nuevoCorreo,nuevoNombre, nuevoAccount;
     private Context context;
 
@@ -75,7 +79,10 @@ public class Tab4 extends Fragment {
         perfilDelCorreo = v.findViewById(R.id.perfilCorreo);
         perfilDelAccount = v.findViewById(R.id.perfilAccount);
         perfilDelFoto = v.findViewById(R.id.perfilFoto);
-
+        dialogWindow = v.findViewById(R.id.dialogWindow);
+        registrarAnonimo = v.findViewById(R.id.registrarAnonimo);
+        cerrarSesion = v.findViewById(R.id.cerrarSesion);
+        infoPersona = v.findViewById(R.id.infoPersona);
 
         animacion2 = AnimationUtils.loadAnimation(getContext().getApplicationContext(),R.anim.desplazamiento_abajo);
 
@@ -96,21 +103,16 @@ public class Tab4 extends Fragment {
             perfilDelApellido.setText("Apellido");
             perfilDelCorreo.setText("Correo");
             perfilDelAccount.setText("Account");
+            dialogWindow.setVisibility(View.VISIBLE);
+            cerrarSesion.setVisibility(View.INVISIBLE);
+            infoPersona.setVisibility(View.INVISIBLE);
 
-            Dialog dialogSheetDialog = new Dialog(requireContext());
+        }
+        else{
+            cerrarSesion.setVisibility(View.VISIBLE);
+            infoPersona.setVisibility(View.VISIBLE);
+            dialogWindow.setVisibility(View.INVISIBLE);
 
-            Log.d("Demo", this.getContext().getClass().toString());
-
-            View dialogSheetView = LayoutInflater.from(this.getContext())
-                    .inflate(R.layout.dialog_anonimo,null);
-            dialogSheetDialog.setContentView(dialogSheetView);
-
-            dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            dialogSheetDialog.show();
-//            dialogSheetDialog.setCancelable(false);
-
-
-        } else{
             db.collection("Users")
                     .document(Objects.requireNonNull(usuario.getUid()))
                     .get()
@@ -130,11 +132,17 @@ public class Tab4 extends Fragment {
                                 perfilDelApellido.setText(apellido);
                                 perfilDelCorreo.setText(correo);
                                 perfilDelAccount.setText("@"+account);
-                                Glide.with(Tab4.this)
-                                        .load(foto)
-                                        .apply(RequestOptions.circleCropTransform())
-                                        .into(perfilDelFoto);
+                                if(foto!=null){
+                                    Glide.with(Tab4.this)
+                                            .load(foto)
+                                            .apply(RequestOptions.circleCropTransform())
+                                            .into(perfilDelFoto);
+                                }
 
+                                if(account==null){
+                                    perfilDelAccount.setText("Anyadir usernane");
+                                    perfilDelAccount.setTextColor(0xff555555);
+                                }
 
                             } else {
                                 Log.e("Firestore", "Error al leer", task.getException());
@@ -192,6 +200,7 @@ public class Tab4 extends Fragment {
                         login();
 
                         Dialog dialogSheetDialog = new Dialog(requireContext());
+
                         View dialogSheetView = LayoutInflater.from(getContext())
                                 .inflate(R.layout.correo_no_verificado,null);
                         dialogSheetDialog.setContentView(dialogSheetView);
@@ -321,6 +330,15 @@ public class Tab4 extends Fragment {
                     }
                 });
 
+            }
+        });
+
+        registrarAnonimo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(),RegisterActivity.class));
             }
         });
     }

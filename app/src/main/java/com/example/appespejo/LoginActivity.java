@@ -29,11 +29,13 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -65,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private final static int RC_SIGH_IN_GOOGLE = 2;
+    GoogleSignInClient googleSignInClient;
     FirebaseAuth mAuth;
     FirebaseStorage storage;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -115,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             setupbd();
             context = this;
             createRequest();
+
             }
         }
 

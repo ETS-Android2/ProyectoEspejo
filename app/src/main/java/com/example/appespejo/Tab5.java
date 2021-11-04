@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +20,7 @@ public class Tab5 extends Fragment {
       Button logout;
       FirebaseAuth mAuth;
       View HomeActivity;
-//    String hello = "";
+    ConstraintLayout dialogWindow;
 
 
    /* @Override
@@ -36,10 +37,32 @@ public class Tab5 extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab5, container, false);
 
+//        -----------------------------------------------------------------------------------
+//        Base de datos
+//        -----------------------------------------------------------------------------------
+
         mAuth = FirebaseAuth.getInstance();
+
+//        -----------------------------------------------------------------------------------
+//        -----------------------------------------------------------------------------------
+
+        dialogWindow = v.findViewById(R.id.dialogWindow);
+        dialogWindow.setVisibility(View.INVISIBLE);
+
+//        -----------------------------------------------------------------------------------
+//        -----------------------------------------------------------------------------------
+
+        if(mAuth.getCurrentUser().getEmail().equals("")){
+
+            dialogWindow.setVisibility(View.VISIBLE);
+        }
 
         return v;
     }
+
+//        -----------------------------------------------------------------------------------
+//    Funciones
+//        -----------------------------------------------------------------------------------
 
     private void prueba(){
 //        FirebaseAuth.getInstance().signOut();
