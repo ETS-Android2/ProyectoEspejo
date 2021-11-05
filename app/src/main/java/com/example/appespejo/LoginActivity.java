@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,6 +67,11 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton loginButton;
     FirebaseUser usuarioo;
     CallbackManager mCallbackManager;
+
+    private FingerprintManager fingerprintManager;
+    private TextView mParaLabel;
+
+
 //    private AccessTokenTracker accessTokenTracker;
 
 //    ------------------------------Al empezar actividad---------------------------------
@@ -87,6 +93,21 @@ public class LoginActivity extends AppCompatActivity {
 //        usuarioo = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
         mCallbackManager = CallbackManager.Factory.create();
+
+
+
+        //HUELLA
+
+        fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+        mParaLabel = (TextView) findViewById(R.id.paraLabel);
+
+
+        if (fingerprintManager.isHardwareDetected()){
+            mParaLabel.setText("Put finger");
+            FingerprintHandle fingerprintHandler = new FingerprintHandle(this);
+            fingerprintHandler.startAuth(fingerprintManager,null);
+        }
+
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null && usuarioo.isEmailVerified())
@@ -196,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        callbackManager.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -239,6 +260,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -284,7 +306,7 @@ public class LoginActivity extends AppCompatActivity {
         ImageView facebookIV = this.findViewById(R.id.facebook);
         TextView recuperar = this.findViewById(R.id.Recuperar);
         TextInputEditText textLogin = this.findViewById(R.id.login);
-        TextInputEditText textPassword = this.findViewById(R.id.password);
+        TextInputEditText textPassword = this.findViewById(R.id.contra_actual);
         ImageView logo = findViewById(R.id.fotoUsuario);
         mAuth = FirebaseAuth.getInstance();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
@@ -367,6 +389,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                facebook();
                 handleFacebookToken(loginResult.getAccessToken());
             }
         });

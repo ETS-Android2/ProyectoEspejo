@@ -53,7 +53,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -97,10 +96,6 @@ public class HomeActivity extends AppCompatActivity {
                                 String apellido = task.getResult().getString("Apellido");
                                 usuarioNombre.setText("Hola, "+name);
 
-//      -----------------------------------------Tab4----------------------------------------------------
-//                                perfilNombre.setText(name);
-//                                perfilApellido.setText(apellido);
-//                                perfilEmail.setText(correo);
 
 //                                Glide.with(HomeActivity.this).load(usuario.getPhotoUrl()).into(fotoUsuario);
                             } else {
@@ -137,10 +132,7 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
-    public void lanzarAcercaDe(View view){
-        Intent i = new Intent(this, AcercaDeActivity.class);
-        startActivity(i);
-    }
+
 
     private NavigationBarView.OnItemSelectedListener bottomNavMethod = new
             NavigationBarView.OnItemSelectedListener(){
@@ -173,6 +165,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
     /*Tab1 tab1 = new Tab1();
     Tab2 tab2 = new Tab2();
     Tab3 tab3 = new Tab3();

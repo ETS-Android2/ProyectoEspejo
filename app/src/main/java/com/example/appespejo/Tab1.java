@@ -44,6 +44,6 @@ public class Tab1 extends Fragment {
                     });*/
 
 
-        return inflater.inflate(R.layout.tab1, container, false);
+        return v;
     }
 }

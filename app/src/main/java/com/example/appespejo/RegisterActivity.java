@@ -21,8 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -63,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText usuario = this.findViewById(R.id.Email);
         EditText nombre = this.findViewById(R.id.Nombre);
         EditText apellidos = this.findViewById(R.id.Apellido);
-        TextInputEditText contrasena = this.findViewById(R.id.password);
+        TextInputEditText contrasena = this.findViewById(R.id.contra_actual);
         TextInputEditText repit = this.findViewById(R.id.repitPassword);
 
         register.setOnClickListener(new View.OnClickListener(){
@@ -98,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText email = findViewById(R.id.Email);
         EditText nombre = findViewById(R.id.Nombre);
         EditText apellidos = findViewById(R.id.Apellido);
-        TextInputEditText contrasena = findViewById(R.id.password);
+        TextInputEditText contrasena = findViewById(R.id.contra_actual);
 //        db = FirebaseFirestore.getInstance();
 
         mail = email.getText().toString();
@@ -182,7 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
                     EditText usuario = findViewById(R.id.Email);
                     EditText nombre = findViewById(R.id.Nombre);
                     EditText apellidos = findViewById(R.id.Apellido);
-                    TextInputEditText contrasena = findViewById(R.id.password);
+                    TextInputEditText contrasena = findViewById(R.id.contra_actual);
 
                     mail = usuario.getText().toString();
                     pass = contrasena.getText().toString();
