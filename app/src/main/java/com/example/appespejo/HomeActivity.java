@@ -1,5 +1,6 @@
 package com.example.appespejo;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,7 +38,6 @@ public class HomeActivity extends AppCompatActivity {
    // private String[] nombres = new String[]{"Luces","Pestaña 2","Pestaña 3", "Pesataña 4", "Pesataña 5"};
 
 
-     ImageButton logout;
      private BottomNavigationView bottomNavigationView;
      FirebaseAuth mAuth;
      TextView usuarioNombre;
@@ -45,6 +48,8 @@ public class HomeActivity extends AppCompatActivity {
      TextView perfilNombre;
      TextView perfilApellido;
      TextView perfilEmail;
+     Animation animacion2;
+     Dialog dialog;
 
 
 
@@ -56,9 +61,8 @@ public class HomeActivity extends AppCompatActivity {
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
+        animacion2 = AnimationUtils.loadAnimation(this,R.anim.desplazamiento_abajo);
 
-
-        logout = (ImageButton) findViewById(R.id.logOut);
         fotoUsuario = findViewById(R.id.fotoUsuario);
         perfilNombre = findViewById(R.id.perfilNombre);
         perfilApellido = findViewById(R.id.perfilApellido);
@@ -66,48 +70,14 @@ public class HomeActivity extends AppCompatActivity {
 
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
-        if(!usuario.isEmailVerified()){
-            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-            Toast.makeText(HomeActivity.this, "Necesitas verificar tu correo", Toast.LENGTH_SHORT).show();
-        }
 
-        if(usuario != null){
-
-//-----------------------------------------------------------------------------------------------
-//-------------Lo que queremos mostrar rollo datos del usuario se sacan apartir de aqui----------
-//-----------------------------------------------------------------------------------------------
-
-//            Glide.with(this)
-//                    .load(usuario.getPhotoUrl())
-//                    .into(fotoUsuario);
-
-            Glide.with(this).clear(fotoUsuario);
+//        if(!usuario.isEmailVerified() && !usuario.isAnonymous()){
+//            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+//            Toast.makeText(HomeActivity.this, "Necesitas verificar tu correo", Toast.LENGTH_SHORT).show();
+//            FirebaseAuth.getInstance().signOut();
+//        }
 
 
-            db.collection("Users")
-                    .document(Objects.requireNonNull(usuario.getEmail()))
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                String name = task.getResult().getString("Nombre");
-                                String correo = task.getResult().getString("Email");
-                                String apellido = task.getResult().getString("Apellido");
-                                usuarioNombre.setText("Hola, "+name);
-
-
-//                                Glide.with(HomeActivity.this).load(usuario.getPhotoUrl()).into(fotoUsuario);
-                            } else {
-                                Log.e("Firestore", "Error al leer", task.getException());
-                            }
-                        }
-                    });
-        }
-
-        else{
-            usuarioNombre.setText("Usuario no logeado");
-        }
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
@@ -128,6 +98,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
@@ -141,7 +112,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()){
                         case R.id.ligth:
-                        fragment=new Tab1();
+                            fragment=new Tab1();
                         break;
 
                         case R.id.music:
