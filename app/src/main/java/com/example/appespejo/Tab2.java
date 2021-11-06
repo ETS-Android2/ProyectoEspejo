@@ -53,8 +53,9 @@ public class Tab2 extends Fragment {
                 new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI);
 
         builder.setScopes(new String[]{"streaming"});
-        AuthorizationRequest request = builder.build();
+        builder.setShowDialog(true);
 
+        AuthorizationRequest request = builder.build();
         AuthorizationClient.openLoginActivity(getActivity(), REQUEST_CODE, request);
 
         return v;
@@ -104,7 +105,7 @@ public class Tab2 extends Fragment {
                     @Override
                     public void onConnected(SpotifyAppRemote spotifyAppRemote) {
                         mSpotifyAppRemote = spotifyAppRemote;
-                        Log.d("MainActivity", "Connected! Yay!");
+                        Log.d("Demo", "Connected! Yay!");
 
                         // Now you can start interacting with App Remote
                         connected();
@@ -112,30 +113,20 @@ public class Tab2 extends Fragment {
 
                     @Override
                     public void onFailure(Throwable throwable) {
-                        Log.e("MainActivity", throwable.getMessage(), throwable);
+                        Log.e("Demo", throwable.getMessage(), throwable);
 
                         // Something went wrong when attempting to connect! Handle errors here
 
-                        Log.d("MainActivity", "No se ha connectado con el spotify");
+                        Log.d("Demo", "No se ha connectado con el spotify");
                     }
                 });
-
-        AuthorizationRequest.Builder builder =
-                new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI);
-        builder.setScopes(new String[]{"streaming"});
-        builder.setShowDialog(true);
-
-        AuthorizationRequest request = builder.build();
-
-        AuthorizationClient.openLoginActivity(getActivity(), REQUEST_CODE, request);
-
     }
 
 
     private void connected() {
         // Then we will write some more code here.
         // Play a playlist
-//        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX7K31D69s4M1");
+        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX7K31D69s4M1");
 
         // Subscribe to PlayerState
         mSpotifyAppRemote.getPlayerApi()
@@ -149,13 +140,15 @@ public class Tab2 extends Fragment {
                         Log.d("Demo", "No ha pillado el track");
                     }
                 });
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+//        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+        mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onStop");
     }
 
@@ -164,6 +157,7 @@ public class Tab2 extends Fragment {
         super.onDestroy();
 
         SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+        mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onDestroy");
 
     }
