@@ -1,21 +1,21 @@
 package com.example.appespejo;
 
-import static com.spotify.sdk.android.auth.LoginActivity.REQUEST_CODE;
-
 import android.content.Intent;
-import android.graphics.ColorSpace;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
-import com.spotify.protocol.client.Subscription;
-import com.spotify.protocol.types.PlayerState;
+import com.spotify.protocol.client.CallResult;
+import com.spotify.protocol.types.Image;
 import com.spotify.protocol.types.Track;
 
 //import com.spotify.sdk.android.auth;
@@ -33,6 +33,7 @@ public class Tab2 extends Fragment {
     private static final String REDIRECT_URI = "SpotifyTestApp://authenticationResponse";
     private SpotifyAppRemote mSpotifyAppRemote;
     final int REQUEST_CODE = 1337;
+    ImageView album, pause, back, next, play;
 
 
     public Tab2(){
@@ -44,6 +45,14 @@ public class Tab2 extends Fragment {
 
         View v = inflater.inflate(R.layout.tab2, container, false);
 
+        album = v.findViewById(R.id.album);
+        pause = v.findViewById(R.id.pausePlay);
+        back = v.findViewById(R.id.back);
+        next = v.findViewById(R.id.next);
+        play = v.findViewById(R.id.play);
+        play.setVisibility(View.GONE);
+
+        allClicks();
 
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
@@ -60,6 +69,30 @@ public class Tab2 extends Fragment {
 
         return v;
     }
+
+    private void allClicks() {
+
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSpotifyAppRemote.getPlayerApi().pause();
+                pause.setVisibility(View.GONE);
+                play.setVisibility(View.VISIBLE);
+            }
+        });
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSpotifyAppRemote.getPlayerApi().resume();
+                play.setVisibility(View.GONE);
+                pause.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -126,7 +159,6 @@ public class Tab2 extends Fragment {
     private void connected() {
         // Then we will write some more code here.
         // Play a playlist
-        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX7K31D69s4M1");
 
         // Subscribe to PlayerState
         mSpotifyAppRemote.getPlayerApi()
@@ -135,13 +167,25 @@ public class Tab2 extends Fragment {
                     final Track track = playerState.track;
                     if (track != null) {
                         Log.d("Demo", track.name + " by " + track.artist.name);
+
+                        mSpotifyAppRemote.getImagesApi()
+                                .getImage(track.imageUri, Image.Dimension.LARGE)
+                                .setResultCallback(new CallResult.ResultCallback<Bitmap>(){
+
+                                    @Override public void onResult(Bitmap bitmap) {
+                                        album.setImageBitmap(bitmap);
+                                    }
+                                });
+
+
+
                     }
                     else{
                         Log.d("Demo", "No ha pillado el track");
                     }
                 });
-
     }
+
 
     @Override
     public void onStop() {
@@ -151,6 +195,7 @@ public class Tab2 extends Fragment {
         mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onStop");
     }
+
 
     @Override
     public void onDestroy() {
