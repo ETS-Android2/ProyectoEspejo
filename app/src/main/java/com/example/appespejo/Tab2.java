@@ -30,8 +30,10 @@ import com.spotify.sdk.android.auth.AuthorizationResponse;
 public class Tab2 extends Fragment {
     
     private static final String CLIENT_ID = "d6720cc30e3c48b283910c2040f81244";
-    private static final String REDIRECT_URI = "https://dle.rae.es/gilipollas";
+    private static final String REDIRECT_URI = "SpotifyTestApp://authenticationResponse";
     private SpotifyAppRemote mSpotifyAppRemote;
+    final int REQUEST_CODE = 1337;
+
 
     public Tab2(){
         // require a empty public constructor
@@ -46,8 +48,6 @@ public class Tab2 extends Fragment {
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
 
-        final int REQUEST_CODE = 1337;
-        final String REDIRECT_URI = "yourcustomprotocol://callback";
 
         AuthorizationRequest.Builder builder =
                 new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI);
@@ -120,7 +120,14 @@ public class Tab2 extends Fragment {
                     }
                 });
 
+        AuthorizationRequest.Builder builder =
+                new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI);
+        builder.setScopes(new String[]{"streaming"});
+        builder.setShowDialog(true);
 
+        AuthorizationRequest request = builder.build();
+
+        AuthorizationClient.openLoginActivity(getActivity(), REQUEST_CODE, request);
 
     }
 
@@ -128,13 +135,36 @@ public class Tab2 extends Fragment {
     private void connected() {
         // Then we will write some more code here.
         // Play a playlist
-        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
-    }
+//        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX7K31D69s4M1");
 
+        // Subscribe to PlayerState
+        mSpotifyAppRemote.getPlayerApi()
+                .subscribeToPlayerState()
+                .setEventCallback(playerState -> {
+                    final Track track = playerState.track;
+                    if (track != null) {
+                        Log.d("Demo", track.name + " by " + track.artist.name);
+                    }
+                    else{
+                        Log.d("Demo", "No ha pillado el track");
+                    }
+                });
+    }
 
     @Override
     public void onStop() {
         super.onStop();
-        // Aaand we will finish off here.
+
+        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+        Log.d("Demo", "onStop");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+        Log.d("Demo", "onDestroy");
+
     }
 }
