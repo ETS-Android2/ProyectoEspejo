@@ -1,14 +1,20 @@
 package com.example.appespejo;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
@@ -27,6 +33,8 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import java.util.List;
+
 public class Tab2 extends Fragment {
     
     private static final String CLIENT_ID = "d6720cc30e3c48b283910c2040f81244";
@@ -34,6 +42,7 @@ public class Tab2 extends Fragment {
     private SpotifyAppRemote mSpotifyAppRemote;
     final int REQUEST_CODE = 1337;
     ImageView album, pause, back, next, play;
+    Button spotify;
 
 
     public Tab2(){
@@ -51,6 +60,7 @@ public class Tab2 extends Fragment {
         next = v.findViewById(R.id.next);
         play = v.findViewById(R.id.play);
         play.setVisibility(View.GONE);
+        spotify = v.findViewById(R.id.spotify);
 
         allClicks();
 
@@ -72,6 +82,7 @@ public class Tab2 extends Fragment {
 
     private void allClicks() {
 
+        Tab2 cx = this;
 
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +102,57 @@ public class Tab2 extends Fragment {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSpotifyAppRemote.getPlayerApi().skipPrevious();
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSpotifyAppRemote.getPlayerApi().skipNext();
+            }
+        });
+
+        spotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<PackageInfo> packs = getActivity().getPackageManager().getInstalledPackages(0);
+
+                String apppackage = "com.spotify.android";
+
+
+                try {
+                    Intent i = getActivity().getPackageManager().getLaunchIntentForPackage(apppackage);
+                    Log.d("Demo", "Esta cargando");
+                    startActivity(i);
+                }
+                catch (Exception  e) {
+                    Log.d("Demo", "Sorry, Spotify Apps Not Found");
+                    Toast.makeText(getContext(), "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
+    }
+
+    public void spotify(View view){
+//        Intent i2 = getPackageManager().getLaunchIntentForPackage("com.spotify.android");
+//        startActivity(i2);
+        String apppackage = "com.spotify.android";
+        Tab2 cx = this;
+        try {
+            Intent i = getActivity().getPackageManager().getLaunchIntentForPackage(apppackage);
+            Log.d("Demo", "Esta cargando");
+            cx.startActivity(i);
+        } catch (Exception  e) {
+            Log.d("Demo", "Sorry, Spotify Apps Not Found");
+            Toast.makeText(getContext(), "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -169,7 +231,7 @@ public class Tab2 extends Fragment {
                         Log.d("Demo", track.name + " by " + track.artist.name);
 
                         mSpotifyAppRemote.getImagesApi()
-                                .getImage(track.imageUri, Image.Dimension.LARGE)
+                                .getImage(track.imageUri, Image.Dimension.MEDIUM)
                                 .setResultCallback(new CallResult.ResultCallback<Bitmap>(){
 
                                     @Override public void onResult(Bitmap bitmap) {

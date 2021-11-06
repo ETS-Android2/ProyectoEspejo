@@ -1,6 +1,7 @@
 package com.example.appespejo;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,15 +42,13 @@ public class HomeActivity extends AppCompatActivity {
 
      private BottomNavigationView bottomNavigationView;
      FirebaseAuth mAuth;
-     TextView usuarioNombre;
      FirebaseUser usuario;
      ImageView fotoUsuario;
      FirebaseFirestore db;
      FirebaseStorage storage;
-     TextView perfilNombre;
-     TextView perfilApellido;
-     TextView perfilEmail;
+     TextView perfilNombre,perfilApellido,perfilEmail,usuarioNombre;
      Animation animacion2;
+     Button spotify;
      Dialog dialog;
 
 
@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Context context = this;
 
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
@@ -68,16 +69,14 @@ public class HomeActivity extends AppCompatActivity {
         perfilNombre = findViewById(R.id.perfilNombre);
         perfilApellido = findViewById(R.id.perfilApellido);
         perfilEmail = findViewById(R.id.perfilCorreo);
-
+        spotify = findViewById(R.id.spotify);
         usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
-
 
 //        if(!usuario.isEmailVerified() && !usuario.isAnonymous()){
 //            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
 //            Toast.makeText(HomeActivity.this, "Necesitas verificar tu correo", Toast.LENGTH_SHORT).show();
 //            FirebaseAuth.getInstance().signOut();
 //        }
-
 
 
         bottomNavigationView = findViewById(R.id.bottomNav);
@@ -102,6 +101,21 @@ public class HomeActivity extends AppCompatActivity {
         LoginManager.getInstance().logOut();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    public void spotify(View view){
+//        Intent i2 = getPackageManager().getLaunchIntentForPackage("com.spotify.android");
+//        startActivity(i2);
+        String apppackage = "com.spotify.android";
+        Context cx=this;
+        try {
+            Intent i = cx.getPackageManager().getLaunchIntentForPackage(apppackage);
+            Log.d("Demo", "Esta cargando");
+            cx.startActivity(i);
+        } catch (Exception  e) {
+            Log.d("Demo", "Sorry, Spotify Apps Not Found");
+            Toast.makeText(this, "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void lanzarAcercaDe(View view){
