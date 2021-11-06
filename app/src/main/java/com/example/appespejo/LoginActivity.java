@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(LoginActivity.this);
 
 
-
+        /**
         //HUELLA
 
         fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
             FingerprintHandle fingerprintHandler = new FingerprintHandle(this);
             fingerprintHandler.startAuth(fingerprintManager,null);
         }
-
+**/
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null)
@@ -305,7 +305,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView anonimo = this.findViewById(R.id.anonimo);
         TextView recuperar = this.findViewById(R.id.Recuperar);
         TextInputEditText textLogin = this.findViewById(R.id.login);
-        TextInputEditText textPassword = this.findViewById(R.id.contra_actual);
+        TextInputEditText textPassword = this.findViewById(R.id.password);
         ImageView logo = findViewById(R.id.fotoUsuario);
         mAuth = FirebaseAuth.getInstance();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();

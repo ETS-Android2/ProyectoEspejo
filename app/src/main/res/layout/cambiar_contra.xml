@@ -6,46 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/contra_nueva"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#32435C"
-        android:fontFamily="@font/lucidagrande"
-        android:hint="Contraseña nueva"
-        android:inputType="textPassword"
-        android:textColor="#000000"
-        android:textColorHighlight="#2F435E"
-        android:textColorHint="#7C7A7A"
-        android:textColorLink="#448AFF"
-        app:hintTextColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contra_actual"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/repe_contra_nueva"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#32435C"
-        android:fontFamily="@font/lucidagrande"
-        android:hint="Repetir contraseña nueva"
-        android:inputType="textPassword"
-        android:textColor="#000000"
-        android:textColorHighlight="#2F435E"
-        android:textColorHint="#7C7A7A"
-        android:textColorLink="#448AFF"
-        app:hintTextColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contra_nueva"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
@@ -74,39 +34,108 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/contra_actual"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="#32435C"
-        android:fontFamily="@font/lucidagrande"
-        android:hint="Contraseña actual"
-        android:inputType="textPassword"
-        android:textColor="#000000"
-        android:textColorHighlight="#2F435E"
-        android:textColorHint="#7C7A7A"
-        android:textColorLink="#448AFF"
-        app:hintTextColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/cambiar_contra"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/lucidagrande"
         android:text="Cambiar contraseña"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repe_contra_nueva" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
+
+    <TextView
+        android:id="@+id/prueba"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cambiar_contra" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:textColor="#000000"
+        android:textColorHint="#7D7B7B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#7E7D7D">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contra_actual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:fontFamily="@font/lucidagrande"
+            android:hint="Contraseña actual"
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:textColor="#000000"
+        android:textColorHint="#7D7B7B"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#7E7D7D">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contra_nueva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lucidagrande"
+            android:hint="Contraseña nueva"
+            android:textColor="@color/black"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:textColor="#000000"
+        android:textColorHint="#7D7B7B"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#7E7D7D"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/repe_contra_nueva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lucidagrande"
+            android:hint="Repetir contraseña nueva"
+            android:password="false"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,9 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Preferencias extends AppCompatActivity {
 
-   /** protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenciasFragment()).commit();
-    }**/
+    }
 
 }
