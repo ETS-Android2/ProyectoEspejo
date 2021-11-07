@@ -9,11 +9,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class Tab3 extends Fragment {
 
     ConstraintLayout dialogWindow;
     FirebaseAuth mAuth;
+    FirebaseStorage storage;
+    StorageReference storageRef;
 
     public Tab3(){
         // require a empty public constructor
@@ -27,6 +31,9 @@ public class Tab3 extends Fragment {
 //        Base de datos
 //        -----------------------------------------------------------------------------------
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+
+
 
 //        -----------------------------------------------------------------------------------
 //        -----------------------------------------------------------------------------------
@@ -42,6 +49,10 @@ public class Tab3 extends Fragment {
             dialogWindow.setVisibility(View.VISIBLE);
         }
 
+//        -----------------------------------------------------------------------------------
+//      Para sacar las fotos de bd
+//        -----------------------------------------------------------------------------------
+
 
 
         return v;
@@ -50,5 +61,8 @@ public class Tab3 extends Fragment {
 //        -----------------------------------------------------------------------------------
 //    Funciones
 //        -----------------------------------------------------------------------------------
+
+
+
 
 }

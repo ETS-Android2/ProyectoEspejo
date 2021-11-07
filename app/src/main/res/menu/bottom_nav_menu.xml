@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item
-    android:id="@+id/ligth"
-    android:title="Ligth"
-    android:icon="@drawable/ic_baseline_highlight_24"/>
-
-<item
-    android:id="@+id/music"
-    android:title="Music"
-    android:icon="@drawable/ic_baseline_music_note_24"/>
-<item
-    android:id="@+id/photo"
-    android:title="Photos"
-    android:icon="@drawable/ic_baseline_photo_24"/>
     <item
-        android:id="@+id/perfil"
-        android:title="Person"
-        android:icon="@drawable/ic_baseline_person_24"/>
+        android:id="@+id/photo"
+        android:icon="@drawable/foto50" />
+    <item
+        android:id="@+id/music"
+        android:icon="@drawable/audio50" />
+    <item
+        android:id="@+id/ligth"
+        android:icon="@drawable/lampara" />
     <item
         android:id="@+id/conf"
-        android:title="Setting"
-        android:icon="@drawable/ic_baseline_construction_24"/>
+        android:icon="@drawable/ajustes50" />
+    <item
+        android:id="@+id/perfil"
+        android:icon="@drawable/perfil" />
 </menu>

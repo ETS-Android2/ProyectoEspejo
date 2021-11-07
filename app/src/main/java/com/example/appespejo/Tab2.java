@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.spotify.android.appremote.api.ConnectionParams;
@@ -43,11 +44,16 @@ public class Tab2 extends Fragment {
     final int REQUEST_CODE = 1337;
     ImageView album, pause, back, next, play;
     Button spotify;
+    TextView cancion,artista;
+    String mAccessToken;
+    public static final int AUTH_TOKEN_REQUEST_CODE = 0x10;
+    public static final int AUTH_CODE_REQUEST_CODE = 0x11;
 
 
     public Tab2(){
         // require a empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,12 +67,14 @@ public class Tab2 extends Fragment {
         play = v.findViewById(R.id.play);
         play.setVisibility(View.GONE);
         spotify = v.findViewById(R.id.spotify);
+        cancion = v.findViewById(R.id.cancion);
+        artista = v.findViewById(R.id.artista);
 
+//    Aqui desclararemos todas las funciones onClick
         allClicks();
 
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
-
 
         AuthorizationRequest.Builder builder =
                 new AuthorizationRequest.Builder(CLIENT_ID, AuthorizationResponse.Type.TOKEN, REDIRECT_URI);
@@ -80,6 +88,11 @@ public class Tab2 extends Fragment {
         return v;
     }
 
+
+
+//        -----------------------------------------------------------------------------------
+//        Todas las funciones onClick
+//        -----------------------------------------------------------------------------------
     private void allClicks() {
 
         Tab2 cx = this;
@@ -120,15 +133,13 @@ public class Tab2 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                List<PackageInfo> packs = getActivity().getPackageManager().getInstalledPackages(0);
-
-                String apppackage = "com.spotify.android";
-
+//                String apppackage = "https://www.spotify.com/31sh5hscok32wewoudxkmivktpye4";
+                String apppackage = "https://open.spotify.com/";
 
                 try {
                     Intent i = getActivity().getPackageManager().getLaunchIntentForPackage(apppackage);
                     Log.d("Demo", "Esta cargando");
-                    startActivity(i);
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(apppackage)));
                 }
                 catch (Exception  e) {
                     Log.d("Demo", "Sorry, Spotify Apps Not Found");
@@ -182,6 +193,7 @@ public class Tab2 extends Fragment {
     }
 
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -218,6 +230,10 @@ public class Tab2 extends Fragment {
     }
 
 
+
+//        -----------------------------------------------------------------------------------
+//        Para mostrar por la pantalla los datos de la cancion
+//        -----------------------------------------------------------------------------------
     private void connected() {
         // Then we will write some more code here.
         // Play a playlist
@@ -230,16 +246,19 @@ public class Tab2 extends Fragment {
                     if (track != null) {
                         Log.d("Demo", track.name + " by " + track.artist.name);
 
+//        -----------------------------------------------------------------------------------
+//        Para sacar los datos necesarios de la cancion
+//        -----------------------------------------------------------------------------------
                         mSpotifyAppRemote.getImagesApi()
                                 .getImage(track.imageUri, Image.Dimension.MEDIUM)
                                 .setResultCallback(new CallResult.ResultCallback<Bitmap>(){
-
                                     @Override public void onResult(Bitmap bitmap) {
                                         album.setImageBitmap(bitmap);
                                     }
                                 });
 
-
+                        cancion.setText(track.name);
+                        artista.setText(track.artist.name);
 
                     }
                     else{

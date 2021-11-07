@@ -79,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
 //        }
 
 
+
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new Tab1()).commit();
@@ -103,16 +104,16 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
-    public void spotify(View view){
+    public void spotifyy(View view){
 //        Intent i2 = getPackageManager().getLaunchIntentForPackage("com.spotify.android");
 //        startActivity(i2);
         String apppackage = "com.spotify.android";
-        Context cx=this;
         try {
-            Intent i = cx.getPackageManager().getLaunchIntentForPackage(apppackage);
+            Intent i = getPackageManager().getLaunchIntentForPackage(apppackage);
             Log.d("Demo", "Esta cargando");
-            cx.startActivity(i);
-        } catch (Exception  e) {
+            startActivity(i);
+        }
+        catch (Exception  e) {
             Log.d("Demo", "Sorry, Spotify Apps Not Found");
             Toast.makeText(this, "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
         }
@@ -123,12 +124,18 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void registrarAnonimo(View view){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+    }
+
     private NavigationBarView.OnItemSelectedListener bottomNavMethod = new
             NavigationBarView.OnItemSelectedListener(){
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem){
                     Fragment fragment=null;
 
                     switch (menuItem.getItemId()){
+
                         case R.id.ligth:
                             fragment=new Tab1();
                         break;

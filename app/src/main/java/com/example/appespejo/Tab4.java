@@ -90,7 +90,7 @@ public class Tab4 extends Fragment {
 
 
 //        -----------------------------------------------------------------------------------
-//        Para mostrar por la pantalla los datos del usuario
+//      Para mostrar por la pantalla los datos del usuario
 //        -----------------------------------------------------------------------------------
 
         if(mAuth.getCurrentUser() == null){
@@ -106,8 +106,8 @@ public class Tab4 extends Fragment {
             dialogWindow.setVisibility(View.VISIBLE);
             cerrarSesion.setVisibility(View.INVISIBLE);
             infoPersona.setVisibility(View.INVISIBLE);
-
         }
+
         else{
             cerrarSesion.setVisibility(View.VISIBLE);
             infoPersona.setVisibility(View.VISIBLE);
@@ -144,13 +144,13 @@ public class Tab4 extends Fragment {
                                     perfilDelAccount.setTextColor(0xff555555);
                                 }
 
-                            } else {
+                            }
+                            else {
                                 Log.e("Firestore", "Error al leer", task.getException());
                             }
                         }
                     });
         }
-
         return v;
     }
 
@@ -177,7 +177,6 @@ public class Tab4 extends Fragment {
 
                 direccionActual.setText("Tu direccion de correo electronico actual es \n" + perfilDelCorreo.getText().toString() + " \n¿Por cual te gustaria cambiarla?");
 
-
                 guardar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -190,9 +189,6 @@ public class Tab4 extends Fragment {
                                 .document(usuario.getUid())
                                 .update("Email", nuevoCorreo.getText().toString());
 //                                .update(user);
-
-
-
 
                         Log.d("Demo", "El correo cogido es: " + nuevoCorreo.getText().toString());
                         Toast.makeText(getContext(), "Tu correo ha sido cambiado correstamente", Toast.LENGTH_SHORT).show();
@@ -333,14 +329,6 @@ public class Tab4 extends Fragment {
             }
         });
 
-        registrarAnonimo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(),RegisterActivity.class));
-            }
-        });
     }
 
 
@@ -354,8 +342,8 @@ public class Tab4 extends Fragment {
         usuario.sendEmailVerification();
         Log.d("Demo", "El correo ha sido enviado");
         Toast.makeText(getContext().getApplicationContext(), "Se ha enviado un correo de confirmación", Toast.LENGTH_LONG).show();
-
     }
+
 
     private void updateUI(FirebaseUser user) {
         if(user!=null){
