@@ -48,7 +48,7 @@
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".cambiar_contra"
+            android:name=".CambiarContra"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
@@ -60,6 +60,14 @@
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity android:name=".mapa"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".politica_de_datos"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".condiciones_de_uso"
             android:exported="true"
             android:screenOrientation="portrait"
             />

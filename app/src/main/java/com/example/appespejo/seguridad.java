@@ -2,23 +2,10 @@ package com.example.appespejo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Objects;
 
 public class seguridad extends AppCompatActivity {
 
@@ -48,7 +35,7 @@ public class seguridad extends AppCompatActivity {
     }
 
     public void abrirContrasenya(View view){
-        Intent i = new Intent(this, cambiar_contra.class);
+        Intent i = new Intent(this, CambiarContra.class);
         startActivity(i);
     }
 }

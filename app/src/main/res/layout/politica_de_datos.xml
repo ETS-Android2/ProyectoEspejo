@@ -11,6 +11,247 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:text="Política de privacidad"
+                android:textColor="@color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:text="Política de datos de MirrorMe"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="166dp"
+                android:text="Esta Política de privacidad describe Nuestras políticas y procedimientos sobre la recopilación, uso y divulgación de Su información cuando usa el Servicio y le informa sobre Sus derechos de privacidad y cómo la ley lo protege. Usamos sus datos personales para proporcionar y mejorar el servicio. Al utilizar el Servicio, acepta la recopilación y el uso de información de acuerdo con esta Política de privacidad. Esta Política de privacidad se ha creado con la ayuda del Generador de políticas de privacidad."
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:text="Interpretaciones y definiciones"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Interpretaciones "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="Las palabras cuya letra inicial está en mayúscula tienen significados definidos en las siguientes condiciones. Las siguientes definiciones tendrán el mismo significado independientemente de que aparezcan en singular o en plural."
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Definiciones"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="633dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="A los efectos de esta Política de privacidad:
+
+Cuenta significa una cuenta única creada para que usted acceda a nuestro Servicio o partes de nuestro Servicio.
+
+
+Afiliado significa una entidad que controla, está controlada por o está bajo control común con una parte, donde control significa la propiedad del 50% o más de las acciones, participación en el capital social u otros valores con derecho a voto para la elección de directores u otra autoridad de gestión.
+
+Aplicación significa el programa de software proporcionado por la Compañía descargado por Usted en cualquier dispositivo electrónico, llamado Mirrow Me
+
+Compañía (denominada la Compañía, Nosotros, Nos o Nuestro en este Acuerdo) se refiere a Mirrow Me.
+
+País se refiere a: España
+
+Dispositivo significa cualquier dispositivo que pueda acceder al Servicio, como una computadora, un teléfono celular o una tableta digital.
+
+Los datos personales son cualquier información que se relacione con una persona identificada o identificable.
+
+Servicio se refiere a la Aplicación.
+
+Proveedor de servicios significa cualquier persona física o jurídica que procesa los datos en nombre de la Compañía. Se refiere a empresas de terceros o personas empleadas por la Compañía para facilitar el Servicio, para proporcionar el Servicio en nombre de la Compañía, para realizar servicios relacionados con el Servicio o para ayudar a la Compañía a analizar cómo se utiliza el Servicio.
+
+El Servicio de redes sociales de terceros se refiere a cualquier sitio web o cualquier sitio web de red social a través del cual un Usuario puede iniciar sesión o crear una cuenta para usar el Servicio.
+
+Los Datos de uso se refieren a los datos recopilados automáticamente, ya sea generados por el uso del Servicio o por la propia infraestructura del Servicio (por ejemplo, la duración de una visita a la página).
+
+Usted se refiere a la persona que accede o utiliza el Servicio, o la empresa u otra entidad legal en nombre de la cual dicha persona accede o utiliza el Servicio, según corresponda."
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Recopilación y uso de sus datos personales" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Tipo de datos recolectados" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="114dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:text="Mientras usamos Nuestro Servicio, podemos pedirle que nos proporcione cierta información de identificación personal que pueda usarse para contactarlo o identificarlo. La información de identificación personal puede incluir, entre otros: - Dirección de correo electrónico - Nombre y apellido - Datos de uso"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Datos de uso" />
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="match_parent"
+                android:layout_height="319dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:text="Los datos de uso se recopilan automáticamente cuando se utiliza el servicio.  Los datos de uso pueden incluir información como la dirección del Protocolo de Internet de su dispositivo (por ejemplo, la dirección IP), el tipo de navegador, la versión del navegador, las páginas de nuestro Servicio que visita, la hora y fecha de su visita, el tiempo que pasó en esas páginas, el dispositivo único identificadores y otros datos de diagnóstico.  Cuando accede al Servicio a través de un dispositivo móvil, podemos recopilar cierta información automáticamente, que incluye, entre otros, el tipo de dispositivo móvil que utiliza, la identificación única de su dispositivo móvil, la dirección IP de su dispositivo móvil, su dispositivo móvil sistema operativo, el tipo de navegador de Internet móvil que utiliza, identificadores de dispositivo únicos y otros datos de diagnóstico.  También podemos recopilar información que su navegador envía cada vez que visita nuestro Servicio o cuando accede al Servicio a través de un dispositivo móvil."
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Información de servicios de redes sociales de terceros" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="match_parent"
+                android:layout_height="284dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:text="La Compañía le permite crear una cuenta e iniciar sesión para usar el Servicio a través de los siguientes Servicios de redes sociales de terceros: Google Facebook  Si decide registrarse a través de un Servicio de redes sociales de terceros o de otro modo otorgarnos acceso a él, podemos recopilar datos personales que ya estén asociados con la cuenta de su Servicio de redes sociales de terceros, como su nombre, su dirección de correo electrónico, sus actividades. o Su lista de contactos asociada con esa cuenta.  También puede tener la opción de compartir información adicional con la Compañía a través de la cuenta de su Servicio de redes sociales de terceros. Si elige proporcionar dicha información y Datos personales, durante el registro o de otro modo, está otorgando permiso a la Compañía para usarlos, compartirlos y almacenarlos de manera consistente con esta Política de privacidad. "
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Información recopilada durante el uso de la aplicación" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="match_parent"
+                android:layout_height="264dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:text="Mientras usamos nuestra aplicación, con el fin de proporcionar características de nuestra aplicación, podemos recopilar, con su permiso previo:  Información sobre su ubicación Información de la agenda telefónica de su dispositivo (lista de contactos) Imágenes y otra información de la biblioteca de fotos y la cámara de su dispositivo Usamos esta información para proporcionar características de Nuestro Servicio, para mejorar y personalizar Nuestro Servicio. La información se puede cargar en los servidores de la Compañía y / o en el servidor de un Proveedor de servicios o simplemente se puede almacenar en Su dispositivo.  Puede habilitar o deshabilitar el acceso a esta información en cualquier momento, a través de la configuración de su dispositivo"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Uso de sus datos personales" />
+
+            <TextView
+                android:id="@+id/textView34"
+                android:layout_width="match_parent"
+                android:layout_height="1090dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:text="La Compañía puede utilizar los Datos Personales para los siguientes propósitos:  Para proporcionar y mantener nuestro Servicio, incluso para controlar el uso de nuestro Servicio.  Para administrar Su Cuenta: para administrar Su registro como usuario del Servicio. Los Datos Personales que proporcione pueden darle acceso a diferentes funcionalidades del Servicio que están disponibles para Usted como usuario registrado.  Para la ejecución de un contrato: el desarrollo, cumplimiento y ejecución del contrato de compra de los productos, artículos o servicios que haya comprado o de cualquier otro contrato con Nosotros a través del Servicio.  Para contactarlo: Para contactarlo por correo electrónico, llamadas telefónicas, SMS u otras formas equivalentes de comunicación electrónica, como las notificaciones push de una aplicación móvil sobre actualizaciones o comunicaciones informativas relacionadas con las funcionalidades, productos o servicios contratados, incluidas las actualizaciones de seguridad, cuando sea necesario o razonable para su implementación.  Para proporcionarle noticias, ofertas especiales e información general sobre otros bienes, servicios y eventos que ofrecemos y que son similares a los que ya ha comprado o sobre los que ha consultado, a menos que haya optado por no recibir dicha información.  Para gestionar sus solicitudes: Para atender y gestionar sus solicitudes para nosotros.  Para transferencias comerciales: podemos usar su información para evaluar o llevar a cabo una fusión, desinversión, reestructuración, reorganización, disolución u otra venta o transferencia de algunos o todos nuestros activos, ya sea como empresa en funcionamiento o como parte de una quiebra, liquidación, o procedimiento similar, en el que los Datos personales que tenemos sobre los usuarios de nuestro Servicio se encuentran entre los activos transferidos.  Para otros fines: podemos utilizar su información para otros fines, como análisis de datos, identificación de tendencias de uso, determinación de la eficacia de nuestras campañas promocionales y para evaluar y mejorar nuestro Servicio, productos, servicios, marketing y su experiencia.  Podemos compartir su información personal en las siguientes situaciones:  Con proveedores de servicios: podemos compartir su información personal con proveedores de servicios para monitorear y analizar el uso de nuestro servicio, para comunicarnos con usted. Para transferencias comerciales: podemos compartir o transferir Su información personal en relación con, o durante las negociaciones de, cualquier fusión, venta de activos de la Compañía, financiamiento o adquisición de la totalidad o una parte de Nuestro negocio a otra compañía. Con afiliados: podemos compartir su información con nuestros afiliados, en cuyo caso les exigiremos que cumplan con esta Política de privacidad. Los afiliados incluyen nuestra empresa matriz y cualquier otra subsidiaria, socios de empresas conjuntas u otras empresas que controlemos o que estén bajo control común con nosotros. Con socios comerciales: podemos compartir su información con nuestros socios comerciales para ofrecerle ciertos productos, servicios o promociones. Con otros usuarios: cuando comparte información personal o interactúa de otra manera en las áreas públicas con otros usuarios, dicha información puede ser vista por todos los usuarios y puede distribuirse públicamente en el exterior. Si interactúa con otros usuarios o se registra a través de un servicio de redes sociales de terceros, sus contactos en el servicio de redes sociales de terceros pueden ver su nombre, perfil, imágenes y descripción de su actividad. Del mismo modo, otros usuarios podrán ver descripciones de su actividad, comunicarse con usted y ver su perfil. Con su consentimiento: podemos divulgar su información personal para cualquier otro propósito con su consentimiento."
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textView35"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="Conservación de sus datos personales" />
+
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/lucidagrande"
+                android:textColor="@color/black"
+                android:text="La Compañía retendrá sus datos personales solo durante el tiempo que sea necesario para los fines establecidos en esta Política de privacidad. Retendremos y usaremos sus datos personales en la medida necesaria para cumplir con nuestras obligaciones legales (por ejemplo, si estamos obligados a retener sus datos para cumplir con las leyes aplicables), resolver disputas y hacer cumplir nuestros acuerdos y políticas legales. La Compañía también conservará los Datos de uso para fines de análisis interno. Los datos de uso generalmente se conservan durante un período de tiempo más corto, excepto cuando estos datos se utilizan para fortalecer la seguridad o mejorar la funcionalidad de nuestro servicio, o estamos legalmente obligados a conservar estos datos durante períodos de tiempo más largos."/></LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -103,7 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Dialog dialogPolitica = new Dialog(RegisterActivity.this);
 
                 View dialogSheetView = LayoutInflater.from(RegisterActivity.this)
-                        .inflate(R.layout.politica_privacidad,null);
+                        .inflate(R.layout.politica_de_datos,null);
                 dialogPolitica.setContentView(dialogSheetView);
 
                 dialogPolitica.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));

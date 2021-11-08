@@ -82,6 +82,7 @@
 
             android:fontFamily="@font/lucidagrande"
             android:hint="Contraseña actual"
+            android:password="true"
             android:textColor="@color/black"
             android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -107,6 +108,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/lucidagrande"
             android:hint="Contraseña nueva"
+            android:password="true"
             android:textColor="@color/black"
             android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -134,7 +136,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/lucidagrande"
             android:hint="Repetir contraseña nueva"
-            android:password="false"
+            android:password="true"
             android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
