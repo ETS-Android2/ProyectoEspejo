@@ -98,16 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
         politica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Dialog dialogSheetDialog = new Dialog(requireContext());
-                Dialog dialogPolitica = new Dialog(RegisterActivity.this);
-
-                View dialogSheetView = LayoutInflater.from(RegisterActivity.this)
-                        .inflate(R.layout.politica_de_datos,null);
-                dialogPolitica.setContentView(dialogSheetView);
-
-                dialogPolitica.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialogPolitica.show();
+                startActivity(new Intent(RegisterActivity.this, politica_de_datos.class));
             }
         });
 

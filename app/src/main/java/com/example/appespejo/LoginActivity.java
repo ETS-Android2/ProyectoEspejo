@@ -76,11 +76,8 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton loginButton;
     FirebaseUser usuarioo;
     CallbackManager mCallbackManager;
-
     private FingerprintManager fingerprintManager;
     private TextView mParaLabel;
-
-
 //    private AccessTokenTracker accessTokenTracker;
     private SharedPreferences preferences;
 
@@ -108,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
         FacebookSdk.sdkInitialize(LoginActivity.this);
-
+        
 
         /**
         //HUELLA
@@ -125,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 **/
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
-        if(usuarioo!=null)
+        if(usuarioo!=null && usuarioo.isEmailVerified())
         {
             startActivity(new Intent(this, HomeActivity.class));
             Toast.makeText(LoginActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
@@ -136,8 +133,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 //        ----------Else nos deja entrar a login activity y y ejecutar lo necesario----------
-        else
-            {
+        else {
+            Toast.makeText(this, "Verifica tu correo electronico", Toast.LENGTH_SHORT).show();
             Log.d("Demo" , "No esta entrado ni un usuario");
             setupbd();
             context = this;
