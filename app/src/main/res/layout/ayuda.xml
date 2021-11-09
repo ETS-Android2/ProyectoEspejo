@@ -36,6 +36,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
 
+    <Button
+        android:id="@+id/llamar"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/info"
+        android:fontFamily="@font/lucidagrande"
+        android:onClick="llamarTelefono"
+        android:paddingLeft="20dp"
+        android:text="  Llamar al servicio de ayuda"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <Button
+        android:id="@+id/web"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/info"
+        android:fontFamily="@font/lucidagrande"
+        android:onClick="abrirPagina"
+        android:paddingLeft="20dp"
+        android:text="  Abrir web de ayuda"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llamar" />
+
     <TextView
         android:id="@+id/textView13"
         android:layout_width="354dp"
@@ -53,14 +85,14 @@
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/lucidagrande"
         android:text="MirrowMe"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/web" />
 
     <Button
         android:id="@+id/button2"
