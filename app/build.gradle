@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.appespejo"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -77,6 +77,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:appCompatVersion"
     implementation files ('../libs/spotify-app-remote-release-0.7.2.aar')
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
 
 }

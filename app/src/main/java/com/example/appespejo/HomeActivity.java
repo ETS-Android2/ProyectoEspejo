@@ -61,7 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Context context = this;
 
-
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -186,6 +185,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
     /*Tab1 tab1 = new Tab1();
     Tab2 tab2 = new Tab2();
     Tab3 tab3 = new Tab3();

@@ -1,135 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".HomeActivity">
-
+    android:background="@color/white">
 
     <Button
-        android:id="@+id/seguridad"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:background="#00000000"
-        android:drawableLeft="@drawable/info"
-        android:fontFamily="@font/lucidagrande"
-        android:onClick="abrirSeguridad"
-        android:paddingLeft="20dp"
-        android:text="  Seguridad"
-        android:textAlignment="viewStart"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <Button
-        android:id="@+id/privacidad"
+        android:id="@+id/button3"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:background="#00000000"
         android:drawableLeft="@drawable/info"
         android:fontFamily="@font/lucidagrande"
         android:paddingLeft="20dp"
-        android:text="  Privacidad"
+        android:text="  Servicio de ayuda"
         android:textAlignment="viewStart"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seguridad" />
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     <Button
-        android:id="@+id/preferencias"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:drawableLeft="@drawable/tuerca"
-        android:fontFamily="@font/lucidagrande"
-        android:onClick="AbrirPreferencias"
-        android:paddingLeft="20dp"
-        android:text="  Preferencias de usuario"
-        android:textAlignment="viewStart"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/privacidad" />
-
-    <Button
-        android:id="@+id/acercade"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:drawableLeft="@drawable/salvavidas"
-        android:fontFamily="@font/lucidagrande"
-        android:onClick="lanzarAcercaDe"
-        android:paddingLeft="20dp"
-        android:text="  Acerca de"
-        android:textAlignment="viewStart"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ayuda" />
-
-    <Button
-        android:id="@+id/ayuda"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:drawableLeft="@drawable/salvavidas"
-        android:fontFamily="@font/lucidagrande"
-        android:paddingLeft="20dp"
-        android:text="  Ayuda"
-        android:textAlignment="viewStart"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/informacion" />
-
-    <Button
-        android:id="@+id/informacion"
+        android:id="@+id/button4"
         android:layout_width="411dp"
         android:layout_height="wrap_content"
         android:background="#00000000"
         android:drawableLeft="@drawable/info"
         android:fontFamily="@font/lucidagrande"
-        android:onClick="abrirInformación"
         android:paddingLeft="20dp"
-        android:text="  Información"
+        android:text="  Ayuda sobre privacidad y seguridad"
         android:textAlignment="viewStart"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preferencias" />
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/llamar"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/info"
+        android:fontFamily="@font/lucidagrande"
+        android:onClick="llamarTelefono"
+        android:paddingLeft="20dp"
+        android:text="  Llamar al servicio de ayuda"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <Button
+        android:id="@+id/web"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/info"
+        android:fontFamily="@font/lucidagrande"
+        android:onClick="abrirPagina"
+        android:paddingLeft="20dp"
+        android:text="  Abrir web de ayuda"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llamar" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView13"
         android:layout_width="354dp"
         android:layout_height="36dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/lucidagrande"
-        android:text="Ajustes de usuario"
+        android:text="Ayuda"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/lucidagrande"
         android:text="MirrowMe"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acercade" />
+        app:layout_constraintTop_toBottomOf="@+id/web" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/info"
+        android:fontFamily="@font/lucidagrande"
+        android:paddingLeft="20dp"
+        android:text="  Informar de un problema"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.fingerprint.FingerprintManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,8 +76,16 @@ public class LoginActivity extends AppCompatActivity {
     LoginButton loginButton;
     FirebaseUser usuarioo;
     CallbackManager mCallbackManager;
+
+    private FingerprintManager fingerprintManager;
+    private TextView mParaLabel;
+
+
+//    private AccessTokenTracker accessTokenTracker;
     private SharedPreferences preferences;
 
+//    ------------------------------Al empezar actividad---------------------------------
+//    -----------------------------------------------------------------------------------
 
     @Override
     public void onStart() {
@@ -99,6 +108,21 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
         FacebookSdk.sdkInitialize(LoginActivity.this);
+
+
+        /**
+        //HUELLA
+
+        fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+        mParaLabel = (TextView) findViewById(R.id.paraLabel);
+
+
+        if (fingerprintManager.isHardwareDetected()){
+            mParaLabel.setText("Put finger");
+            FingerprintHandle fingerprintHandler = new FingerprintHandle(this);
+            fingerprintHandler.startAuth(fingerprintManager,null);
+        }
+**/
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null)

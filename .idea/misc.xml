@@ -5,6 +5,25 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.19270833333333334" />
         <entry key="../../../../.gradle/caches/transforms-3/7fdb8d95fa27dc75c4828707cb6ebda6/transformed/jetified-facebook-share-4.42.0/res/drawable/com_facebook_button_send_background.xml" value="0.3765625" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_login.xml" value="0.536" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_recuperar_contr.xml" value="0.21557971014492755" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/ayuda.xml" value="0.264" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/cambiar_account.xml" value="0.20018115942028986" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/cambiar_contra.xml" value="0.2" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/condiciones_de_uso.xml" value="0.21557971014492755" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/informacion.xml" value="0.264" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/mapa.xml" value="0.25" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/politica_de_datos.xml" value="0.12917115177610333" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/politica_privacidad.xml" value="0.4" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/preferencias.xml" value="0.264" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/seguridad.xml" value="0.264" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/tab1.xml" value="0.23007246376811594" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/tab3.xml" value="0.23550724637681159" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/tab4.xml" value="0.4" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/tab5.xml" value="0.4" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/xml/mis_preferencias.xml" value="0.1947463768115942" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/xml/preferencias.xml" value="0.21557971014492755" />
         <entry key="app/src/main/res/drawable/borders_redondos_dialog.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/drawable/bordes_redondos.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/drawable/bordes_redondos_arriba.xml" value="0.45" />
@@ -19,8 +38,9 @@
         <entry key="app/src/main/res/layout-land/tab1.xml" value="0.11302083333333333" />
         <entry key="app/src/main/res/layout/acercade.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.1787037037037037" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_prueba.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/activity_recuperar_contr.xml" value="0.25" />
