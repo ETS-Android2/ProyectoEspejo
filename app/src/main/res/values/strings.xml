@@ -28,7 +28,10 @@
     <string name="cambiarapellido">Cambiar apellido</string>
     <string name="guardarcambios">Guardar cambios</string>
     <string name="accesoDenegado">Acceso denegado</string>
+    <string name="confirmarCorreo">Confirmar correo electrónico</string>
+    <string name="correoEnviado">Se le ha enviado un correo para verificar dicho cambio. Es posible que el mensaje haya sido enviado en la bandeja de SPAM o similar.</string>
     <string name="paraAcceder">Para acceder a este contenido necesita registrarse</string>
+
 
     <string name="politicaprivacidad">Política de privacidad
 

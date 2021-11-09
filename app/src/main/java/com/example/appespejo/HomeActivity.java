@@ -3,10 +3,12 @@ package com.example.appespejo;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -48,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
      FirebaseStorage storage;
      TextView perfilNombre,perfilApellido,perfilEmail,usuarioNombre;
      Animation animacion2;
-     Button spotify;
+     Button spotify,verificado;
      Dialog dialog;
 
 
@@ -70,7 +72,8 @@ public class HomeActivity extends AppCompatActivity {
         perfilApellido = findViewById(R.id.perfilApellido);
         perfilEmail = findViewById(R.id.perfilCorreo);
         spotify = findViewById(R.id.spotify);
-        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
+        verificado = findViewById(R.id.verificado);
+//        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
 //        if(!usuario.isEmailVerified() && !usuario.isAnonymous()){
 //            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
@@ -79,6 +82,22 @@ public class HomeActivity extends AppCompatActivity {
 //        }
 
 
+        Dialog dialogSheetDialog = new Dialog(getApplicationContext());
+
+        View dialogSheetView = LayoutInflater.from(HomeActivity.this)
+                .inflate(R.layout.correo_no_verificado,null);
+        dialogSheetDialog.setContentView(dialogSheetView);
+        dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
+
+//        if(usuario.isEmailVerified()){
+//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
+//            dialogSheetDialog.show();
+//        } else{
+//            dialogSheetDialog.cancel();
+//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
+//        }
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
@@ -116,6 +135,12 @@ public class HomeActivity extends AppCompatActivity {
         catch (Exception  e) {
             Log.d("Demo", "Sorry, Spotify Apps Not Found");
             Toast.makeText(this, "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void verificado(View view){
+        if(usuario.isEmailVerified()){
+
         }
     }
 
