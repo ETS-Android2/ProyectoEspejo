@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,8 +27,10 @@ public class ayuda extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ayuda);
 
+
         web = findViewById(R.id.web);
         llamar = findViewById(R.id.llamar);
+
 
         web.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +51,10 @@ public class ayuda extends AppCompatActivity {
     public void abrirPagina(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.androidcurso.com/"));
         startActivity(intent);
+    }
+    public void volverAtras(View view) {
+        Intent i = new Intent(this, Tab5.class);
+        startActivity(i);
     }
 
     public void llamarTelefono(View view) {
