@@ -98,16 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
         politica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Dialog dialogSheetDialog = new Dialog(requireContext());
-                Dialog dialogPolitica = new Dialog(RegisterActivity.this);
-
-                View dialogSheetView = LayoutInflater.from(RegisterActivity.this)
-                        .inflate(R.layout.politica_de_datos,null);
-                dialogPolitica.setContentView(dialogSheetView);
-
-                dialogPolitica.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialogPolitica.show();
+                startActivity(new Intent(RegisterActivity.this, politica_de_datos.class));
             }
         });
 
@@ -148,37 +139,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerUser(){
 
-//        if(mAuth.getCurrentUser().getEmail().equals("")){
-//
-//            EditText usuario = findViewById(R.id.Email);
-//            EditText nombre = findViewById(R.id.Nombre);
-//            EditText apellidos = findViewById(R.id.Apellido);
-//            TextInputEditText contrasena = findViewById(R.id.password);
-//
-//            mail = usuario.getText().toString().trim();
-//            pass = contrasena.getText().toString();
-//            nombree = nombre.getText().toString().trim();
-//            apellido = apellidos.getText().toString().trim();
-//
-//            AuthCredential credential = EmailAuthProvider.getCredential(mail, pass);
-//
-//            Map<String, Object> user = new HashMap<>();
-//            user.put("Apellido", apellido);
-//            user.put("Contrasena", pass);
-//            user.put("Email", mail);
-//            user.put("Nombre", nombree);
-//            user.put("Account", accountt);
-//
-//            db.collection("Users")
-//                    .document(usuarioo.getUid())
-//                    .set(user);
-//
-//
-//            Log.d("Demo","El usuario ha sido registrado "+usuarioo.getEmail());
-//            Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
-//            startActivity(intent2);
-//
-//        }else{
             mAuth.createUserWithEmailAndPassword(mail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -203,7 +163,6 @@ public class RegisterActivity extends AppCompatActivity {
                         user.put("Email", mail);
                         user.put("Nombre", nombree);
                         user.put("Account", accountt);
-//                    user.put("Verificado", false);
 
                         login();
 
@@ -216,12 +175,12 @@ public class RegisterActivity extends AppCompatActivity {
                         startActivity(intent2);
 
                     }else{
+                        Log.d("Demo","El usuario no se pudo registrarse "+usuarioo.getEmail());
                         Toast.makeText(RegisterActivity.this,"No se pudo registrar el usuario "
                                 +task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
                     }
                 }
             });
-//        }
     }
 
     private void login() {

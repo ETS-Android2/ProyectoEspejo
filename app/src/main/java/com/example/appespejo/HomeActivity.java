@@ -1,15 +1,19 @@
 package com.example.appespejo;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,15 +44,13 @@ public class HomeActivity extends AppCompatActivity {
 
      private BottomNavigationView bottomNavigationView;
      FirebaseAuth mAuth;
-     TextView usuarioNombre;
      FirebaseUser usuario;
      ImageView fotoUsuario;
      FirebaseFirestore db;
      FirebaseStorage storage;
-     TextView perfilNombre;
-     TextView perfilApellido;
-     TextView perfilEmail;
+     TextView perfilNombre,perfilApellido,perfilEmail,usuarioNombre;
      Animation animacion2;
+     Button spotify,verificado;
      Dialog dialog;
 
 
@@ -57,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Context context = this;
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -67,9 +70,9 @@ public class HomeActivity extends AppCompatActivity {
         perfilNombre = findViewById(R.id.perfilNombre);
         perfilApellido = findViewById(R.id.perfilApellido);
         perfilEmail = findViewById(R.id.perfilCorreo);
-
-        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
-
+        spotify = findViewById(R.id.spotify);
+        verificado = findViewById(R.id.verificado);
+//        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
 //        if(!usuario.isEmailVerified() && !usuario.isAnonymous()){
 //            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
@@ -78,6 +81,22 @@ public class HomeActivity extends AppCompatActivity {
 //        }
 
 
+        Dialog dialogSheetDialog = new Dialog(getApplicationContext());
+
+        View dialogSheetView = LayoutInflater.from(HomeActivity.this)
+                .inflate(R.layout.correo_no_verificado,null);
+        dialogSheetDialog.setContentView(dialogSheetView);
+        dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+
+
+//        if(usuario.isEmailVerified()){
+//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
+//            dialogSheetDialog.show();
+//        } else{
+//            dialogSheetDialog.cancel();
+//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
+//        }
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
@@ -103,7 +122,36 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
+    public void spotifyy(View view){
+//        Intent i2 = getPackageManager().getLaunchIntentForPackage("com.spotify.android");
+//        startActivity(i2);
+        String apppackage = "com.spotify.android";
+        try {
+            Intent i = getPackageManager().getLaunchIntentForPackage(apppackage);
+            Log.d("Demo", "Esta cargando");
+            startActivity(i);
+        }
+        catch (Exception  e) {
+            Log.d("Demo", "Sorry, Spotify Apps Not Found");
+            Toast.makeText(this, "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
+        }
+    }
 
+    public void verificado(View view){
+        if(usuario.isEmailVerified()){
+
+        }
+    }
+
+    public void lanzarAcercaDe(View view){
+        Intent i = new Intent(this, AcercaDeActivity.class);
+        startActivity(i);
+    }
+
+    public void registrarAnonimo(View view){
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+    }
 
     private NavigationBarView.OnItemSelectedListener bottomNavMethod = new
             NavigationBarView.OnItemSelectedListener(){
@@ -111,6 +159,7 @@ public class HomeActivity extends AppCompatActivity {
                     Fragment fragment=null;
 
                     switch (menuItem.getItemId()){
+
                         case R.id.ligth:
                             fragment=new Tab1();
                         break;

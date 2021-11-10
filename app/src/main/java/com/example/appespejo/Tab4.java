@@ -57,7 +57,7 @@ public class Tab4 extends Fragment {
     Animation animacion2;
     ConstraintLayout dialogWindow;
     NestedScrollView infoPersona;
-    Button cerrarSesion,registrarAnonimo;
+    Button cerrarSesion,registrarAnonimo, verificado;
     EditText nuevoApellido,nuevoCorreo,nuevoNombre, nuevoAccount;
     private Context context;
 
@@ -68,6 +68,7 @@ public class Tab4 extends Fragment {
 
 
         View v = inflater.inflate(R.layout.tab4, container, false);
+
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -90,7 +91,7 @@ public class Tab4 extends Fragment {
 
 
 //        -----------------------------------------------------------------------------------
-//        Para mostrar por la pantalla los datos del usuario
+//      Para mostrar por la pantalla los datos del usuario
 //        -----------------------------------------------------------------------------------
 
         if(mAuth.getCurrentUser() == null){
@@ -106,8 +107,8 @@ public class Tab4 extends Fragment {
             dialogWindow.setVisibility(View.VISIBLE);
             cerrarSesion.setVisibility(View.INVISIBLE);
             infoPersona.setVisibility(View.INVISIBLE);
-
         }
+
         else{
             cerrarSesion.setVisibility(View.VISIBLE);
             infoPersona.setVisibility(View.VISIBLE);
@@ -144,13 +145,13 @@ public class Tab4 extends Fragment {
                                     perfilDelAccount.setTextColor(0xff555555);
                                 }
 
-                            } else {
+                            }
+                            else {
                                 Log.e("Firestore", "Error al leer", task.getException());
                             }
                         }
                     });
         }
-
         return v;
     }
 
@@ -177,27 +178,18 @@ public class Tab4 extends Fragment {
 
                 direccionActual.setText("Tu direccion de correo electronico actual es \n" + perfilDelCorreo.getText().toString() + " \n¿Por cual te gustaria cambiarla?");
 
-
                 guardar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-//                        Map<String, Object> user = new HashMap<>();
-//                        user.put("Email", nuevoCorreo.getText().toString());
-//                        user.put("Verificado", false);
 
-                        db.collection("Users")
-                                .document(usuario.getUid())
-                                .update("Email", nuevoCorreo.getText().toString());
-//                                .update(user);
-
-
-
+                        Objects.requireNonNull(mAuth.getCurrentUser()).updateEmail(nuevoCorreo.getText().toString());
 
                         Log.d("Demo", "El correo cogido es: " + nuevoCorreo.getText().toString());
                         Toast.makeText(getContext(), "Tu correo ha sido cambiado correstamente", Toast.LENGTH_SHORT).show();
 
                         login();
+
 
                         Dialog dialogSheetDialog = new Dialog(requireContext());
 
@@ -207,16 +199,34 @@ public class Tab4 extends Fragment {
                         dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 
-//                        if(){
-//                            dialogSheetDialog.show();
-//                            dialogSheetDialog.setCancelable(false);
-//                        }
-//                        if (mAuth.getCurrentUser().isEmailVerified()){
-//                            dialogSheetDialog.cancel();
-//                        }
-
                         bottomSheetDialog.cancel();
-                        updateUI(mAuth.getCurrentUser());
+
+                        dialogSheetDialog.show();
+                        verificado = dialogSheetView.findViewById(R.id.verificado);
+
+                        verificado.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(usuario.isEmailVerified()){
+
+                                    dialogSheetDialog.cancel();
+
+                                    db.collection("Users")
+                                            .document(usuario.getUid())
+                                            .update("Email", nuevoCorreo.getText().toString());
+//                                .update(user);
+
+                                }else{
+
+                                    Toast.makeText(getContext(), "Verifica tu correo antes por favor", Toast.LENGTH_SHORT).show();
+                                    dialogSheetDialog.show();
+                                    dialogSheetDialog.setCancelable(false);
+                                    dialogSheetDialog.setCanceledOnTouchOutside(false);
+                                }
+                            }
+                        });
+
+//
                     }
                 });
             }
@@ -333,14 +343,6 @@ public class Tab4 extends Fragment {
             }
         });
 
-        registrarAnonimo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getContext(),RegisterActivity.class));
-            }
-        });
     }
 
 
@@ -354,8 +356,8 @@ public class Tab4 extends Fragment {
         usuario.sendEmailVerification();
         Log.d("Demo", "El correo ha sido enviado");
         Toast.makeText(getContext().getApplicationContext(), "Se ha enviado un correo de confirmación", Toast.LENGTH_LONG).show();
-
     }
+
 
     private void updateUI(FirebaseUser user) {
         if(user!=null){
