@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -54,14 +56,44 @@ public class CambiarContra extends AppCompatActivity {
         repe = this.findViewById(R.id.repe_contra_nueva);
         cambiar_contra = this.findViewById(R.id.cambiar_contra);
 
+
+        cambiar_contra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AuthCredential credential = EmailAuthProvider.getCredential(usuario.getEmail().toString(),contra_actual.getText().toString());
+            usuario.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    usuario.updatePassword(contra_nueva.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                db.collection("Users")
+                                        .document(Objects.requireNonNull(usuario.getUid()))
+                                        .update("Contrasena", contra_nueva.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(getApplicationContext(), "Contraseña actualizada", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }});
+                }
+            });
+            }
+        });
+
+
+        /**
+
         cambiar_contra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 con_actual=contra_actual.getText().toString();
                 con_nueva = contra_nueva.getText().toString();
                 repetir=repe.getText().toString();
-
-
+**/
+/**
                 db.collection("Users")
                         .document(mAuth.getCurrentUser().getUid())
                         .get()
@@ -91,11 +123,9 @@ public class CambiarContra extends AppCompatActivity {
                         });
 
 
+**/
 
-            }
-        });
-    }
-
+    /**
     private void cambiar(){
 
         mAuth.getCurrentUser().updatePassword(con_nueva).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -125,8 +155,8 @@ public class CambiarContra extends AppCompatActivity {
                         }
                     }
                 });
-    }
-}
+    }**/
+    }}
 
 
 

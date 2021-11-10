@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(LoginActivity.this);
         
 
-        /**
+
         //HUELLA
 
         fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
             FingerprintHandle fingerprintHandler = new FingerprintHandle(this);
             fingerprintHandler.startAuth(fingerprintManager,null);
         }
-**/
+
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null && usuarioo.isEmailVerified())
