@@ -5,6 +5,18 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.19270833333333334" />
         <entry key="../../../../.gradle/caches/transforms-3/7fdb8d95fa27dc75c4828707cb6ebda6/transformed/jetified-facebook-share-4.42.0/res/drawable/com_facebook_button_send_background.xml" value="0.3765625" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/cambiar_apellido.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/cambiar_correo.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/cambiar_nombre.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/content_main.xml" value="0.20729166666666668" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/content_scrolling.xml" value="0.1" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/gallery_item.xml" value="0.33" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/item_list.xml" value="0.33" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/item_row.xml" value="0.1" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/tab1.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/tab2.xml" value="0.1" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/tab3.xml" value="0.1" />
+        <entry key="..\:/Users/maria/AndroidStudioProjects/ProyectoEspejo/app/src/main/res/layout/tab5.xml" value="0.1527777777777778" />
         <entry key="app/src/main/res/drawable/bordes_redondos.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/drawable/bordes_redondos_arriba.xml" value="0.45" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2875" />
