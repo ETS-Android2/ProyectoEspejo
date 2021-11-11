@@ -175,33 +175,36 @@ public class Tab4 extends Fragment {
         View bottomSheetView = LayoutInflater.from(getContext().getApplicationContext())
                 .inflate(R.layout.cambiar_correo,null);
         bottomSheetDialog.setContentView(bottomSheetView);
-
         bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
         Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
         TextView direccionActual = bottomSheetView.findViewById(R.id.nombreActual);
         nuevoCorreo = bottomSheetView.findViewById(R.id.cambiarNombre);
 
-//   Dialog de correo no verificado
-        Dialog dialogSheetDialog = new Dialog(requireContext());
 
+        //   Dialog de correo no verificado
+        Dialog dialogSheetDialog = new Dialog(requireContext());
         View dialogSheetView = LayoutInflater.from(getContext())
                 .inflate(R.layout.correo_no_verificado,null);
         dialogSheetDialog.setContentView(dialogSheetView);
         dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
         verificado = dialogSheetView.findViewById(R.id.verificado);
 
+
+
+        //Al pinchar a correo nos muestra bottomSheetView
         perfilDelCorreo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 direccionActual.setText("Tu direccion de correo electronico actual es \n" + perfilDelCorreo.getText().toString() + " \n¿Por cual te gustaria cambiarla?");
-
                 bottomSheetDialog.show();
+
+
 //  Al pinchar a guardar nos esta cerrando el dialog window de cambiar correo, cambiando el correo en mAuth a nuevoo y enviando el correo a nuevo
                 guardar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+                        //Accede a bd
                         db.collection("Users")
                                 .document(usuario.getUid().toString())
                                  .get()
@@ -209,11 +212,15 @@ public class Tab4 extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if(task.isSuccessful()){
+
+                                    //Si esta bien me saca la contrasenya y la desclara en una variable
                                     password = task.getResult().getString("Contrasena");
 
+                                    //Y declara credenciales del usuario para actualizar sus datos
                                     AuthCredential credential = EmailAuthProvider.getCredential(usuario.getEmail().toString(), password);
                                     Log.d("Demo", "La contreasena de usuario es: " + password);
 
+//
                                     usuario.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -228,8 +235,12 @@ public class Tab4 extends Fragment {
                                                                 .document(usuario.getUid())
                                                                 .update("Email", nuevoCorreo.getText().toString());
 
+                                                        // ??
                                                         usuario.verifyBeforeUpdateEmail(nuevoCorreo.getText().toString());
                                                         login();
+
+                                                        //Probar. Salgo y no vuelvo atras.
+                                                        getActivity().finish();
                                                     }
                                                 }
                                             });

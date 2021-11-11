@@ -18,7 +18,7 @@
             android:id="@+id/seekBar"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="50dp"
             android:indeterminateTint="#8C8C8C"
             android:progressBackgroundTint="#8C8C8C"
             android:progressTint="#000003"
