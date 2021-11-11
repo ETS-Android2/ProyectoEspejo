@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,11 +32,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:tickMarkTint="#000003" />
 
-        <top.defaults.colorpicker.ColorPickerView
-            android:id="@+id/colorPicker"
+
+        <com.skydoves.colorpickerview.ColorPickerView
+            android:id="@+id/colorPickerView"
             android:layout_width="314dp"
             android:layout_height="357dp"
             android:translationZ="90dp"
+            app:actionMode="last"
+            app:alpha_flag="0.8"
+            app:alpha_selector="0.8"
             app:enableAlpha="false"
             app:enableBrightness="false"
             app:layout_constraintBottom_toTopOf="@+id/seekBar"
@@ -43,14 +48,28 @@
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-            app:layout_constraintVertical_bias="0.39">
+            app:layout_constraintVertical_bias="0.39"
+            app:selector="@drawable/flag"
+            app:selector_size="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"></LinearLayout>
-        </top.defaults.colorpicker.ColorPickerView>
+
+            <LinearLayout
+                android:id="@+id/flag_color_layout"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical"/>
+
+
+
+        </com.skydoves.colorpickerview.ColorPickerView>
+
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"

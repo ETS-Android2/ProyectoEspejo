@@ -7,9 +7,41 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.skydoves.colorpickerview.ColorEnvelope;
+import com.skydoves.colorpickerview.flag.BubbleFlag;
+import com.skydoves.colorpickerview.flag.FlagMode;
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
+
 import top.defaults.colorpicker.ColorPickerPopup;
-import top.defaults.colorpicker.ColorPickerView;
 import top.defaults.colorpicker.ColorSliderView;
+
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import com.skydoves.colorpickerview.AlphaTileView;
+import com.skydoves.colorpickerview.ColorEnvelope;
+import com.skydoves.colorpickerview.ColorPickerDialog;
+import com.skydoves.colorpickerview.ColorPickerView;
+import com.skydoves.colorpickerview.flag.BubbleFlag;
+import com.skydoves.colorpickerview.flag.FlagMode;
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
+import com.skydoves.colorpickerview.listeners.ColorPickerViewListener;
+import com.skydoves.colorpickerview.sliders.AlphaSlideBar;
+import com.skydoves.colorpickerview.sliders.BrightnessSlideBar;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import timber.log.Timber;
+
 
 public class Tab1 extends Fragment {
    /* @Override
@@ -19,36 +51,30 @@ public class Tab1 extends Fragment {
    public Tab1(){
        // require a empty public constructor
    }
+
+    ColorPickerView colorPickerView;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab1, container, false);
 
-        ColorPickerView colorPicker;
-        colorPicker = v.findViewById(R.id.colorPicker);
+        colorPickerView = new ColorPickerView(this.getContext());
+        //colorPickerView = v.findViewById(R.id.colorPickerView);
+
+        BubbleFlag bubbleFlag = new BubbleFlag(getContext());
+        bubbleFlag.setFlagMode(FlagMode.FADE);
+        colorPickerView.setFlagView(bubbleFlag);
 
 
-        //ColorPickerView colorPicker = v.findViewById(R.id.colorPicker);
+        colorPickerView.setColorListener(
+                (ColorEnvelopeListener)
+                        (envelope, fromUser) -> {
+                            Timber.d("color: %s", envelope.getHexCode());
+                            //n(envelope);
 
-        //colorPicker.show(v, new )
-
-            new ColorPickerPopup.Builder(this.getContext());
-                    /*.initialColor(Color.RED) // Set initial color
-                    .enableBrightness(false) // Enable brightness slider or not
-                    .enableAlpha(false) // Enable alpha slider or not
-                    .okTitle("Choose")
-                    .cancelTitle("Cancel")
-                    .showIndicator(true)
-                    .showValue(true)
-                    .build()
-                    .show(v, new ColorPickerPopup.ColorPickerObserver() {
-                        @Override
-                        public void onColorPicked(int color) {
-                            v.setBackgroundColor(color);
-                        }
-
-                    });*/
-
+                        });
 
         return v;
     }
