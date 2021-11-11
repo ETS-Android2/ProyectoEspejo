@@ -15,6 +15,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="false"
@@ -85,8 +87,6 @@
             android:name=".AcercaDeActivity"
             android:label="Acerca de ..."
             android:screenOrientation="portrait"/>
-
-
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
