@@ -27,6 +27,7 @@
         android:fontFamily="@font/lucidagrande"
         android:text="Tu contraseña debe tener más de seis caracteres e incluir una combinación de números, letras y caracteres especiales."
         android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />

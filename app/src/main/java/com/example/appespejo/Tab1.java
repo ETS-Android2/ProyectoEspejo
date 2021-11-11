@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import top.defaults.colorpicker.ColorPickerPopup;
+import top.defaults.colorpicker.ColorPickerView;
+import top.defaults.colorpicker.ColorSliderView;
 
 public class Tab1 extends Fragment {
    /* @Override
@@ -21,6 +23,10 @@ public class Tab1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab1, container, false);
+
+        ColorPickerView colorPicker;
+        colorPicker = v.findViewById(R.id.colorPicker);
+
 
         //ColorPickerView colorPicker = v.findViewById(R.id.colorPicker);
 

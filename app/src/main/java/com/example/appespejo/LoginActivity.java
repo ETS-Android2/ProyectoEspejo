@@ -341,11 +341,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if(task.isSuccessful()){
 
-                                        if(!usuarioo.isEmailVerified()){
+                                        if(!mAuth.getCurrentUser().isEmailVerified()){
                                             Toast.makeText(getApplicationContext(), "Verifica tu correo electronico", Toast.LENGTH_SHORT).show();
                                         }else{
                                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                             startActivity(intent);
+                                            finish();
                                         }
 
                                     }else{

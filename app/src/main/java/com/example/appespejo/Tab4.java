@@ -153,7 +153,6 @@ public class Tab4 extends Fragment {
                                     perfilDelAccount.setText("Anyadir usernane");
                                     perfilDelAccount.setTextColor(0xff555555);
                                 }
-
                             }
                             else {
                                 Log.e("Firestore", "Error al leer", task.getException());

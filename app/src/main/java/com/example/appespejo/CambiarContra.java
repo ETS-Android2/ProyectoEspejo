@@ -1,5 +1,6 @@
 package com.example.appespejo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,55 +33,49 @@ public class CambiarContra extends AppCompatActivity {
     FirebaseUser usuario;
     String contrasena;
     FirebaseFirestore db;
-
-
-    private String con_actual = "";
-    private String con_nueva = "";
-    private String repetir="";
     String password;
     private TextView prueba;
-    EditText contra_actual,contra_nueva,repe;
+    TextInputEditText contra_actual,contra_nueva,repe;
     Button cambiar_contra;
 
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cambiar_contra);
+
+        contra_actual = findViewById(R.id.contra_actual);
+        contra_nueva = findViewById(R.id.contra_nueva);
+        repe = findViewById(R.id.repe_contra_nueva);
+        cambiar_contra = findViewById(R.id.cambiar_contra);
+
         setup();
         mAuth = FirebaseAuth.getInstance();
         usuario = mAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
 
     }
 
 
     private void setup(){
 
-        contra_actual = this.findViewById(R.id.contra_actual);
-        contra_nueva = this.findViewById(R.id.contra_nueva);
-        repe = this.findViewById(R.id.repe_contra_nueva);
-        cambiar_contra = this.findViewById(R.id.cambiar_contra);
-
-        String actual = contra_actual.getText().toString();
-        String nueva = contra_nueva.getText().toString();
-        String repetir = repe.getText().toString();
-
-
         cambiar_contra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Si los campos estan relenados
-                if(!actual.isEmpty() && !nueva.isEmpty() && !repetir.isEmpty()){
+                if(!contra_actual.getText().toString().isEmpty() && !contra_nueva.getText().toString().isEmpty() && !repe.getText().toString().isEmpty()){
 
                     // comprobando si las nuevas contraseñas son iguales
-                    if(!nueva.equals(repetir)){
+                    if(!contra_nueva.getText().toString().equals(repe.getText().toString())){
                         Toast.makeText(getApplicationContext(), "Las nuevas contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+                    }
+                    if(contra_nueva.getText().toString().length() < 6 || repe.getText().toString().length() <6){
+                        Toast.makeText(getApplicationContext(), "La contrasena debe consistir al menos 6 caracteres", Toast.LENGTH_SHORT).show();
                     }
                     // Si esta rellenado, hace consula a bd para sacar la contraseña
                     else{
 
                         //Sacando la contrasenya de bd
                         db.collection("Users")
-                                .document(usuario.getUid())
+                                .document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
@@ -90,7 +86,7 @@ public class CambiarContra extends AppCompatActivity {
                                             password = task.getResult().getString("Contrasena");
 
                                             //Comprobamos si la introducida contrasenya actual de usuario es igual a la cual la tiene ahora
-                                            if(password.equals(actual)){
+                                            if(password.equals(contra_actual.getText().toString())){
 
                                                 //Si las contraseñas se coinciden podemos cambiarla sacando credenciales del usuario
                                                 AuthCredential credential = EmailAuthProvider.getCredential(usuario.getEmail().toString(), password);
@@ -98,12 +94,12 @@ public class CambiarContra extends AppCompatActivity {
                                                 usuario.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
-                                                        usuario.updatePassword(nueva).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        usuario.updatePassword(contra_nueva.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 db.collection("Users")
                                                                         .document(usuario.getUid())
-                                                                        .update("Contrasena", nueva);
+                                                                        .update("Contrasena", contra_nueva.getText().toString());
                                                             }
                                                         });
                                                     }
@@ -115,6 +111,7 @@ public class CambiarContra extends AppCompatActivity {
                                                 });
 
                                                 Toast.makeText(getApplicationContext(), "Tu contraseña ha sido cambiada correctamente", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(CambiarContra.this, seguridad.class));  
 
                                             } else{
                                                 Toast.makeText(getApplicationContext(), "La contraseña actual es incorrecta", Toast.LENGTH_SHORT).show();
@@ -129,87 +126,7 @@ public class CambiarContra extends AppCompatActivity {
                 }
             }
         });
-
-
-
-        /**
-
-        cambiar_contra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                con_actual=contra_actual.getText().toString();
-                con_nueva = contra_nueva.getText().toString();
-                repetir=repe.getText().toString();
-**/
-/**
-                db.collection("Users")
-                        .document(mAuth.getCurrentUser().getUid())
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                                String password = task.getResult().getString("Contrasena");
-
-                                if(!con_actual.isEmpty() || !con_nueva.isEmpty()||!repetir.isEmpty()){
-                                    if(con_nueva.length() < 6 ||repetir.length() <6){
-                                        Toast.makeText(CambiarContra.this, "La contrasena debe consistir al menos 6 caracteres", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else if(!repetir.equals(con_nueva)){
-                                        Toast.makeText(CambiarContra.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-                                    }
-                                    else if(con_actual == password){
-                                        Log.d("Demo", "He entrado a funcion cambiar");
-                                        cambiar();
-                                    }
-
-                                }
-                                else{
-                                    Toast.makeText(CambiarContra.this, "Debe completar los campos", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-
-**/
-
-    /**
-    private void cambiar(){
-
-        mAuth.getCurrentUser().updatePassword(con_nueva).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Log.d("Demo", "He cambiado la contrasenya de mAuth");
-            }
-        });
-
-        db.collection("Users")
-                .document(Objects.requireNonNull(usuario.getUid()))
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-
-                            String contrasena = task.getResult().getString("Contrasena");
-                            Log.d("Demo", "La contrasenya actual es: " + contrasena);
-                            Log.d("Demo", "La contrasenya nueva es: " + con_nueva.toString());
-                            db.collection("Users")
-                                    .document(usuario.getUid())
-                                    .update("Contrasena",con_nueva);
-                        } else {
-                            Log.d("Firestore", "Error al leer", task.getException());
-                        }
-                    }
-                });
-    }**/
     }}
-
-
-
-
-
 
 
 
