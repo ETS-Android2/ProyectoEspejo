@@ -10,6 +10,7 @@
 <!--    -->
 
     <string name="login">Inicio Sesión</string>
+    <string name="modo">Modo</string>
     <string name="cerrarsesion">Cerrar session</string>
     <string name="registro">Registrarse</string>
     <string name="recupecontra">Recuperar la contraseña</string>
