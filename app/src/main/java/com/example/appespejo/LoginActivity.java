@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(LoginActivity.this);
         
 
-        /**
         //HUELLA
 
         fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
@@ -119,7 +118,6 @@ public class LoginActivity extends AppCompatActivity {
             FingerprintHandle fingerprintHandler = new FingerprintHandle(this);
             fingerprintHandler.startAuth(fingerprintManager,null);
         }
-**/
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null && usuarioo.isEmailVerified())
@@ -134,12 +132,10 @@ public class LoginActivity extends AppCompatActivity {
 
 //        ----------Else nos deja entrar a login activity y y ejecutar lo necesario----------
         else {
-            Toast.makeText(this, "Verifica tu correo electronico", Toast.LENGTH_SHORT).show();
             Log.d("Demo" , "No esta entrado ni un usuario");
             setupbd();
             context = this;
             createRequest();
-
             }
         }
 
@@ -303,7 +299,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView recuperar = this.findViewById(R.id.Recuperar);
         TextInputEditText textLogin = this.findViewById(R.id.login);
         TextInputEditText textPassword = this.findViewById(R.id.password);
-        ImageView logo = findViewById(R.id.fotoUsuario);
+        ImageView logo = this.findViewById(R.id.fotoUsuario);
         mAuth = FirebaseAuth.getInstance();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -343,13 +339,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if(task.isSuccessful()){
 
-                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                        startActivity(intent);
-//                                        if(mAuth.getCurrentUser().isEmailVerified()){
-//                                            db.collection("Users")
-//                                                    .document(usuarioo.getUid())
-//                                                    .update("Verificado", true);
-//                                        }
+                                        if(!usuarioo.isEmailVerified()){
+                                            Toast.makeText(getApplicationContext(), "Verifica tu correo electronico", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                            startActivity(intent);
+                                        }
 
                                     }else{
                                         Toast.makeText(LoginActivity.this, "Incorrecto usuario o/y contrasena", Toast.LENGTH_SHORT).show();

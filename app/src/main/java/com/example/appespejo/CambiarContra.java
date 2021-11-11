@@ -49,7 +49,7 @@ public class CambiarContra extends AppCompatActivity {
 
     private void setup(){
 
-        contra_actual = this.findViewById(R.id.contra_actual);
+        contra_actual = this.findViewById(R.id.password);
         contra_nueva = this.findViewById(R.id.contra_nueva);
         repe = this.findViewById(R.id.repe_contra_nueva);
         cambiar_contra = this.findViewById(R.id.cambiar_contra);

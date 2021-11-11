@@ -3,7 +3,6 @@ package com.example.appespejo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -16,7 +15,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,13 +31,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-
 import java.security.Policy;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private String mail = "";
     private String pass = "";
     private String repetir="";
@@ -50,27 +46,22 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseUser usuarioo;
     RadioButton radioButton;
     private final static int RC_SIGN_IN = 123;
-
     FirebaseAuth mAuth;
     DatabaseReference mDataBase;
     FirebaseFirestore db;
     FirebaseStorage storage;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         setup();
-
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mDataBase = FirebaseDatabase.getInstance().getReference();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
     }
-
     private void setup(){
-
         Button register = this.findViewById(R.id.registrarmeButton);
         EditText usuario = this.findViewById(R.id.Email);
         EditText nombre = this.findViewById(R.id.Nombre);
@@ -80,25 +71,28 @@ public class RegisterActivity extends AppCompatActivity {
         TextInputEditText contrasena = this.findViewById(R.id.password);
         TextInputEditText repit = this.findViewById(R.id.repitPassword);
         radioButton = findViewById(R.id.radioButton);
-
 //        -----------------------------------------------------------------------------------
 //        PARA ACTIVAR Y DESACTIVAR BOTON
 //        -----------------------------------------------------------------------------------
         isActivatedButton = radioButton.isChecked(); //DESACTIVADO
-
         radioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //        ACTIVADO
                 if(isActivatedButton){radioButton.setChecked(false);}
                 isActivatedButton = radioButton.isChecked();
-             }
+            }
         });
-
         politica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, politica_de_datos.class));
+//                Dialog dialogSheetDialog = new Dialog(requireContext());
+                Dialog dialogPolitica = new Dialog(RegisterActivity.this);
+                View dialogSheetView = LayoutInflater.from(RegisterActivity.this)
+                        .inflate(R.layout.politica_de_datos,null);
+                dialogPolitica.setContentView(dialogSheetView);
+                dialogPolitica.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialogPolitica.show();
             }
         });
 
@@ -107,15 +101,12 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
                 mail = usuario.getText().toString();
                 pass = contrasena.getText().toString();
                 repetir = repit.getText().toString();
                 nombree = nombre.getText().toString();
                 apellido = apellidos.getText().toString();
                 accountt = account.getText().toString();
-
-
                 if(!mail.isEmpty() || !pass.isEmpty()||!repetir.isEmpty()||!nombree.isEmpty()||!apellido.isEmpty()|| !radioButton.isChecked()){
                     if(pass.length() < 6 ||repetir.length() <6){
                         Toast.makeText(RegisterActivity.this, "La contrasena debe consistir al menos 6 caracteres", Toast.LENGTH_SHORT).show();
@@ -139,54 +130,80 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerUser(){
 
-            mAuth.createUserWithEmailAndPassword(mail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-
+//        if(mAuth.getCurrentUser().getEmail().equals("")){
+//
+//            EditText usuario = findViewById(R.id.Email);
+//            EditText nombre = findViewById(R.id.Nombre);
+//            EditText apellidos = findViewById(R.id.Apellido);
+//            TextInputEditText contrasena = findViewById(R.id.password);
+//
+//            mail = usuario.getText().toString().trim();
+//            pass = contrasena.getText().toString();
+//            nombree = nombre.getText().toString().trim();
+//            apellido = apellidos.getText().toString().trim();
+//
+//            AuthCredential credential = EmailAuthProvider.getCredential(mail, pass);
+//
+//            Map<String, Object> user = new HashMap<>();
+//            user.put("Apellido", apellido);
+//            user.put("Contrasena", pass);
+//            user.put("Email", mail);
+//            user.put("Nombre", nombree);
+//            user.put("Account", accountt);
+//
+//            db.collection("Users")
+//                    .document(usuarioo.getUid())
+//                    .set(user);
+//
+//
+//            Log.d("Demo","El usuario ha sido registrado "+usuarioo.getEmail());
+//            Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
+//            startActivity(intent2);
+//
+//        }else{
+        mAuth.createUserWithEmailAndPassword(mail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
 //                    String id = mAuth.getCurrentUser().getUid();
-                        EditText usuario = findViewById(R.id.Email);
-                        EditText nombre = findViewById(R.id.Nombre);
-                        EditText apellidos = findViewById(R.id.Apellido);
-                        TextInputEditText contrasena = findViewById(R.id.password);
+                    EditText usuario = findViewById(R.id.Email);
+                    EditText nombre = findViewById(R.id.Nombre);
+                    EditText apellidos = findViewById(R.id.Apellido);
+                    TextInputEditText contrasena = findViewById(R.id.password);
+                    mail = usuario.getText().toString().trim();
+                    pass = contrasena.getText().toString();
+                    nombree = nombre.getText().toString().trim();
+                    apellido = apellidos.getText().toString().trim();
+                    // Create a new user with a first and last name
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("Apellido", apellido);
+                    user.put("Contrasena", pass);
+                    user.put("Email", mail);
+                    user.put("Nombre", nombree);
+                    user.put("Account", accountt);
+//                    user.put("Verificado", false);
 
-                        mail = usuario.getText().toString().trim();
-                        pass = contrasena.getText().toString();
-                        nombree = nombre.getText().toString().trim();
-                        apellido = apellidos.getText().toString().trim();
+                    login();
 
+                    db.collection("Users")
+                            .document(usuarioo.getUid())
+                            .set(user);
+                    Log.d("Demo","El usuario ha sido registrado "+usuarioo.getEmail());
+                    Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent2);
 
-                        // Create a new user with a first and last name
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("Apellido", apellido);
-                        user.put("Contrasena", pass);
-                        user.put("Email", mail);
-                        user.put("Nombre", nombree);
-                        user.put("Account", accountt);
-
-                        login();
-
-                        db.collection("Users")
-                                .document(usuarioo.getUid())
-                                .set(user);
-
-                        Log.d("Demo","El usuario ha sido registrado "+usuarioo.getEmail());
-                        Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent2);
-
-                    }else{
-                        Log.d("Demo","El usuario no se pudo registrarse "+usuarioo.getEmail());
-                        Toast.makeText(RegisterActivity.this,"No se pudo registrar el usuario "
-                                +task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
-                    }
+                }else{
+                    Log.d("Demo","El usuario no se pudo registrarse "+usuarioo.getEmail());
+                    Toast.makeText(RegisterActivity.this,"No se pudo registrar el usuario "
+                            +task.getException().getLocalizedMessage(),Toast.LENGTH_LONG).show();
                 }
-            });
+            }
+        });
+//        }
     }
 
     private void login() {
-
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
-
         usuarioo.sendEmailVerification();
         Log.d("Demo", "El correo ha sido enviado");
         Toast.makeText(this, "Se ha enviado un correo de confirmación", Toast.LENGTH_LONG).show();

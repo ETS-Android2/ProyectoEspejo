@@ -55,7 +55,7 @@
         android:ems="10"
         android:fontFamily="@font/lucidagrande"
         android:hint="Correo"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textEmailAddress"
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textSize="16sp" />

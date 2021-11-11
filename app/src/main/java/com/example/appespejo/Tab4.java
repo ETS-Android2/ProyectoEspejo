@@ -28,6 +28,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.api.Context;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -51,7 +54,7 @@ public class Tab4 extends Fragment {
     FirebaseUser usuario;
     FirebaseAuth mAuth;
     TextView perfilDelNombre,perfilDelApellido, perfilDelCorreo, perfilDelAccount;
-    String name,correo,apellido,foto,account;
+    String name,correo,apellido,foto,account, password;
     ImageView perfilDelFoto;
     Dialog dialog;
     Animation animacion2;
@@ -85,7 +88,11 @@ public class Tab4 extends Fragment {
         cerrarSesion = v.findViewById(R.id.cerrarSesion);
         infoPersona = v.findViewById(R.id.infoPersona);
 
+
+
         animacion2 = AnimationUtils.loadAnimation(getContext().getApplicationContext(),R.anim.desplazamiento_abajo);
+
+        Log.d("Demo", "isEmailVerified() en onCreateView  " + usuario.isEmailVerified());
 
         setOnClick(v);
 
@@ -113,6 +120,8 @@ public class Tab4 extends Fragment {
             cerrarSesion.setVisibility(View.VISIBLE);
             infoPersona.setVisibility(View.VISIBLE);
             dialogWindow.setVisibility(View.INVISIBLE);
+
+
 
             db.collection("Users")
                     .document(Objects.requireNonNull(usuario.getUid()))
@@ -161,72 +170,99 @@ public class Tab4 extends Fragment {
 
     private void setOnClick(View view){
 
+        //  Dialog para cambier el correo
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+        View bottomSheetView = LayoutInflater.from(getContext().getApplicationContext())
+                .inflate(R.layout.cambiar_correo,null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
+        Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
+        TextView direccionActual = bottomSheetView.findViewById(R.id.nombreActual);
+        nuevoCorreo = bottomSheetView.findViewById(R.id.cambiarNombre);
+
+//   Dialog de correo no verificado
+        Dialog dialogSheetDialog = new Dialog(requireContext());
+
+        View dialogSheetView = LayoutInflater.from(getContext())
+                .inflate(R.layout.correo_no_verificado,null);
+        dialogSheetDialog.setContentView(dialogSheetView);
+        dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        verificado = dialogSheetView.findViewById(R.id.verificado);
+
         perfilDelCorreo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
-                View bottomSheetView = LayoutInflater.from(getContext().getApplicationContext())
-                        .inflate(R.layout.cambiar_correo,null);
-                bottomSheetDialog.setContentView(bottomSheetView);
-
-                bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                bottomSheetDialog.show();
-
-                Button guardar = bottomSheetView.findViewById(R.id.guardarCambios);
-                TextView direccionActual = bottomSheetView.findViewById(R.id.nombreActual);
-                nuevoCorreo = bottomSheetView.findViewById(R.id.cambiarNombre);
-
                 direccionActual.setText("Tu direccion de correo electronico actual es \n" + perfilDelCorreo.getText().toString() + " \n¿Por cual te gustaria cambiarla?");
 
+                bottomSheetDialog.show();
+//  Al pinchar a guardar nos esta cerrando el dialog window de cambiar correo, cambiando el correo en mAuth a nuevoo y enviando el correo a nuevo
                 guardar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+                        db.collection("Users")
+                                .document(usuario.getUid().toString())
+                                 .get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    password = task.getResult().getString("Contrasena");
 
-                        Objects.requireNonNull(mAuth.getCurrentUser()).updateEmail(nuevoCorreo.getText().toString());
+                                    AuthCredential credential = EmailAuthProvider.getCredential(usuario.getEmail().toString(), password);
+                                    Log.d("Demo", "La contreasena de usuario es: " + password);
+
+                                    usuario.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Log.d("value", "User ha side actualizado");
+                                            usuario.updateEmail(nuevoCorreo.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        // Toast.makeText(getContext(), "Email cambiado es: " + nuevoCorreo.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                                                        db.collection("Users")
+                                                                .document(usuario.getUid())
+                                                                .update("Email", nuevoCorreo.getText().toString());
+
+                                                        usuario.verifyBeforeUpdateEmail(nuevoCorreo.getText().toString());
+                                                        login();
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
 
                         Log.d("Demo", "El correo cogido es: " + nuevoCorreo.getText().toString());
-                        Toast.makeText(getContext(), "Tu correo ha sido cambiado correstamente", Toast.LENGTH_SHORT).show();
-
-                        login();
-
-
-                        Dialog dialogSheetDialog = new Dialog(requireContext());
-
-                        View dialogSheetView = LayoutInflater.from(getContext())
-                                .inflate(R.layout.correo_no_verificado,null);
-                        dialogSheetDialog.setContentView(dialogSheetView);
-                        dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-
+                        // Toast.makeText(getContext(), "Tu correo ha sido cambiado correstamente", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.cancel();
-
                         dialogSheetDialog.show();
-                        verificado = dialogSheetView.findViewById(R.id.verificado);
 
                         verificado.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(usuario.isEmailVerified()){
 
+                                FirebaseAuth mAuthD = FirebaseAuth.getInstance();
+                                Log.d("Demo", "isEmailVerified()" + mAuthD.getCurrentUser().isEmailVerified());
+                                Log.d("Demo", "Correo de usuario es: " + mAuthD.getCurrentUser().getEmail());
+
+                                if(mAuthD.getCurrentUser().isEmailVerified()){
                                     dialogSheetDialog.cancel();
-
-                                    db.collection("Users")
-                                            .document(usuario.getUid())
-                                            .update("Email", nuevoCorreo.getText().toString());
-//                                .update(user);
 
                                 }else{
 
                                     Toast.makeText(getContext(), "Verifica tu correo antes por favor", Toast.LENGTH_SHORT).show();
-                                    dialogSheetDialog.show();
                                     dialogSheetDialog.setCancelable(false);
                                     dialogSheetDialog.setCanceledOnTouchOutside(false);
                                 }
                             }
                         });
-
-//
                     }
                 });
             }
@@ -339,14 +375,11 @@ public class Tab4 extends Fragment {
                         updateUI(mAuth.getCurrentUser());
                     }
                 });
-
             }
         });
-
     }
 
-
-//        -----------------------------------------------------------------------------------
+    //        -----------------------------------------------------------------------------------
 //    Funcion para cambiar el correo y mandar el correo de verificacion
 //        -----------------------------------------------------------------------------------
     private void login() {

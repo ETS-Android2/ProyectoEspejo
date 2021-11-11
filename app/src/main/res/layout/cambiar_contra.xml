@@ -75,7 +75,7 @@
         app:passwordToggleTint="#7E7D7D">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/contra_actual"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
