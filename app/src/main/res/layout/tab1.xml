@@ -49,7 +49,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
             app:layout_constraintVertical_bias="0.39"
-            app:selector="@drawable/flag"
+            app:selector="@drawable/wheel"
             app:selector_size="10dp">
 
             <LinearLayout
@@ -71,16 +71,22 @@
         </com.skydoves.colorpickerview.ColorPickerView>
 
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="32dp"
+        <ScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/colorPickerView"
+            app:layout_constraintEnd_toStartOf="@+id/imageView6"
+            app:layout_constraintHorizontal_bias="0.41"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="10dp">
 
@@ -143,16 +149,19 @@
                     app:srcCompat="@drawable/plus30" />
 
             </LinearLayout>
-        </HorizontalScrollView>
+        </ScrollView>
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView"
-            app:layout_constraintEnd_toEndOf="@+id/horizontalScrollView"
-            app:layout_constraintTop_toTopOf="@+id/horizontalScrollView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="4dp"
+            android:background="#FFFFFF"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/nestedScrollView"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/turn_off_on50" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

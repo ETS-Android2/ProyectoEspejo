@@ -101,20 +101,20 @@ public class Tab3 extends Fragment {
         View v = inflater.inflate(R.layout.tab3, container, false);
 
         gallery_number = v.findViewById(R.id.gallery_number);
-      recyclerView = v.findViewById(R.id.recyclerview_gallery_imagen);
+        recyclerView = v.findViewById(R.id.recyclerview_gallery_imagen);
 
 
-
-
+        //Permisos
         if(ContextCompat.checkSelfPermission(getContext(),
                 Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},MY_READ_PERMISSION_CODE);
         }else{
+            //Carga imagenes
          loadImages();
-
         }
+
         return v;
     }
 
@@ -125,13 +125,15 @@ public class Tab3 extends Fragment {
     recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(),2));
     images= ImageGallery.lisofImages(getContext());
 
-    galleryAdapter=new GalleryAdapter(getContext(), images, new GalleryAdapter.PhotoListener() {
+    galleryAdapter = new GalleryAdapter(getContext(), images, new GalleryAdapter.PhotoListener() {
         @Override
         public void onPhotoClick(String path) {
+            //Para cuando pinchas la foto
           Toast.makeText(getContext(),"La ruta es "+path,Toast.LENGTH_SHORT).show();
         }
     });
 
+    //Meter la vista en el recycle
     recyclerView.setAdapter(galleryAdapter);
        // images = images.subList(0,Math.min(99, images.size()));
     gallery_number.setText("Photos("+images.size()+")");
