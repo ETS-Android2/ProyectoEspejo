@@ -1,6 +1,7 @@
 package com.example.appespejo;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +61,10 @@ public class Tab1 extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tab1, container, false);
 
-        colorPickerView = new ColorPickerView(this.getContext());
-        //colorPickerView = v.findViewById(R.id.colorPickerView);
 
+        colorPickerView = v.findViewById(R.id.colorPickerView);
         BubbleFlag bubbleFlag = new BubbleFlag(getContext());
-        bubbleFlag.setFlagMode(FlagMode.FADE);
+        bubbleFlag.setFlagMode(FlagMode.ALWAYS);
         colorPickerView.setFlagView(bubbleFlag);
 
 
@@ -75,6 +75,9 @@ public class Tab1 extends Fragment {
                             //n(envelope);
 
                         });
+
+        colorPickerView.setFlagView(new CustomFlag(getContext(), R.layout.flag_bubble_colorpickerview_skydoves));
+
 
         return v;
     }
