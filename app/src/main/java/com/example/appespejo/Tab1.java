@@ -52,9 +52,7 @@ public class Tab1 extends Fragment {
    public Tab1(){
        // require a empty public constructor
    }
-
     ColorPickerView colorPickerView;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

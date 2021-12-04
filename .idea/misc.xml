@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/drawable/borders_redondos_dialog.xml" value="0.19074074074074074" />
         <entry key="app/src/main/res/drawable/bordes_redondos.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/drawable/bordes_redondos_arriba.xml" value="0.45" />
+        <entry key="app/src/main/res/drawable/bordes_redondos_botton.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/button_rounded.xml" value="0.18802083333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2875" />
         <entry key="app/src/main/res/drawable/ic_baseline_construction_24.xml" value="0.2875" />
@@ -31,9 +32,10 @@
         <entry key="app/src/main/res/drawable/ic_baseline_music_note_24.xml" value="0.2875" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2875" />
         <entry key="app/src/main/res/drawable/ic_baseline_photo_24.xml" value="0.2875" />
+        <entry key="app/src/main/res/drawable/radius_luces_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/tab1.xml" value="0.11302083333333333" />
         <entry key="app/src/main/res/layout/acercade.xml" value="0.23489583333333333" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.24444444444444444" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.1787037037037037" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -49,12 +51,15 @@
         <entry key="app/src/main/res/layout/cambiarnombre.xml" value="0.335" />
         <entry key="app/src/main/res/layout/correo_no_verificado.xml" value="0.165" />
         <entry key="app/src/main/res/layout/dialog_anonimo.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/politica_privacidad.xml" value="0.25" />
         <entry key="app/src/main/res/layout/tab1.xml" value="0.25" />
         <entry key="app/src/main/res/layout/tab2.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/tab3.xml" value="0.31614583333333335" />
         <entry key="app/src/main/res/layout/tab4.xml" value="0.25" />
         <entry key="app/src/main/res/layout/tab5.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/tareas_layout.xml" value="0.31614583333333335" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
   </component>
