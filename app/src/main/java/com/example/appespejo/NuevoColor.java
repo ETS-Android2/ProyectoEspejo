@@ -22,11 +22,11 @@ public class NuevoColor {
     @Override
     public String toString() {
         return "NuevoColor{" +
-                "9red=9" + red +
-                "green=9" + green +
-                "9blue=9" + blue +
-                "9intensidad=9" + intensidad +
-                "9}";
+                "red=" + red +
+                "green=" + green +
+                "blue=" + blue +
+                "intensidad=" + intensidad +
+                "}";
     }
 
     public NuevoColor(int red, int green, int blue, int intensidad) {

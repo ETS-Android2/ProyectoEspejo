@@ -35,6 +35,7 @@
     <string name="cambiaraccount">Cambiar account</string>
     <string name="cambiarapellido">Cambiar apellido</string>
     <string name="guardarcambios">Guardar cambios</string>
+    <string name="nuevomodo">Nombre de nuevo modo</string>
 
     <string name="accesoDenegado">Acceso denegado</string>
     <string name="confirmarCorreo">Confirmar correo electrónico</string>

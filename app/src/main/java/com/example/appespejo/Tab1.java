@@ -4,6 +4,7 @@ package com.example.appespejo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -41,9 +43,13 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -62,7 +68,6 @@ import com.skydoves.colorpickerview.sliders.BrightnessSlideBar;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,12 +77,12 @@ import timber.log.Timber;
 
 public class Tab1 extends Fragment {
     /* @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-        }*/
-   public Tab1(){
-       // require a empty public constructor
-   }
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+     }*/
+    public Tab1(){
+        // require a empty public constructor
+    }
     SharedPreferences preferences;
     RecyclerView recyclerView;
     ColorListAdapter  adaptador;
@@ -91,8 +96,9 @@ public class Tab1 extends Fragment {
     DatabaseReference databaseReference;
     SeekBar seekBar;
     TextView intensidad;
+    Button guardar;
+    EditText nombreModo;
     Context context;
-    int aux=0;
     int pos=100;
     private boolean FLAG_PALETTE = false;
     private boolean FLAG_SELECTOR = false;
@@ -166,13 +172,63 @@ public class Tab1 extends Fragment {
 
         colorPickerView.setFlagView(new BubbleFlag(getContext()));
 
-        recyclerView = v.findViewById(R.id.recyclerModos);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adaptador = new ColorListAdapter(getContext(), elements);
+//        recyclerView = v.findViewById(R.id.recyclerModos);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+//
+//        adaptador = new ColorListAdapter(getContext(), elements);
+//
+//        recyclerView.setAdapter(adaptador);
 
-        recyclerView.setAdapter(adaptador);
+        modos(v);
 
         return v;
+    }
+
+    public void modos(View view){
+
+        HashMap<String, Object> modo = new HashMap<>();
+
+
+        db.collection("Luces")
+                .document(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                Codigo para sacar el documento
+                        if(task.isSuccessful()){
+
+                            List<Object> prueba = new ArrayList<>();
+
+//                    Coge el nombre de objetos, no index
+                            for(int i=0; i<task.getResult().getData().size(); i++) {
+                                prueba.add(i, task.getResult().getData().get("Prueba"+i));
+                            }
+
+//                            for(int i=0; i<task.getResult().getData().size(); i++){
+//                                task.getResult().getData().forEach((k, v) -> prueba.add(0,v));
+//                            }
+
+//                            for(Map.Entry<String, Object> objeto: task.getResult().getData()){
+////                                objeto = task.getResult().getData();
+////                                prueba.add(objeto);
+//                            }
+
+                            prueba.indexOf(prueba.get(1).toString());
+
+//                            Log.d("Prueba", prueba.indexOf(prueba.get(1)));
+//                            Log.d("Prueba", task.getResult().getData().get("night").toString());
+
+                            recyclerView = view.findViewById(R.id.recyclerModos);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+                            adaptador = new ColorListAdapter(getContext(), prueba);
+                            recyclerView.setAdapter(adaptador);
+
+                        }
+                    }
+                });
     }
 
     @Override
@@ -193,11 +249,12 @@ public class Tab1 extends Fragment {
     @SuppressLint("SetTextI18n")
     private void setColor(ColorEnvelope envelope) {
 
-
         int i = Integer.decode(String.valueOf(envelope.getColor()));
         int colorR = Color.red(i);
         int colorG = Color.green(i);
         int colorB = Color.blue(i);
+
+        Map<String, Object> lucess = new HashMap<>();
 
         NuevoColor colour = new NuevoColor(colorR, colorG, colorB, seekBar.getProgress());
 
@@ -206,46 +263,69 @@ public class Tab1 extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
-
                     DocumentSnapshot document = task.getResult();
-
-                    String doc = document.getData().entrySet().toArray()[0].toString().split("Modo=")[1];
+//                    String doc = document.getData().entrySet().toArray()[0].toString().split("Modo=")[1];
 //                    cada color
 //                    En split(", \\{")[0]. ponemos un i en vez de 1 que es igual a tamanyo del array(!)
-                    String[] unpackedDocRed = doc.split(", \\{")[0].split(",")[0].split("=");
-                    String unpackedDocGreen = doc.split(", \\{")[0].split(",")[1].split("=")[1];
-                    String unpackedDocBlue = doc.split(", \\{")[0].split(",")[2].split("=")[1];
-                    String unpackedDocInts = doc.split(", \\{")[0].split(",")[3].split("=")[1].split("\\}")[0];
+//                    String[] unpackedDocRed = doc.split(", \\{")[0].split(",")[0].split("=");
+//                    String unpackedDocGreen = doc.split(", \\{")[0].split(",")[1].split("=")[1];
+//                    String unpackedDocBlue = doc.split(", \\{")[0].split(",")[2].split("=")[1];
+//                    String unpackedDocInts = doc.split(", \\{")[0].split(",")[3].split("=")[1].split("\\}")[0];
 
-                    Log.d("Object", unpackedDocRed[1]);
-                    Log.d("Object", unpackedDocGreen);
-                    Log.d("Object", unpackedDocBlue);
-                    Log.d("Object", unpackedDocInts);
+//                    Log.d("Object", unpackedDocRed[1]);
+//                    Log.d("Object", unpackedDocGreen);
+//                    Log.d("Object", unpackedDocBlue);
+//                    Log.d("Object", unpackedDocInts);
 
 //                    Un objeto
 //                    doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(",");
 
 //                    Log.d("Doc", doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(","));
+//                    doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(",").length
 
+//                    for(int j = 0; j< 1; j++){
+//                        luces.put("Modo", doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}"));
+//                    }
+//                    Log.d("Object", String.valueOf(doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("q")[0]));
                 }
             }
         });
 
-        Map<String, Object> luces = new HashMap<>();
-
-        for(int j = 0; j< luces.size()+1; j++){
-            luces.put("Modo", elements);
-        }
+//        Si le enviamos el nombre del color y en este nombre le ponemos un array
 
         newLuces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                elements.add(colour);
-//                Empezamos un for?
-                db.collection("Luces")
-                        .document(mAuth.getCurrentUser().getUid())
-                        .set(luces);
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                View bottomSheetView = LayoutInflater.from(getContext())
+                        .inflate(R.layout.nuevo_color_name,null);
+                bottomSheetDialog.setContentView(bottomSheetView);
+
+                bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                bottomSheetDialog.show();
+
+                guardar = bottomSheetView.findViewById(R.id.guardarCambios3);
+
+                nombreModo = bottomSheetView.findViewById(R.id.nombreModo);
+
+                guardar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        lucess.put(nombreModo.getText().toString(), colour);
+
+                        db.collection("Luces")
+                                .document(mAuth.getCurrentUser().getUid())
+                                .update(lucess);
+
+                        Toast.makeText(getContext(), "Tu nuevo modo ha sido guardado correctamente", Toast.LENGTH_SHORT).show();
+                        Log.d("Demo", "El nombre nuevo es: " + nombreModo.getText().toString());
+
+                        bottomSheetDialog.cancel();
+//                        updateUI(mAuth.getCurrentUser());
+                    }
+                });
             }
         });
 

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,7 +74,7 @@ public class HomeFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseUser usuario;
     FirebaseFirestore db;
-    TextView welcome, fecha, grados, location, cancion,artista;
+    TextView welcome, fecha, grados, location, cancion,artista , intensidad;
     ImageView iconWeather,album;
     Button pause, back, next, play;
     String name,mAccessToken;
@@ -114,6 +115,9 @@ public class HomeFragment extends Fragment {
         grados = v.findViewById(R.id.tiempoGrados);
         location = v.findViewById(R.id.localizacion);
         iconWeather = v.findViewById(R.id.iconWeather);
+        SeekBar seekBar = tab1.findViewById(R.id.seekBar);
+        intensidad = v.findViewById(R.id.intensidadLucesHome);
+        intensidad.setText("Intencidad " + seekBar.getProgress() + "%");
 
         album = v.findViewById(R.id.homeSpotyImage);
         pause = v.findViewById(R.id.spotyPause);
@@ -124,6 +128,7 @@ public class HomeFragment extends Fragment {
 //        spotify = v.findViewById(R.id.spotify);
         cancion = v.findViewById(R.id.homeSpotyCancion);
         artista = v.findViewById(R.id.spotyHomeArtista);
+
 
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
