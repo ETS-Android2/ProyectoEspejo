@@ -20,7 +20,7 @@ import java.util.List;
 public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.ViewHolder> {
 
     private Context context;
-    private List<ColorArray> modo;
+    private List<NuevoColor> modo;
     private LayoutInflater mInflates;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -34,15 +34,15 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
             button = itemView.findViewById(R.id.button13);
         }
 
-        void bindData(final ColorArray item ){
+        void bindData(final List<NuevoColor> item ){
 //            db.collection("Users").document(mAuth)
-            button.setText((CharSequence) item.getColor());
+            button.setText("Modo");
         }
 
 
     }
 
-    public ColorListAdapter(Context context, List<ColorArray> color) {
+    public ColorListAdapter(Context context, List<NuevoColor> color) {
         this.context = context;
         this.modo = color;
     }
@@ -71,7 +71,7 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
         holder.button.setText("Modo");
     }
 
-    public void setItems(List<ColorArray> items){
+    public void setItems(List<NuevoColor> items){
         modo = items;}
 
 }

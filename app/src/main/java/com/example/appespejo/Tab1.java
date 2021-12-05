@@ -4,18 +4,24 @@ package com.example.appespejo;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.skydoves.colorpickerview.ColorEnvelope;
 import com.skydoves.colorpickerview.flag.BubbleFlag;
@@ -56,6 +62,7 @@ import com.skydoves.colorpickerview.sliders.BrightnessSlideBar;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +71,10 @@ import timber.log.Timber;
 
 
 public class Tab1 extends Fragment {
-   /* @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }*/
+    /* @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }*/
    public Tab1(){
        // require a empty public constructor
    }
@@ -85,6 +92,7 @@ public class Tab1 extends Fragment {
     SeekBar seekBar;
     TextView intensidad;
     Context context;
+    int aux=0;
     int pos=100;
     private boolean FLAG_PALETTE = false;
     private boolean FLAG_SELECTOR = false;
@@ -158,12 +166,11 @@ public class Tab1 extends Fragment {
 
         colorPickerView.setFlagView(new BubbleFlag(getContext()));
 
-//        recyclerView = v.findViewById(R.id.recyclerModos);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//        adaptador = new ColorListAdapter(getContext(), elements);
-//
-//        recyclerView.setAdapter(adaptador);
+        recyclerView = v.findViewById(R.id.recyclerModos);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adaptador = new ColorListAdapter(getContext(), elements);
+
+        recyclerView.setAdapter(adaptador);
 
         return v;
     }
@@ -179,36 +186,62 @@ public class Tab1 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        int defaultValue = getResources().getInteger(seekBar.getProgress());
-        seekBar.setProgress(defaultValue);
+//        int defaultValue = getResources().getInteger(seekBar.getProgress());
+//        seekBar.setProgress(defaultValue);
     }
 
     @SuppressLint("SetTextI18n")
     private void setColor(ColorEnvelope envelope) {
-//        TextView textView = view.findViewById(R.id.textView);
-//        textView.setText("#" + envelope.getHexCode());
-//        Log.d("Demo", String.valueOf(envelope.getColor()));
-//        DatabaseReference red = database.getReference("red");
-//        DatabaseReference green = database.getReference("green");
-//        DatabaseReference blue = database.getReference("blue");
 
-//        int[] color = envelope.getArgb();
 
         int i = Integer.decode(String.valueOf(envelope.getColor()));
         int colorR = Color.red(i);
         int colorG = Color.green(i);
         int colorB = Color.blue(i);
 
+        NuevoColor colour = new NuevoColor(colorR, colorG, colorB, seekBar.getProgress());
+
+        db.collection("Luces").document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+
+                    DocumentSnapshot document = task.getResult();
+
+                    String doc = document.getData().entrySet().toArray()[0].toString().split("Modo=")[1];
+//                    cada color
+//                    En split(", \\{")[0]. ponemos un i en vez de 1 que es igual a tamanyo del array(!)
+                    String[] unpackedDocRed = doc.split(", \\{")[0].split(",")[0].split("=");
+                    String unpackedDocGreen = doc.split(", \\{")[0].split(",")[1].split("=")[1];
+                    String unpackedDocBlue = doc.split(", \\{")[0].split(",")[2].split("=")[1];
+                    String unpackedDocInts = doc.split(", \\{")[0].split(",")[3].split("=")[1].split("\\}")[0];
+
+                    Log.d("Object", unpackedDocRed[1]);
+                    Log.d("Object", unpackedDocGreen);
+                    Log.d("Object", unpackedDocBlue);
+                    Log.d("Object", unpackedDocInts);
+
+//                    Un objeto
+//                    doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(",");
+
+//                    Log.d("Doc", doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(","));
+
+                }
+            }
+        });
+
         Map<String, Object> luces = new HashMap<>();
-        for(int j=luces.size(); j< luces.size()+1; j++){
-            luces.put("Modos", elements);
+
+        for(int j = 0; j< luces.size()+1; j++){
+            luces.put("Modo", elements);
         }
 
         newLuces.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                elements.add(new NuevoColor(colorR, colorG, colorB, seekBar.getProgress()));
+                elements.add(colour);
 //                Empezamos un for?
                 db.collection("Luces")
                         .document(mAuth.getCurrentUser().getUid())

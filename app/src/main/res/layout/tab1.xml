@@ -90,13 +90,14 @@
             android:id="@+id/colorPickerView"
             android:layout_width="314dp"
             android:layout_height="380dp"
+            android:layout_marginBottom="8dp"
             android:translationZ="90dp"
             app:actionMode="last"
             app:alpha_flag="0.8"
             app:alpha_selector="0.8"
             app:enableAlpha="false"
             app:enableBrightness="false"
-            app:layout_constraintBottom_toTopOf="@+id/seekBar"
+            app:layout_constraintBottom_toTopOf="@+id/intensidad"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +133,7 @@
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="6dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
             </LinearLayout>
 
