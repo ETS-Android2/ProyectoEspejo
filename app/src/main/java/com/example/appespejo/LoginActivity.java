@@ -105,8 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
         FacebookSdk.sdkInitialize(LoginActivity.this);
-        
-
 
         //HUELLA
 

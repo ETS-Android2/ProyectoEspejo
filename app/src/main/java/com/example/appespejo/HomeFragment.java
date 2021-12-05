@@ -103,6 +103,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View tab1 = inflater.inflate(R.layout.tab1, container,false);
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -205,8 +206,6 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
-
-
     public void setup(View view){
 
         elements = new ArrayList<>();
@@ -253,6 +252,7 @@ public class HomeFragment extends Fragment {
                 mSpotifyAppRemote.getPlayerApi().resume();
                 play.setVisibility(View.GONE);
                 pause.setVisibility(View.VISIBLE);
+                Log.d("Demo", mSpotifyAppRemote.getPlayerApi().getPlayerState().toString());
             }
         });
 
@@ -269,26 +269,6 @@ public class HomeFragment extends Fragment {
                 mSpotifyAppRemote.getPlayerApi().skipNext();
             }
         });
-
-//        spotify.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-////                String apppackage = "https://www.spotify.com/31sh5hscok32wewoudxkmivktpye4";
-//                String apppackage = "https://open.spotify.com/";
-//
-//                try {
-//                    Intent i = getActivity().getPackageManager().getLaunchIntentForPackage(apppackage);
-//                    Log.d("Demo", "Esta cargando");
-//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(apppackage)));
-//                }
-//                catch (Exception  e) {
-//                    Log.d("Demo", "Sorry, Spotify Apps Not Found");
-//                    Toast.makeText(getContext(), "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//        });
 
     }
 
@@ -343,7 +323,6 @@ public class HomeFragment extends Fragment {
                     final Track track = playerState.track;
                     if (track != null) {
                         Log.d("Demo", track.name + " by " + track.artist.name);
-
 //        -----------------------------------------------------------------------------------
 //        Para sacar los datos necesarios de la cancion
 //        -----------------------------------------------------------------------------------
@@ -357,7 +336,9 @@ public class HomeFragment extends Fragment {
 
                         cancion.setText(track.name);
                         artista.setText(track.artist.name);
-
+//                        if(mSpotifyAppRemote.getPlayerApi().getPlayerState().equals(mSpotifyAppRemote.getPlayerApi().pause())){
+//
+//                        }
                     }
                     else{
                         Log.d("Demo", "No ha pillado el track");
@@ -369,7 +350,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-
 //        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
         mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onStop");

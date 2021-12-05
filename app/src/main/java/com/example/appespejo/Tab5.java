@@ -92,11 +92,6 @@ public class Tab5 extends Fragment {
         startActivity(i);
     }
 
-    public void abrirPerfil(View view){
-        startActivity(new Intent(getActivity().getApplicationContext(), Tab4.class));
-    }
-
-
     public void AbrirPreferencias(View view) {
         Intent i = new Intent(getActivity().getApplicationContext(), Preferencias.class);
         startActivity(i);
