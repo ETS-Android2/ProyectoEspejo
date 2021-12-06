@@ -68,6 +68,7 @@ import com.skydoves.colorpickerview.sliders.BrightnessSlideBar;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -186,8 +187,7 @@ public class Tab1 extends Fragment {
 
     public void modos(View view){
 
-        HashMap<String, Object> modo = new HashMap<>();
-
+//        HashMap<String, Object> modo = new HashMap<>();
 
         db.collection("Luces")
                 .document(mAuth.getCurrentUser().getUid())
@@ -199,13 +199,13 @@ public class Tab1 extends Fragment {
 //                Codigo para sacar el documento
                         if(task.isSuccessful()){
 
-                            List<Object> prueba = new ArrayList<>();
+                            List<HashMap> prueba = new ArrayList<HashMap>();
+
 
 //                    Coge el nombre de objetos, no index
                             for(int i=0; i<task.getResult().getData().size(); i++) {
-                                prueba.add(i, task.getResult().getData().get("Prueba"+i));
+                                prueba.add(i, (HashMap) task.getResult().getData().get("Prueba"+i));
                             }
-
 //                            for(int i=0; i<task.getResult().getData().size(); i++){
 //                                task.getResult().getData().forEach((k, v) -> prueba.add(0,v));
 //                            }
@@ -214,12 +214,9 @@ public class Tab1 extends Fragment {
 ////                                objeto = task.getResult().getData();
 ////                                prueba.add(objeto);
 //                            }
-
-                            prueba.indexOf(prueba.get(1).toString());
-
+                            Log.d("PruebaArray", prueba.toString());
 //                            Log.d("Prueba", prueba.indexOf(prueba.get(1)));
 //                            Log.d("Prueba", task.getResult().getData().get("night").toString());
-
                             recyclerView = view.findViewById(R.id.recyclerModos);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
@@ -257,39 +254,6 @@ public class Tab1 extends Fragment {
         Map<String, Object> lucess = new HashMap<>();
 
         NuevoColor colour = new NuevoColor(colorR, colorG, colorB, seekBar.getProgress());
-
-        db.collection("Luces").document(mAuth.getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot document = task.getResult();
-//                    String doc = document.getData().entrySet().toArray()[0].toString().split("Modo=")[1];
-//                    cada color
-//                    En split(", \\{")[0]. ponemos un i en vez de 1 que es igual a tamanyo del array(!)
-//                    String[] unpackedDocRed = doc.split(", \\{")[0].split(",")[0].split("=");
-//                    String unpackedDocGreen = doc.split(", \\{")[0].split(",")[1].split("=")[1];
-//                    String unpackedDocBlue = doc.split(", \\{")[0].split(",")[2].split("=")[1];
-//                    String unpackedDocInts = doc.split(", \\{")[0].split(",")[3].split("=")[1].split("\\}")[0];
-
-//                    Log.d("Object", unpackedDocRed[1]);
-//                    Log.d("Object", unpackedDocGreen);
-//                    Log.d("Object", unpackedDocBlue);
-//                    Log.d("Object", unpackedDocInts);
-
-//                    Un objeto
-//                    doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(",");
-
-//                    Log.d("Doc", doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(","));
-//                    doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}")[0].split(",").length
-
-//                    for(int j = 0; j< 1; j++){
-//                        luces.put("Modo", doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("\\}"));
-//                    }
-//                    Log.d("Object", String.valueOf(doc.split("\\[")[1].split("\\]")[0].split("\\{")[1].split("q")[0]));
-                }
-            }
-        });
 
 //        Si le enviamos el nombre del color y en este nombre le ponemos un array
 
