@@ -95,43 +95,18 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isComplete()){
 
-                    long red = 0;
-                    long green = 0;
-                    long blue =0;
 
                     List<Long> rojo = new ArrayList<>();
                     List<Long> verde = new ArrayList<>();
                     List<Long> azul = new ArrayList<>();
 
-                    Color myColor;
-
                     for(int i=0; i<task.getResult().getData().size(); i++){
 //                        Log.d("Color", String.valueOf(task.getResult().getData().get("Prueba1")));
                         Log.d("Modo2", modo.get(i).toString());
 
-                        red = (long) modo.get(i).get("red");
-                        green = (long) modo.get(i).get("green");
-                        blue = (long) modo.get(i).get("green");
-
                         rojo.add(i, (Long) modo.get(i).get("red"));
                         verde.add(i, (Long) modo.get(i).get("green"));
                         azul.add(i, (Long) modo.get(i).get("blue"));
-//                        myColor = Color.valueOf(Color.rgb(red,green,blue));
-
-//                        Los numeros son de tipo long
-//                        Log.d("Rojo", "Rojo es "+modo.get(i).get("red").getClass());
-//                        Log.d("Verde", "Verde es "+modo.get(i).get("green").toString());
-//                        Log.d("Azul", "Azul es "+modo.get(i).get("green").toString());
-
-//                        int RGB = android.graphics.Color.rgb(Red, Green, Blue);
-
-//                        Log.d("Rojo", "Rojo es "+red);
-//                        Log.d("Verde", "Verde es "+green);
-//                        Log.d("Azul", "Azul es "+blue);
-
-
-//                        Log.d("Modo", modo.get(i).getClass().toString());
-//                        modo.add((HashMap) task.getResult().getData());
                     }
 //                    holder.button.setText("Modo" + (modo.indexOf(modo.get(position))+1));
                     holder.text.setText("Modo" + (modo.indexOf(modo.get(position))+1));
@@ -139,8 +114,6 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
 
                     Log.d("RedArray", rojo.toString());
 
-
-//                    holder.button.setBackgroundResource(R.drawable.bordes_redondos_botton);
                 }
             }
         });
