@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -382,6 +383,13 @@ public class Tab4 extends AppCompatActivity {
                 });
             }
         });
+
+        cerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout();
+            }
+        });
     }
 
     //        -----------------------------------------------------------------------------------
@@ -403,6 +411,13 @@ public class Tab4 extends AppCompatActivity {
         }else{
             Toast.makeText(Tab4.this, "Sign in to continue", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
 }

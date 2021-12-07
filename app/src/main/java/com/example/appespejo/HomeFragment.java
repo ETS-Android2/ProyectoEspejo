@@ -15,10 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -75,8 +78,9 @@ public class HomeFragment extends Fragment {
     FirebaseUser usuario;
     FirebaseFirestore db;
     TextView welcome, fecha, grados, location, cancion,artista , intensidad;
+    EditText nuevaTarea;
     ImageView iconWeather,album;
-    Button pause, back, next, play;
+    Button pause, back, next, play,spotify;
     String name,mAccessToken;
     Handler mainHandler = new Handler();
     ProgressDialog progressDialog;
@@ -85,7 +89,6 @@ public class HomeFragment extends Fragment {
     private static final String REDIRECT_URI = "SpotifyTestApp://authenticationResponse";
     private SpotifyAppRemote mSpotifyAppRemote;
     final int REQUEST_CODE = 1337;
-    Button spotify;
     public static final int AUTH_TOKEN_REQUEST_CODE = 0x10;
     public static final int AUTH_CODE_REQUEST_CODE = 0x11;
 
@@ -128,6 +131,7 @@ public class HomeFragment extends Fragment {
 //        spotify = v.findViewById(R.id.spotify);
         cancion = v.findViewById(R.id.homeSpotyCancion);
         artista = v.findViewById(R.id.spotyHomeArtista);
+        nuevaTarea = v.findViewById(R.id.nuevaTarea);
 
 
         // Request code will be used to verify if result comes from the login activity.
@@ -234,10 +238,9 @@ public class HomeFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycleTareas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         adaptador = new TareasListAdaptador(getContext(), elements);
-
         recyclerView.setAdapter(adaptador);
+
     }
 
     private void allClicks() {
@@ -274,6 +277,22 @@ public class HomeFragment extends Fragment {
                 mSpotifyAppRemote.getPlayerApi().skipNext();
             }
         });
+
+//        nuevaTarea.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+//                if(actionId == EditorInfo.IME_ACTION_DONE
+//                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+//                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+//
+//                    Toast.makeText(getContext(), "Enter", Toast.LENGTH_SHORT).show();
+//
+//                    return true;
+//
+//                }
+//                return false;
+//            }
+//        });
 
     }
 

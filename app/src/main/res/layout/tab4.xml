@@ -28,7 +28,6 @@
         android:background="@drawable/bordes_redondos_botton"
         android:backgroundTint="#555555"
         android:fontFamily="@font/lucidagrande"
-        android:onClick="logout"
         android:text="Cerrar sesion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

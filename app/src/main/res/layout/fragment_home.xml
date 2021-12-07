@@ -290,7 +290,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/homeSpotyImage3"
-        app:layout_constraintTop_toBottomOf="@+id/textView54">
+        app:layout_constraintTop_toBottomOf="@+id/nuevaTarea">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycleTareas"
@@ -332,5 +332,35 @@
         app:layout_constraintBottom_toBottomOf="@+id/localizacion"
         app:layout_constraintEnd_toStartOf="@+id/localizacion"
         app:layout_constraintTop_toTopOf="@+id/tiempoGrados" />
+
+    <EditText
+        android:id="@+id/nuevaTarea"
+        android:layout_width="197dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:fontFamily="@font/lucidagrande"
+        android:gravity="center|left"
+        android:hint=" Añadir tarea"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#575656"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView54" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="@+id/nuevaTarea"
+        app:layout_constraintEnd_toStartOf="@+id/nuevaTarea"
+        app:layout_constraintStart_toEndOf="@+id/homeSpotyImage2"
+        app:layout_constraintTop_toTopOf="@+id/nuevaTarea" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

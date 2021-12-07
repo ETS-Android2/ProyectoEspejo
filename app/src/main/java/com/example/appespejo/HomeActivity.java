@@ -116,12 +116,12 @@ public class HomeActivity extends AppCompatActivity {
         textView.setText(seekBar.getProgress());
     }
 
-    public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-    }
+//    public void logout(View view) {
+//        FirebaseAuth.getInstance().signOut();
+//        LoginManager.getInstance().logOut();
+//        startActivity(new Intent(this, LoginActivity.class));
+//        finish();
+//    }
 
     public void verificado(View view){
         if(usuario.isEmailVerified()){
