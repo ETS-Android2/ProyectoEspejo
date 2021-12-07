@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -218,29 +220,105 @@ public class HomeFragment extends Fragment {
     public void setup(View view){
 
         elements = new ArrayList<>();
-        elements.add(new TareasList("Hacer ejercicios"));
-        elements.add(new TareasList("Acabar proyecto"));
-        elements.add(new TareasList("Tarea 3"));
-        elements.add(new TareasList("Tarea 4"));
-        elements.add(new TareasList("Tarea 5"));
-        elements.add(new TareasList("Tarea 6"));
-        elements.add(new TareasList("Tarea 7"));
-
-        Map<String, Object> tareas = new HashMap<>();
-
-        for(int i=0; i<elements.size(); i++){
-            tareas.put("Tarea" + i, elements.get(i));
-        }
+        List<HashMap> leer = new ArrayList<>();
 
         db.collection("Tareas")
                 .document(mAuth.getCurrentUser().getUid())
-                .set(tareas);
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    for(int i=0; i<task.getResult().getData().size(); i++){
+                        leer.add(i, (HashMap) task.getResult().getData().get("Tarea"+i));
 
-        recyclerView = view.findViewById(R.id.recycleTareas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adaptador = new TareasListAdaptador(getContext(), elements);
-        recyclerView.setAdapter(adaptador);
+                    }
 
+                    Log.d("Leer", leer.toString());
+
+                    recyclerView = view.findViewById(R.id.recycleTareas);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    adaptador = new TareasListAdaptador(getContext(), leer);
+                    recyclerView.setAdapter(adaptador);
+                }
+            }
+        });
+
+//        elements.add(new TareasList("Hacer ejercicios"));
+//        elements.add(new TareasList("Acabar proyecto"));
+//        elements.add(new TareasList("Tarea 3"));
+//        elements.add(new TareasList("Tarea 4"));
+//        elements.add(new TareasList("Tarea 5"));
+//        elements.add(new TareasList("Tarea 6"));
+//        elements.add(new TareasList("Tarea 7"));
+
+        nuevaTarea.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId == EditorInfo.IME_ACTION_DONE
+                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+//                    elements.add(new TareasList(nuevaTarea.getText().toString()));
+//                    Toast.makeText(getContext(), "Enter", Toast.LENGTH_SHORT).show();
+
+//                    tarea.put("Prueba" + task.getResult().getData().size(), colour);
+
+//                    db.collection("Tareas")
+//                            .document(mAuth.getCurrentUser().getUid())
+//                            .update(tareas);
+
+                    Map<String, Object> tareas = new HashMap<>();
+                    TareasList taskk = new TareasList(nuevaTarea.getText().toString());
+
+                    db.collection("Tareas")
+                            .document(mAuth.getCurrentUser().getUid())
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @RequiresApi(api = Build.VERSION_CODES.N)
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                Codigo para sacar el documento
+                                    if(task.isSuccessful()){
+//                    Coge el nombre de objetos, no index
+                                        tareas.put("Tarea" + task.getResult().getData().size(), taskk);
+
+                                        db.collection("Tareas")
+                                                .document(mAuth.getCurrentUser().getUid())
+                                                .update(tareas);
+
+                                        Toast.makeText(getContext(), "Tu nueva tarea ha sido agregada correctamente", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+
+                    startActivity(new Intent(getContext(), getContext().getClass()));
+                    return true;
+                }
+                return false;
+            }
+        });
+
+//        for(int i=0; i<elements.size(); i++){
+//            tareas.put("Tarea" + i, elements.get(i));
+//        }
+
+//        db.collection("Tareas")
+//                .document(mAuth.getCurrentUser().getUid())
+//                .set(tareas);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("Pause", "pausa");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("Resume", "resume");
     }
 
     private void allClicks() {
@@ -277,22 +355,6 @@ public class HomeFragment extends Fragment {
                 mSpotifyAppRemote.getPlayerApi().skipNext();
             }
         });
-
-//        nuevaTarea.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-//                if(actionId == EditorInfo.IME_ACTION_DONE
-//                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
-//                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
-//
-//                    Toast.makeText(getContext(), "Enter", Toast.LENGTH_SHORT).show();
-//
-//                    return true;
-//
-//                }
-//                return false;
-//            }
-//        });
 
     }
 
@@ -331,8 +393,6 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-
-
     //        -----------------------------------------------------------------------------------
 //        Para mostrar por la pantalla los datos de la cancion
 //        -----------------------------------------------------------------------------------
@@ -370,7 +430,6 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-
     @Override
     public void onStop() {
         super.onStop();
@@ -378,7 +437,6 @@ public class HomeFragment extends Fragment {
 //        mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onStop");
     }
-
 
     @Override
     public void onDestroy() {
