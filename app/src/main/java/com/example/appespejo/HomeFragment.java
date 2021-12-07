@@ -356,7 +356,7 @@ public class HomeFragment extends Fragment {
     public void onStop() {
         super.onStop();
 //        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
-        mSpotifyAppRemote.getPlayerApi().pause();
+//        mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onStop");
     }
 
@@ -366,7 +366,7 @@ public class HomeFragment extends Fragment {
         super.onDestroy();
 
         SpotifyAppRemote.disconnect(mSpotifyAppRemote);
-        mSpotifyAppRemote.getPlayerApi().pause();
+//        mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onDestroy");
 
     }
