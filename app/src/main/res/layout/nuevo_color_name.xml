@@ -1,49 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cambiarnombre"
-    style="@style/anim"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nuevoColorNombre"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="bottom|center"
     android:background="@drawable/bordes_redondos_botton"
     android:orientation="vertical">
-<!--    tools:context=".HomeActivity"-->
-
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView41"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/lucidagrandebold"
-        android:text="@string/cambiarcorreo"
+        android:text="@string/nuevomodo"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/nombreActual3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/nombreActual"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lucidagrande"
-            android:text="Tu direccion de correo electronico actual es"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-    </LinearLayout>
+        android:fontFamily="@font/lucidagrande"
+        android:text="Por favor, incierta nombre para tu nuevo modo de luces"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/cambiarNombre"
-        android:layout_width="300dp"
+        android:id="@+id/nombreModo"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginLeft="35dp"
@@ -51,17 +37,17 @@
         android:layout_marginRight="35dp"
         android:layout_marginBottom="40dp"
         android:backgroundTint="@color/black"
-        android:drawableLeft="@drawable/correo24"
+        android:drawableLeft="@drawable/colour30"
         android:ems="10"
         android:fontFamily="@font/lucidagrande"
-        android:hint="Correo"
-        android:inputType="textPersonName|textEmailAddress"
+        android:hint=" Nombre del modo"
+        android:inputType="textPersonName"
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/guardarCambios"
+        android:id="@+id/guardarCambios3"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="80dp"

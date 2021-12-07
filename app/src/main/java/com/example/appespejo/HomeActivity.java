@@ -1,11 +1,11 @@
 package com.example.appespejo;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,24 +23,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.util.Objects;
+import java.util.Calendar;
 
 
 public class HomeActivity extends AppCompatActivity {
-   // private String[] nombres = new String[]{"Luces","Pestaña 2","Pestaña 3", "Pesataña 4", "Pesataña 5"};
-
 
      private BottomNavigationView bottomNavigationView;
      FirebaseAuth mAuth;
@@ -52,14 +46,20 @@ public class HomeActivity extends AppCompatActivity {
      Animation animacion2;
      Button spotify,verificado;
      Dialog dialog;
-
-
+     SeekBar seekBar;
+     int ints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Context context = this;
+
+        View tab1 = LayoutInflater.from(HomeActivity.this)
+                .inflate(R.layout.tab1,null);
+
+        seekBar = tab1.findViewById(R.id.seekBar);
+        ints = seekBar.getProgress();
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -72,6 +72,8 @@ public class HomeActivity extends AppCompatActivity {
         perfilEmail = findViewById(R.id.perfilCorreo);
         spotify = findViewById(R.id.spotify);
         verificado = findViewById(R.id.verificado);
+
+//        --------------------------PARA EL ANONIMO-----------------------------
 //        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
 //        if(!usuario.isEmailVerified() && !usuario.isAnonymous()){
@@ -80,6 +82,15 @@ public class HomeActivity extends AppCompatActivity {
 //            FirebaseAuth.getInstance().signOut();
 //        }
 
+//        if(usuario.isEmailVerified()){
+//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
+//            dialogSheetDialog.show();
+//        } else{
+//            dialogSheetDialog.cancel();
+//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
+//        }
+//        -----------------------------------------------------------------------
+//        -----------------------------------------------------------------------
 
         Dialog dialogSheetDialog = new Dialog(getApplicationContext());
 
@@ -88,31 +99,21 @@ public class HomeActivity extends AppCompatActivity {
         dialogSheetDialog.setContentView(dialogSheetView);
         dialogSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-
-
-//        if(usuario.isEmailVerified()){
-//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
-//            dialogSheetDialog.show();
-//        } else{
-//            dialogSheetDialog.cancel();
-//            Log.d("Demo", "El correo es: " + Objects.requireNonNull(mAuth.getCurrentUser()).isEmailVerified());
-//        }
-
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new Tab1()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
-        /*ViewPager2 viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new MiPagerAdapter(this));
-        TabLayout tabs = findViewById(R.id.tabs);
-        new TabLayoutMediator(tabs, viewPager,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position){
-                        tab.setText(nombres[position]);
-                    }
-                }
-        ).attach();*/
+    }
+
+    public void intencsity(View view){
+
+        View tab1 = LayoutInflater.from(HomeActivity.this)
+                .inflate(R.layout.tab1,null);
+
+        seekBar = tab1.findViewById(R.id.seekBar);
+
+        TextView textView = view.findViewById(R.id.intensidad);
+        textView.setText(seekBar.getProgress());
     }
 
     public void logout(View view) {
@@ -120,21 +121,6 @@ public class HomeActivity extends AppCompatActivity {
         LoginManager.getInstance().logOut();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
-    }
-
-    public void spotifyy(View view){
-//        Intent i2 = getPackageManager().getLaunchIntentForPackage("com.spotify.android");
-//        startActivity(i2);
-        String apppackage = "com.spotify.android";
-        try {
-            Intent i = getPackageManager().getLaunchIntentForPackage(apppackage);
-            Log.d("Demo", "Esta cargando");
-            startActivity(i);
-        }
-        catch (Exception  e) {
-            Log.d("Demo", "Sorry, Spotify Apps Not Found");
-            Toast.makeText(this, "Sorry, Spotify Apps Not Found", Toast.LENGTH_LONG).show();
-        }
     }
 
     public void verificado(View view){
@@ -172,8 +158,8 @@ public class HomeActivity extends AppCompatActivity {
                             fragment=new Tab3();
                         break;
 
-                        case R.id.perfil:
-                            fragment=new Tab4();
+                        case R.id.menu_home:
+                            fragment=new HomeFragment();
                         break;
 
                         case R.id.conf:

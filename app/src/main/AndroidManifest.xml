@@ -9,14 +9,17 @@
     </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
-
-
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="Android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="false"
@@ -74,6 +77,10 @@
             android:screenOrientation="portrait"
             />
         <activity
+            android:name=".Tab4"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -87,8 +94,6 @@
             android:name=".AcercaDeActivity"
             android:label="Acerca de ..."
             android:screenOrientation="portrait"/>
-
-
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -116,6 +121,11 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
+        <receiver android:name=".ServicioNotificacion" android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action." />-->
+<!--            </intent-filter>-->
+        </receiver>
     </application>
 
 </manifest>

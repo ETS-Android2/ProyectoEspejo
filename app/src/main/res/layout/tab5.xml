@@ -27,6 +27,20 @@
             android:textSize="24sp" />
 
         <Button
+            android:id="@+id/perfil_ajustes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/perfil"
+            android:fontFamily="@font/lucidagrande"
+            android:onClick="abrirPerfil"
+            android:paddingLeft="20dp"
+            android:text=" Mi perfil"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <Button
             android:id="@+id/seguridad"
             android:layout_width="411dp"
             android:layout_height="wrap_content"
@@ -36,7 +50,7 @@
             android:fontFamily="@font/lucidagrande"
             android:onClick="abrirSeguridad"
             android:paddingLeft="20dp"
-            android:text="  Seguridad"
+            android:text=" Seguridad"
             android:textAlignment="viewStart"
             android:textColor="@color/black" />
 

@@ -34,7 +34,7 @@
         android:ems="10"
         android:fontFamily="@font/lucidagrande"
         android:hint="Email:"
-        android:inputType="textPersonName"
+        android:inputType="textPersonName|textEmailAddress"
         android:textColor="@color/black"
         android:textColorHint="#7A7777"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +146,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/contra_actual"
+            android:id="@+id/password"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#000000"

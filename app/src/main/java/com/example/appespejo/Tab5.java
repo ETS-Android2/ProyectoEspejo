@@ -17,7 +17,7 @@ public class Tab5 extends Fragment {
     Button acercade;
     Button informacion;
     Button seguridad;
-    Button ayuda;
+    Button ayuda, perfil;
 
     /* @Override
      public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class Tab5 extends Fragment {
         informacion = v.findViewById(R.id.informacion);
         seguridad = v.findViewById(R.id.seguridad);
         ayuda = v.findViewById(R.id.ayuda);
+        perfil = v.findViewById(R.id.perfil_ajustes);
 
         preferences.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,13 @@ public class Tab5 extends Fragment {
             }
         });
 
+        perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity().getApplicationContext(), Tab4.class));
+            }
+        });
+
         return v;
 
     }
@@ -83,7 +91,6 @@ public class Tab5 extends Fragment {
         Intent i = new Intent(getActivity().getApplicationContext(), ayuda.class);
         startActivity(i);
     }
-
 
     public void AbrirPreferencias(View view) {
         Intent i = new Intent(getActivity().getApplicationContext(), Preferencias.class);

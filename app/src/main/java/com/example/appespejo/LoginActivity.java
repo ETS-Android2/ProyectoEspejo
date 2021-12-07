@@ -105,8 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
         FacebookSdk.sdkInitialize(LoginActivity.this);
-        
-
 
         //HUELLA
 
@@ -134,12 +132,10 @@ public class LoginActivity extends AppCompatActivity {
 
 //        ----------Else nos deja entrar a login activity y y ejecutar lo necesario----------
         else {
-            Toast.makeText(this, "Verifica tu correo electronico", Toast.LENGTH_SHORT).show();
             Log.d("Demo" , "No esta entrado ni un usuario");
             setupbd();
             context = this;
             createRequest();
-
             }
         }
 
@@ -303,7 +299,7 @@ public class LoginActivity extends AppCompatActivity {
         TextView recuperar = this.findViewById(R.id.Recuperar);
         TextInputEditText textLogin = this.findViewById(R.id.login);
         TextInputEditText textPassword = this.findViewById(R.id.password);
-        ImageView logo = findViewById(R.id.fotoUsuario);
+        ImageView logo = this.findViewById(R.id.fotoUsuario);
         mAuth = FirebaseAuth.getInstance();
         usuarioo = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -343,13 +339,13 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if(task.isSuccessful()){
 
-                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                        startActivity(intent);
-//                                        if(mAuth.getCurrentUser().isEmailVerified()){
-//                                            db.collection("Users")
-//                                                    .document(usuarioo.getUid())
-//                                                    .update("Verificado", true);
-//                                        }
+                                        if(!mAuth.getCurrentUser().isEmailVerified()){
+                                            Toast.makeText(getApplicationContext(), "Verifica tu correo electronico", Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
 
                                     }else{
                                         Toast.makeText(LoginActivity.this, "Incorrecto usuario o/y contrasena", Toast.LENGTH_SHORT).show();

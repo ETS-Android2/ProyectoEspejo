@@ -38,7 +38,7 @@ import java.util.List;
 
 public class Tab2 extends Fragment {
     
-    private static final String CLIENT_ID = "d6720cc30e3c48b283910c2040f81244";
+    private static final String CLIENT_ID = "79c5d539ac3e46d199ef6b06f3530d5c";
     private static final String REDIRECT_URI = "SpotifyTestApp://authenticationResponse";
     private SpotifyAppRemote mSpotifyAppRemote;
     final int REQUEST_CODE = 1337;

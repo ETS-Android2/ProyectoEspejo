@@ -6,114 +6,127 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="Contraseña"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="30dp"
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="Tu contraseña debe tener más de seis caracteres e incluir una combinación de números, letras y caracteres especiales."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textColor="#000000"
+        android:textColorHint="#7D7B7B"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#7E7D7D">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contra_actual"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+
             android:fontFamily="@font/lucidagrande"
-            android:text="Contraseña"
+            android:hint="Contraseña actual"
+            android:password="true"
             android:textColor="@color/black"
-            android:textSize="24dp" />
+            android:textColorHint="#BC000000" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/textView12"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout5"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000"
+        android:textColorHint="#7D7B7B"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#7E7D7D">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/contra_nueva"
             android:layout_width="match_parent"
-            android:layout_height="73dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_height="match_parent"
             android:fontFamily="@font/lucidagrande"
-            android:text="Tu contraseña debe tener más de seis caracteres e incluir una combinación de números, letras y caracteres especiales."
-            android:textColor="@color/black" />
+            android:hint="Contraseña nueva"
+            android:password="true"
+            android:textColor="@color/black"
+            android:textColorHint="#BC000000" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout4"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout6"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:textColor="#000000"
+        android:textColorHint="#7D7B7B"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#7E7D7D">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/repe_contra_nueva"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:textColor="#000000"
-            android:textColorHint="#7D7B7B"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="#7E7D7D">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/contra_actual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-
-                android:fontFamily="@font/lucidagrande"
-                android:hint="Contraseña actual"
-                android:password="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:textColor="#000000"
-            android:textColorHint="#7D7B7B"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="#7E7D7D">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/contra_nueva"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lucidagrande"
-                android:hint="Contraseña nueva"
-                android:password="true"
-                android:textColor="@color/black"
-                android:textColorHint="@color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-
-            android:textColor="#000000"
-            android:textColorHint="#7D7B7B"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="#7E7D7D">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/repe_contra_nueva"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lucidagrande"
-                android:hint="Repetir contraseña nueva"
-                android:password="true"
-                android:textColorHint="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/cambiar_contra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/bordes_redondos_botton"
-            android:backgroundTint="#555555"
+            android:layout_height="match_parent"
             android:fontFamily="@font/lucidagrande"
-            android:text="Cambiar contraseña"
-            android:textColor="@color/white" />
+            android:hint="Repetir contraseña nueva"
+            android:password="true"
+            android:textColor="@color/black"
+            android:textColorHint="#BC000000" />
 
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/cambiar_contra"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bordes_redondos_botton"
+        android:backgroundTint="#555555"
+        android:fontFamily="@font/lucidagrande"
+        android:text="Cambiar contraseña"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
