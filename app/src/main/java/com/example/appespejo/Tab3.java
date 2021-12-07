@@ -1,9 +1,11 @@
 package com.example.appespejo;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,20 +27,78 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class Tab3 extends Fragment {
-    /*private static final int MY_READ_PERMISSION_CODE =0 ;
-    private RecyclerView recyclerView;
-    public AdaptadorLugares adaptador;
+
+    private StorageReference storageRef;
+    public AdaptadorImagenes adaptador;
+
+    Button button;
+
+
+
+    public void subirFichero(Uri fichero, String referencia) {
+        StorageReference ficheroRef = storageRef.child(referencia);
+        ficheroRef.putFile(fichero)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>(){
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Log.d("Almacenamiento", "Fichero subido");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Log.e("Almacenamiento", "ERROR: subiendo fichero");
+                    }
+                });
+    }
+
+   /*private void bajarFichero() {
+        File localFile = null;
+        try {
+            localFile = File.createTempFile("image", "jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        final String path = localFile.getAbsolutePath();
+        Log.d("Almacenamiento", "creando fichero: " + path);
+        StorageReference ficheroRef = storageRef.child("imagenes/imagen");
+        ficheroRef.getFile(localFile)
+                .addOnSuccessListener(new
+                                              OnSuccessListener<FileDownloadTask.TaskSnapshot>(){
+                                                  @Override
+                                                  public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot){
+                                                      Log.d("Almacenamiento", "Fichero bajado");
+                                                      ImageView imageView = findViewById(R.id.imageView);
+                                                      imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+                                                  }
+                                              }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.e("Almacenamiento", "ERROR: bajando fichero");
+            }
+        });
+    }*/
+
+
+
 
     public Tab3(){
         // require a empty public constructor
@@ -48,115 +108,70 @@ public class Tab3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+        storageRef = FirebaseStorage.getInstance().getReference();
+
         View v = inflater.inflate(R.layout.tab3, container, false);
-        adaptador = ((Aplicacion) getApplication()).adaptador;
-        recyclerView = binding.content.recyclerView;
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        button= v.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK);
+                i.setType("image/*");
+                startActivityForResult(i, 1234);
+
+            }
+        });
+
+
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+        Query query = FirebaseFirestore.getInstance()
+                .collection("foto");
+        FirestoreRecyclerOptions<Imagen> opciones = new FirestoreRecyclerOptions
+                .Builder<Imagen>().setQuery(query, Imagen.class).build();
+        adaptador = new AdaptadorImagenes(getContext(), opciones);
         recyclerView.setAdapter(adaptador);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // bajarFichero();
 
 
-
-
-
-
-        if(ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},MY_READ_PERMISSION_CODE);
-        }
-        return v;
-    }
-
-}*/
-
-    RecyclerView recyclerView;
-    GalleryAdapter galleryAdapter;
-    List<String> images;
-    TextView gallery_number;
-    Context context;
-    FirebaseFirestore db;
-
-
-    //vars
-    private DatabaseReference root = FirebaseDatabase.getInstance().getReference("Image");
-    private StorageReference reference = FirebaseStorage.getInstance().getReference();
-    private Uri imageUri;
-
-    private static final int MY_READ_PERMISSION_CODE=101;
-
-    final static int RESULT_OK = 123;
-    Button camara;
-
-    public Tab3(){
-        // require a empty public constructor
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.tab3, container, false);
-
-        gallery_number = v.findViewById(R.id.gallery_number);
-        recyclerView = v.findViewById(R.id.recyclerview_gallery_imagen);
-
-
-        //Permisos
-        if(ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},MY_READ_PERMISSION_CODE);
-        }else{
-            //Carga imagenes
-         loadImages();
-        }
 
         return v;
     }
 
-
-    private void loadImages(){
-
-    recyclerView.setHasFixedSize(true);
-    recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(),2));
-    images= ImageGallery.lisofImages(getContext());
-
-    galleryAdapter = new GalleryAdapter(getContext(), images, new GalleryAdapter.PhotoListener() {
-        @Override
-        public void onPhotoClick(String path) {
-            //Para cuando pinchas la foto
-          Toast.makeText(getContext(),"La ruta es "+path,Toast.LENGTH_SHORT).show();
-        }
-    });
-
-    //Meter la vista en el recycle
-    recyclerView.setAdapter(galleryAdapter);
-       // images = images.subList(0,Math.min(99, images.size()));
-    gallery_number.setText("Photos("+images.size()+")");
-
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode==MY_READ_PERMISSION_CODE){
-            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this.getContext(),"Read external storage permission granted",Toast.LENGTH_SHORT).show();
-            loadImages();
-            }
-            else {
-                Toast.makeText(this.getContext(),"Read external storage denied", Toast.LENGTH_SHORT);
+    public void onActivityResult(final int requestCode,
+                                    final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 1234) {
+                subirFichero(data.getData(), "imagenes/imagen");
             }
         }
     }
 
 
-    //Check from permission
+
+
+@Override public void onStart() {
+        super.onStart();
+        adaptador.startListening();
+    }
+    @Override public void onStop() {
+        super.onStop();
+        adaptador.stopListening();
+    }
+
+
+
+
+
+
+
+
+
+
 
 }
 
