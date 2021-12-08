@@ -7,6 +7,30 @@
         <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/tab3.xml" value="0.1721014492753623" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.1787037037037037" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_prueba.xml" value="0.1859375" />
+        <entry key="app/src/main/res/layout/activity_recuperar_contr.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_verificar.xml" value="0.29375" />
+        <entry key="app/src/main/res/layout/cambiar_account.xml" value="0.3548717948717949" />
+        <entry key="app/src/main/res/layout/cambiar_apellido.xml" value="0.17592592592592593" />
+        <entry key="app/src/main/res/layout/cambiar_correo.xml" value="0.17592592592592593" />
+        <entry key="app/src/main/res/layout/cambiar_nombre.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/cambiarnombre.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/correo_no_verificado.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/dialog_anonimo.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/gallery_item.xml" value="0.3676923076923077" />
+        <entry key="app/src/main/res/layout/modos_layout.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/nuevo_color_name.xml" value="0.3037037037037037" />
+        <entry key="app/src/main/res/layout/politica_privacidad.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/tab1.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/tab2.xml" value="0.31614583333333335" />
+        <entry key="app/src/main/res/layout/tab3.xml" value="0.31614583333333335" />
+        <entry key="app/src/main/res/layout/tab4.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/tab5.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/tareas_layout.xml" value="0.31614583333333335" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
   </component>

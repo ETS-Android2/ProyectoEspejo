@@ -198,28 +198,15 @@ public class Tab1 extends Fragment {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 //                Codigo para sacar el documento
                         if(task.isSuccessful()){
-
                             List<HashMap> prueba = new ArrayList<HashMap>();
-
-
 //                    Coge el nombre de objetos, no index
                             for(int i=0; i<task.getResult().getData().size(); i++) {
                                 prueba.add(i, (HashMap) task.getResult().getData().get("Prueba"+i));
                             }
-//                            for(int i=0; i<task.getResult().getData().size(); i++){
-//                                task.getResult().getData().forEach((k, v) -> prueba.add(0,v));
-//                            }
-
-//                            for(Map.Entry<String, Object> objeto: task.getResult().getData()){
-////                                objeto = task.getResult().getData();
-////                                prueba.add(objeto);
-//                            }
                             Log.d("PruebaArray", prueba.toString());
-//                            Log.d("Prueba", prueba.indexOf(prueba.get(1)));
-//                            Log.d("Prueba", task.getResult().getData().get("night").toString());
+
                             recyclerView = view.findViewById(R.id.recyclerModos);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
                             adaptador = new ColorListAdapter(getContext(), prueba);
                             recyclerView.setAdapter(adaptador);
 
@@ -239,6 +226,7 @@ public class Tab1 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+//        modos(v);
 //        int defaultValue = getResources().getInteger(seekBar.getProgress());
 //        seekBar.setProgress(defaultValue);
     }
@@ -261,39 +249,63 @@ public class Tab1 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-                View bottomSheetView = LayoutInflater.from(getContext())
-                        .inflate(R.layout.nuevo_color_name,null);
-                bottomSheetDialog.setContentView(bottomSheetView);
+                db.collection("Luces")
+                        .document(mAuth.getCurrentUser().getUid())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                Codigo para sacar el documento
+                                if(task.isSuccessful()){
+//                    Coge el nombre de objetos, no index
+                                    lucess.put("Prueba" + task.getResult().getData().size(), colour);
 
-                bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                bottomSheetDialog.show();
+                                    db.collection("Luces")
+                                            .document(mAuth.getCurrentUser().getUid())
+                                            .update(lucess);
 
-                guardar = bottomSheetView.findViewById(R.id.guardarCambios3);
+                                    Toast.makeText(getContext(), "Tu nuevo modo ha sido guardado correctamente", Toast.LENGTH_SHORT).show();
 
-                nombreModo = bottomSheetView.findViewById(R.id.nombreModo);
+                                }
+                            }
+                        });
 
-                guardar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                startActivity(new Intent(getContext(), getContext().getClass()));
 
-                        lucess.put(nombreModo.getText().toString(), colour);
 
-                        db.collection("Luces")
-                                .document(mAuth.getCurrentUser().getUid())
-                                .update(lucess);
-
-                        Toast.makeText(getContext(), "Tu nuevo modo ha sido guardado correctamente", Toast.LENGTH_SHORT).show();
-                        Log.d("Demo", "El nombre nuevo es: " + nombreModo.getText().toString());
-
-                        bottomSheetDialog.cancel();
-//                        updateUI(mAuth.getCurrentUser());
-                    }
-                });
+//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+//                View bottomSheetView = LayoutInflater.from(getContext())
+//                        .inflate(R.layout.nuevo_color_name,null);
+//                bottomSheetDialog.setContentView(bottomSheetView);
+//
+//                bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//                bottomSheetDialog.show();
+//
+//                guardar = bottomSheetView.findViewById(R.id.guardarCambios3);
+//                nombreModo = bottomSheetView.findViewById(R.id.nombreModo);
+//
+//                guardar.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        lucess.put(nombreModo.getText().toString(), colour);
+//
+//                        db.collection("Luces")
+//                                .document(mAuth.getCurrentUser().getUid())
+//                                .update(lucess);
+//
+//                        Toast.makeText(getContext(), "Tu nuevo modo ha sido guardado correctamente", Toast.LENGTH_SHORT).show();
+//                        Log.d("Demo", "El nombre nuevo es: " + nombreModo.getText().toString());
+//
+//                        bottomSheetDialog.cancel();
+////                        updateUI(mAuth.getCurrentUser());
+//                    }
+//                });
             }
         });
 
-        Log.d("Demo", "Rojo " + colorR + "Green " + colorG + "Blue " + colorB);
+        Log.d("Demo", "Rojo " + colorR + " Green " + colorG + " Blue " + colorB);
     }
 
 }

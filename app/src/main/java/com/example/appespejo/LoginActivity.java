@@ -10,7 +10,9 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -105,19 +107,15 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
         FacebookSdk.sdkInitialize(LoginActivity.this);
-
         //HUELLA
-
         fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
         mParaLabel = (TextView) findViewById(R.id.paraLabel);
-
 
         if (fingerprintManager.isHardwareDetected()){
             mParaLabel.setText("Put finger");
             FingerprintHandle fingerprintHandler = new FingerprintHandle(this);
             fingerprintHandler.startAuth(fingerprintManager,null);
         }
-
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null && usuarioo.isEmailVerified())
@@ -277,14 +275,12 @@ public class LoginActivity extends AppCompatActivity {
 //    -----------------------------------------------------------------------------------
 //    -----------------------------------------------------------------------------------
 
-
     public static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
 
 //    ------------------Funcion main donde definimos todos onClick-----------------------
 //    -----------------------------------------------------------------------------------
@@ -322,6 +318,53 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.d("Demo", "facebook:onError", error);
+            }
+        });
+
+        textPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(actionId == EditorInfo.IME_ACTION_DONE
+                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
+
+                    Toast.makeText(LoginActivity.this, "Enter", Toast.LENGTH_SHORT).show();
+
+                    String inputName = textLogin.getText().toString();
+                    String inputPassword = Objects.requireNonNull(textPassword.getText()).toString();
+
+                    if(!inputName.isEmpty() || !inputPassword.isEmpty()){
+                        mAuth.signInWithEmailAndPassword(inputName,inputPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                if(task.isSuccessful()){
+
+                                    if(!mAuth.getCurrentUser().isEmailVerified()){
+                                        Toast.makeText(getApplicationContext(), "Verifica tu correo electronico", Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                }else{
+                                    Toast.makeText(LoginActivity.this, "Incorrecto usuario o/y contrasena", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                    if(inputName.isEmpty() || inputPassword.isEmpty()){
+                        Toast.makeText(LoginActivity.this, "Rellena todos los campos", Toast.LENGTH_SHORT).show();
+                    }
+                    if(!isEmailValid(inputName)){
+                        Toast.makeText(LoginActivity.this, "Incierta tu email por favor", Toast.LENGTH_SHORT).show();
+                    }
+
+                    return true;
+
+                }
+                return false;
             }
         });
 

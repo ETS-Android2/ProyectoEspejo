@@ -95,7 +95,6 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isComplete()){
 
-
                     List<Long> rojo = new ArrayList<>();
                     List<Long> verde = new ArrayList<>();
                     List<Long> azul = new ArrayList<>();
@@ -111,7 +110,8 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
 //                    holder.button.setText("Modo" + (modo.indexOf(modo.get(position))+1));
                     holder.text.setText("Modo" + (modo.indexOf(modo.get(position))+1));
                     holder.button.setBackgroundColor(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
-
+//                    holder.button.setBackgroundResource(R.drawable.bordes_redondos_botton);
+//                    holder.button.setColorFilter(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
                     Log.d("RedArray", rojo.toString());
 
                 }
