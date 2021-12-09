@@ -13,12 +13,15 @@
     <string name="tuemail">Your email</string>
     <string name="enviar">Send</string>
     <string name="registrarme">Register</string>
+    <string name="anonimo">Enter like an anonimus</string>
     <string name="apellido">Last name</string>
     <string name="nombre">Name</string>
     <string name="repitcontra">Repit password</string>
     <string name="cambiarcorreo">Change email address</string>
     <string name="cambiarnombre">Change name</string>
+    <string name="cambiaraccount">Change account</string>
     <string name="cambiarapellido">Chande surname</string>
+    <string name="confirmarCorreo">Confirm the electronic address</string>
     <string name="guardarcambios">Save changes</string>
     <string name="abrir_tab1">Tab1</string>
 

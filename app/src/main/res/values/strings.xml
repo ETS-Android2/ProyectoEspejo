@@ -2,11 +2,15 @@
     <!--    <string name="default_web_client_id" translatable="false">123.apps.googleusercontent.com</string>-->
     <string name="app_name">Mirrow Me</string>
     <string name="welcome_home">Welcome home</string>
-    <!--    <string name="default_web_client_id" translatable="false">1:974130529147:android:f63b698ac9ff46895fb3de</string>-->
+
+    <!--    NO TRADUCIR FACEBOOK!!!!! -->
     <string name="facebook_app_id">267924805218319</string>
     <string name="fb_login_protocol_scheme">fb267924805218319</string>
     <!--    <string name="facebook_client_token" translatable="false">ab9101a7e44426b9cee97238bea4ab92</string>-->
+    <!--    -->
+
     <string name="login">Inicio Sesión</string>
+    <string name="modo">Modo</string>
     <string name="cerrarsesion">Cerrar session</string>
     <string name="registro">Registrarse</string>
     <string name="recupecontra">Recuperar la contraseña</string>
@@ -14,12 +18,31 @@
     <string name="tuemail">Tu email</string>
     <string name="enviar">Enviar</string>
     <string name="registrarme">Registrarme</string>
+    <string name="anonimo">Entrar como anonimo</string>
     <string name="apellido">Apellido</string>
-    <string name="nombre">Nombre</string>
+    <string name="account">Username</string>
+    <string name="nombre"> Nombre</string>
+    <string name="miperfil"> Mi perfil</string>
+    <string name="seguridad"> Seguridad</string>
+    <string name="privacidad"> Privacidad</string>
+    <string name="preferenciasdeusu"> Preferencias de usuario</string>
+    <string name="informacion"> Informacion</string>
+    <string name="ayuda"> Ayuda</string>
+    <string name="acercade"> Acerca de</string>
     <string name="repitcontra">Repetir contraseña</string>
     <string name="cambiarcorreo">Cambiar correo electronico</string>
     <string name="cambiarnombre">Cambiar nombre</string>
+    <string name="cambiaraccount">Cambiar account</string>
     <string name="cambiarapellido">Cambiar apellido</string>
     <string name="guardarcambios">Guardar cambios</string>
     <string name="abrir_tab1">Tab1</string>
+    <string name="nuevomodo">Nombre de nuevo modo</string>
+
+    <string name="accesoDenegado">Acceso denegado</string>
+    <string name="confirmarCorreo">Confirmar correo electrónico</string>
+    <string name="correoEnviado">Se le ha enviado un correo para verificar dicho cambio. Es posible que el mensaje haya sido enviado en la bandeja de SPAM o similar.</string>
+    <string name="paraAcceder">Para acceder a este contenido necesita registrarse</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

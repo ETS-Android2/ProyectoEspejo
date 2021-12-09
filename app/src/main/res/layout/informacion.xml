@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="354dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/lucidagrande"
+            android:text="Información"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/politica_de_datos"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/hoja"
+            android:fontFamily="@font/lucidagrande"
+            android:paddingLeft="20dp"
+            android:text="  Política de datos"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/condiciones"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/firma"
+            android:fontFamily="@font/lucidagrande"
+            android:paddingLeft="20dp"
+            android:text="  Condiciones de uso"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/mapa"
+            android:layout_width="411dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/mapa"
+            android:fontFamily="@font/lucidagrande"
+            android:paddingLeft="20dp"
+            android:text="  Mapa"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

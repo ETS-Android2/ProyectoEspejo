@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
+    android:backgroundTint="@color/white"
+    android:key="preferencias_principal">
+
+    <CheckBoxPreference
+        android:key="noche"
+        android:summary="Activar el modo noche"
+        android:title="Modo noche" />
+</PreferenceScreen>

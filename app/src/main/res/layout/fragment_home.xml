@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FEFFFE"
+    tools:context=".HomeFragment">
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/lucidagrandebold"
+        android:text="@string/welcome_home"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lucidagrande"
+        android:text="fecha de hoy"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/welcome"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
+
+    <TextView
+        android:id="@+id/tiempoGrados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="grados"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/localizacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lucidagrande"
+        android:text="location"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/tiempoGrados"
+        app:layout_constraintTop_toBottomOf="@+id/tiempoGrados" />
+
+    <ImageView
+        android:id="@+id/spotyBack"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/bordes_redondos_botton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/localizacion" />
+
+    <ImageView
+        android:id="@+id/homeSpotyImage"
+        android:layout_width="140dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bordes_redondos_botton"
+        app:layout_constraintBottom_toBottomOf="@+id/spotyBack"
+        app:layout_constraintStart_toStartOf="@+id/spotyBack"
+        app:layout_constraintTop_toTopOf="@+id/spotyBack" />
+
+    <ImageView
+        android:id="@+id/homeSpotyImage2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/radius_luces_home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spotyBack" />
+
+    <ImageView
+        android:id="@+id/homeSpotyImage3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bordes_redondos_botton"
+        android:backgroundTint="#DFDFDF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeSpotyImage2" />
+
+    <Button
+        android:id="@+id/spotyPlay"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/play"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/spotyBack"
+        app:layout_constraintEnd_toEndOf="@+id/spotyBack"
+        app:layout_constraintStart_toEndOf="@+id/homeSpotyImage">
+
+        <Button
+            android:id="@+id/spotyNext"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/next"
+            app:layout_constraintBottom_toBottomOf="@+id/spotyPause"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/spotyPause"
+            app:layout_constraintTop_toTopOf="@+id/spotyPause" />
+
+        <Button
+            android:id="@+id/spotyPause"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="61dp"
+            android:background="@drawable/pausa"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/spotyNext"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/homeSpotyPrevious"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/homeSpotyPrevious"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/back"
+            app:layout_constraintBottom_toBottomOf="@+id/spotyPause"
+            app:layout_constraintEnd_toStartOf="@+id/spotyPause"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/spotyPause"
+            tools:ignore="TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/homeSpotyCancion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/lucidagrandebold"
+        android:text="Nombre de la cancion"
+        android:textColor="#020202"
+        app:layout_constraintEnd_toEndOf="@+id/spotyBack"
+        app:layout_constraintStart_toEndOf="@+id/homeSpotyImage"
+        app:layout_constraintTop_toTopOf="@+id/spotyBack" />
+
+    <TextView
+        android:id="@+id/spotyHomeArtista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="Artista"
+        android:textColor="#020202"
+        app:layout_constraintEnd_toEndOf="@+id/homeSpotyCancion"
+        app:layout_constraintStart_toStartOf="@+id/homeSpotyCancion"
+        app:layout_constraintTop_toBottomOf="@+id/homeSpotyCancion" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="48dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/lamp_color"
+        app:layout_constraintStart_toStartOf="@+id/homeSpotyImage2"
+        app:layout_constraintTop_toTopOf="@+id/homeSpotyImage2" />
+
+    <Switch
+        android:id="@+id/switchLuces"
+        android:layout_width="56dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/black"
+        android:backgroundTint="@color/white"
+        android:thumbTint="#474444"
+        android:trackTint="#7C7575"
+        app:layout_constraintEnd_toEndOf="@+id/homeSpotyImage2"
+        app:layout_constraintStart_toEndOf="@+id/imageView16"
+        app:layout_constraintTop_toTopOf="@+id/imageView16"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/nombreLampara"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="Espejito inteligente"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toBottomOf="@+id/imageView16" />
+
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="Temperatura de ambiente"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/homeSpotyImage3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView17" />
+
+    <TextView
+        android:id="@+id/intensidadLucesHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lucidagrande"
+        android:onClick="setup"
+        android:text="Intensidad"
+        android:textColor="#8A8A8A"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/nombreLampara"
+        app:layout_constraintTop_toBottomOf="@+id/nombreLampara" />
+
+    <TextView
+        android:id="@+id/textView53"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="temperature"
+        android:textColor="#8A8A8A"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/textView52"
+        app:layout_constraintTop_toBottomOf="@+id/textView52" />
+
+    <ImageView
+        android:id="@+id/imageView17"
+        android:layout_width="50dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/home_temperature"
+        app:layout_constraintStart_toStartOf="@+id/homeSpotyImage3"
+        app:layout_constraintTop_toTopOf="@+id/homeSpotyImage3" />
+
+    <TextView
+        android:id="@+id/textView54"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:fontFamily="@font/lucidagrandebold"
+        android:text="Reminders"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/homeSpotyImage2"
+        app:layout_constraintTop_toTopOf="@+id/homeSpotyImage2" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/homeSpotyImage3"
+        app:layout_constraintTop_toBottomOf="@+id/nuevaTarea">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleTareas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="75dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_end="16dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/note"
+        app:layout_constraintEnd_toEndOf="@+id/spotyBack"
+        app:layout_constraintTop_toTopOf="@+id/spotyBack" />
+
+    <ImageView
+        android:id="@+id/iconWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/mapa"
+        app:layout_constraintBottom_toBottomOf="@+id/localizacion"
+        app:layout_constraintEnd_toStartOf="@+id/localizacion"
+        app:layout_constraintTop_toTopOf="@+id/tiempoGrados" />
+
+    <EditText
+        android:id="@+id/nuevaTarea"
+        android:layout_width="197dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:fontFamily="@font/lucidagrande"
+        android:gravity="center|left"
+        android:hint=" Añadir tarea"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:textColor="#000000"
+        android:textColorHint="#575656"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView54" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="@+id/nuevaTarea"
+        app:layout_constraintEnd_toStartOf="@+id/nuevaTarea"
+        app:layout_constraintStart_toEndOf="@+id/homeSpotyImage2"
+        app:layout_constraintTop_toTopOf="@+id/nuevaTarea" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

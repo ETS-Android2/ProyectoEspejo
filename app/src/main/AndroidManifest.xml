@@ -9,9 +9,17 @@
     </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="Android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="false"
@@ -22,19 +30,60 @@
         android:theme="@style/Theme.Design.NoActionBar">
         <activity
             android:name=".HomeActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".seguridad"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RecuperarContr"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RegisterActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Preferencias"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".CambiarContra"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Informacion"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ayuda"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".mapa"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".politica_de_datos"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".condiciones_de_uso"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".Tab4"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashScreen"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,12 +93,13 @@
         <activity
             android:name=".AcercaDeActivity"
             android:label="Acerca de ..."
-            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/google_maps_key" />
 
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
@@ -67,16 +117,15 @@
         </activity>
 
         <activity
-            android:name=".Tab5"
-            android:exported="true"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name="com.spotify.sdk.android.auth.LoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
+        <receiver android:name=".ServicioNotificacion" android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action." />-->
+<!--            </intent-filter>-->
+        </receiver>
         <activity
             android:name="com.example.android.architecture.blueprints.appEspejo"
             android:windowSoftInputMode="adjustResize"

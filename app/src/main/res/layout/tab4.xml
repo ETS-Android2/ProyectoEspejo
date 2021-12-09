@@ -8,129 +8,229 @@
     android:background="#F7FFFFFF"
     tools:context=".HomeActivity">
 
-    <TextView
-        android:id="@+id/perfilCorreo"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:background="#FFFFFF"
-        android:drawableRight="@drawable/flecha"
-        android:fontFamily="@font/lucidagrande"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="No logeado"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        android:textIsSelectable="false"
-        android:textSize="18sp"
-        app:drawableTint="#6D000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/perfilApellido" />
 
-    <TextView
-        android:id="@+id/perfilApellido"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:background="#FFFFFF"
-        android:drawableRight="@drawable/flecha"
-        android:fontFamily="@font/lucidagrande"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="No logeado"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        android:textIsSelectable="false"
-        android:textSize="18sp"
-        app:drawableTint="#6D000000"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="190dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/perfilNombre" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/fondo_perfil" />
 
-    <TextView
-        android:id="@+id/perfilNombre"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="64dp"
-        android:background="#FFFFFF"
-        android:drawableRight="@drawable/flecha"
-        android:fontFamily="@font/lucidagrande"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="No logeado"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        android:textIsSelectable="false"
-        android:textSize="18sp"
-        app:drawableTint="#6D000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/perfilFoto" />
 
     <Button
         android:id="@+id/cerrarSesion"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:background="#000000"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bordes_redondos_botton"
+        android:backgroundTint="#555555"
         android:fontFamily="@font/lucidagrande"
-        android:onClick="logout"
         android:text="Cerrar sesion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/infoPersona"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/perfilFoto">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/perfilAccount"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="24dp"
+                android:background="#FFFFFF"
+                android:drawableRight="@drawable/flecha"
+                android:fontFamily="@font/lucidagrande"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="No logeado"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                app:drawableTint="#6D000000" />
+
+            <TextView
+                android:id="@+id/perfilApellido"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:background="#FFFFFF"
+                android:drawableRight="@drawable/flecha"
+                android:fontFamily="@font/lucidagrande"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="No logeado"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                app:drawableTint="#6D000000" />
+
+            <TextView
+                android:id="@+id/perfilNombre"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:background="#FFFFFF"
+                android:drawableRight="@drawable/flecha"
+                android:fontFamily="@font/lucidagrande"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="No logeado"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                app:drawableTint="#6D000000" />
+
+            <TextView
+                android:id="@+id/perfilCorreo"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:background="#FFFFFF"
+                android:drawableRight="@drawable/flecha"
+                android:fontFamily="@font/lucidagrande"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="No logeado"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="#000000"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                app:drawableTint="#6D000000" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/correoNoVerificado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/alert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/alert_mini24"
+                    app:tint="#FA0707" />
+
+                <TextView
+                    android:id="@+id/correoVerificado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lucidagrandebold"
+                    android:text="  Verifica tu correo"
+                    android:textColor="#FA0707"
+                    app:layout_constraintBottom_toBottomOf="@+id/alert"
+                    app:layout_constraintStart_toEndOf="@+id/alert"
+                    app:layout_constraintTop_toTopOf="@+id/alert" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
     <ImageView
         android:id="@+id/perfilFoto"
-        android:layout_width="132dp"
-        android:layout_height="133dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/bordes_redondos"
         android:backgroundTint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_account_circle_24" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/correoNoVerificado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@+id/perfilCorreo"
-        tools:layout_editor_absoluteX="-16dp">
-
-        <ImageView
-            android:id="@+id/alert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/alert_mini24"
-            app:tint="#FA0707" />
+        android:id="@+id/dialogWindow"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/correoVerificado"
+            android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/lucidagrandebold"
-            android:text="  Verifica tu correo"
-            android:textColor="#FA0707"
-            app:layout_constraintBottom_toBottomOf="@+id/alert"
-            app:layout_constraintStart_toEndOf="@+id/alert"
-            app:layout_constraintTop_toTopOf="@+id/alert" />
+            android:gravity="center"
+            android:text="@string/accesoDenegado"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/lucidagrande"
+            android:gravity="center"
+            android:text="@string/paraAcceder"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <Button
+            android:id="@+id/registrarAnonimo"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/bordes_redondos_botton"
+            android:backgroundTint="#555555"
+            android:fontFamily="@font/lucidagrande"
+            android:onClick="registrarAnonimo"
+            android:text="@string/registrarme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/alert96"
+            android:backgroundTint="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -25,20 +25,21 @@ public class ImageGallery {
         ArrayList <String> listofAllImages= new ArrayList<>();
         String absolutePathofImages;
 
+        //Ruta de la foto
         uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        String[] projection ={MediaStore.MediaColumns.DATA,
-        MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
+        String[] projection ={MediaStore.MediaColumns.DATA,MediaStore.Images.Media.BUCKET_DISPLAY_NAME};
 
 
         String[] projection2 = new String[]{
                 MediaStore.Images.ImageColumns.DATA, MediaStore.Images.ImageColumns.DATE_ADDED, MediaStore.Video.VideoColumns.DATE_ADDED
         };
+
+        // Guiar un camino
         Cursor cur = context.getContentResolver()
                 .query(uri, projection2, null, null, MediaStore.Images.ImageColumns.DATE_ADDED + " DESC");
 
         columna_index_data=cur.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
         //column_index_folder_name=cur.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-
 
         String orderBy=MediaStore.Video.Media.DATE_TAKEN;
         //cursor = context.getContentResolver().query(uri,projection,null,

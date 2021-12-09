@@ -69,7 +69,7 @@
         android:id="@+id/googleLogin"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="20dp"
         android:background="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/facebook"
@@ -85,7 +85,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
         android:animateLayoutChanges="true"
         android:animationCache="true"
         android:textColor="#000000"
@@ -127,8 +126,7 @@
         android:id="@+id/textInputLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="#32435C"
         android:textColor="#000000"
         android:textColorHint="#7D7B7B"
@@ -166,8 +164,8 @@
         android:id="@+id/divider"
         android:layout_width="300dp"
         android:layout_height="1dp"
+        android:layout_marginTop="24dp"
         android:background="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/googleLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signUpButton" />
@@ -190,7 +188,7 @@
         android:id="@+id/facebook"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="20dp"
         android:background="#FBFBFB"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -220,6 +218,28 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/facebook"
         tools:ignore="DuplicateClickableBoundsCheck" />
+
+    <TextView
+        android:id="@+id/paraLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="@color/black"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="695dp" />
+
+    <TextView
+        android:id="@+id/anonimo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="@string/anonimo"
+        android:textColor="#000000"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

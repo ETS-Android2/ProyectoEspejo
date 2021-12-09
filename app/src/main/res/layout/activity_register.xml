@@ -7,24 +7,6 @@
     android:background="#FFFFFF"
     tools:context=".RegisterActivity">
 
-    <EditText
-        android:id="@+id/Email"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
-        android:ems="10"
-        android:fontFamily="@font/lucidagrande"
-        android:hint="Email:"
-        android:inputType="textPersonName"
-        android:textColor="@color/black"
-        android:textColorHint="#7A7777"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Apellido"
-        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
-
     <!--    <EditText-->
     <!--        android:id="@+id/editTextRegContras"-->
     <!--        android:layout_width="300dp"-->
@@ -43,34 +25,44 @@
     <!--        app:layout_constraintTop_toBottomOf="@+id/EditTextRegUsername"-->
     <!--        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />-->
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/Email"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="166dp" />
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#000000"
+        android:ems="10"
+        android:fontFamily="@font/lucidagrande"
+        android:hint="Email:"
+        android:inputType="textPersonName|textEmailAddress"
+        android:textColor="@color/black"
+        android:textColorHint="#7A7777"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Account"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/registrarmeButton"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_marginTop="24dp"
         android:background="#000000"
         android:fontFamily="@font/lucidagrande"
         android:text="@string/registrarme"
         android:textColor="#EBEBEB"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.361"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton"
         tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        app:layout_constraintBottom_toTopOf="@+id/Nombre"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +73,7 @@
         android:id="@+id/Apellido"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#000000"
         android:ems="10"
         android:fontFamily="@font/lucidagrande"
@@ -88,7 +81,6 @@
         android:inputType="textPersonName"
         android:textColor="@color/black"
         android:textColorHint="#7A7777"
-        app:layout_constraintBottom_toTopOf="@+id/Email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +101,6 @@
         android:textColorHighlight="#34445B"
         android:textColorHint="#7A7777"
         android:textColorLink="#34445B"
-        app:layout_constraintBottom_toTopOf="@+id/Apellido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,15 +108,34 @@
         app:layout_constraintVertical_chainStyle="spread"
         tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
+    <EditText
+        android:id="@+id/Account"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#000000"
+        android:ems="10"
+        android:fontFamily="@font/lucidagrande"
+        android:hint="@string/account"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHighlight="#34445B"
+        android:textColorHint="#7A7777"
+        android:textColorLink="#34445B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Apellido"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:textColorHint="#7C7A7A"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false"
         app:hintTextColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -157,12 +167,12 @@
         android:id="@+id/textInputLayout2"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#1B1C1E"
         android:textColorHint="#7C7A7A"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false"
         app:hintTextColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -189,6 +199,7 @@
         android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/black"
         android:buttonTint="@color/black"
         android:checked="false"
@@ -196,10 +207,10 @@
         android:text="He leido"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/politicaDePrivacidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/lucidagrande"
@@ -207,7 +218,7 @@
         android:textColor="#436FB8"
         app:layout_constraintBottom_toBottomOf="@+id/radioButton"
         app:layout_constraintStart_toEndOf="@+id/radioButton"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/radioButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
