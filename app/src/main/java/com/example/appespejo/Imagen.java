@@ -1,23 +1,21 @@
 package com.example.appespejo;
 
-public class Imagen {
-    private String titulo;
+
+import java.util.Date;
+
+public class Imagen{
     private String url;
     private long tiempo;
 
-    public Imagen(String titulo, String url, long tiempo) {
-        this.titulo = titulo;
+    public Imagen() {
+    }
+
+    public Imagen(String url, long tiempo) {
         this.url = url;
-        this.tiempo = tiempo;
+        tiempo = new Date().getTime();
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
 
     public String getUrl() {
         return url;

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.fingerprint.FingerprintManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -95,6 +96,7 @@ public class HomeFragment extends Fragment {
     public static final int AUTH_CODE_REQUEST_CODE = 0x11;
 
 
+
     /* @Override
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -136,6 +138,8 @@ public class HomeFragment extends Fragment {
         nuevaTarea = v.findViewById(R.id.nuevaTarea);
 
 
+
+
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
 
@@ -148,7 +152,7 @@ public class HomeFragment extends Fragment {
         AuthorizationRequest request = builder.build();
         AuthorizationClient.openLoginActivity(getActivity(), REQUEST_CODE, request);
 
-        allClicks();
+         // allClicks();
 
         Date d = new Date();
         CharSequence s = DateFormat.format("d MMMM yyyy ", d.getTime());
@@ -364,6 +368,7 @@ public class HomeFragment extends Fragment {
         // We will start writing our code here.
 
         // Set the connection parameters
+
         ConnectionParams connectionParams =
                 new ConnectionParams.Builder(CLIENT_ID)
                         .setRedirectUri(REDIRECT_URI)
@@ -391,6 +396,8 @@ public class HomeFragment extends Fragment {
                         Log.d("Demo", "No se ha connectado con el spotify");
                     }
                 });
+
+
     }
 
     //        -----------------------------------------------------------------------------------
@@ -442,7 +449,7 @@ public class HomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+        //SpotifyAppRemote.disconnect(mSpotifyAppRemote);
 //        mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onDestroy");
 

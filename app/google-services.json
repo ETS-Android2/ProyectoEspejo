@@ -1,24 +1,25 @@
 {
   "project_info": {
     "project_number": "974130529147",
+    "firebase_url": "https://prueba1-9bb89-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "prueba1-9bb89",
     "storage_bucket": "prueba1-9bb89.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:974130529147:android:f63b698ac9ff46895fb3de",
+        "mobilesdk_app_id": "1:974130529147:android:c93214d70d90a4735fb3de",
         "android_client_info": {
-          "package_name": "com.example.appespejo"
+          "package_name": "com.example.raspberry"
         }
       },
       "oauth_client": [
         {
-          "client_id": "974130529147-f2r9q7i7vikl7n1g2uh3g3jmtlao79mu.apps.googleusercontent.com",
+          "client_id": "974130529147-kc1d040l0q02oallavntj4c9ifdotncr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.appespejo",
-            "certificate_hash": "0d1d83a2b9daad450ab57968259c37f1197f54b2"
+            "package_name": "com.example.raspberry",
+            "certificate_hash": "2bb75108b349f66e83e6915506582bc611b560a9"
           }
         },
         {
