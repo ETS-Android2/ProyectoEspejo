@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
 
-    implementation 'com.facebook.android:facebook-login:12.0.1'
+    implementation 'com.facebook.android:facebook-login:12.1.0'
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
@@ -72,7 +72,7 @@ dependencies {
 //    implementation "com.github.firdausmaulan:GlideSlider:1.5.1"
 //    implementation 'com.squareup.picasoo:picasso:2.71828'
 
-    implementation "com.google.code.gson:gson:2.8.6"
+    implementation "com.google.code.gson:gson:2.8.8"
 //    implementation 'com.github.kaaes:spotify-web-api-android:0.4.1'
     implementation 'com.spotify.android:auth:1.2.6' // Maven dependency
 
@@ -82,7 +82,6 @@ dependencies {
     implementation files ('../libs/spotify-app-remote-release-0.7.2.aar')
     implementation files ('../weather/QWeather_Public_Android_V4.8.jar')
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
-
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.google.android.gms:play-services-maps:18.0.0'
     //implementation project(":colorpickerview")
@@ -92,9 +91,19 @@ dependencies {
 //    NO ACTUALIZAR!!!, dejar 3.10.0
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
 //    _____________________________________________________________
-    
-    implementation 'com.google.code.gson:gson:2.8.6'
+
 
     implementation 'com.android.volley:volley:1.2.1'
+
+
+    implementation 'com.firebaseui:firebase-ui-firestore:6.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    
+
+
+
+
 
 }

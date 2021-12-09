@@ -12,7 +12,7 @@ import com.facebook.login.Login;
 
 public class FingerprintHandle extends FingerprintManager.AuthenticationCallback{
 
-        private Context context;
+      /*  private Context context;
 
         public FingerprintHandle(Context context){
             this.context = context;
@@ -40,10 +40,10 @@ public class FingerprintHandle extends FingerprintManager.AuthenticationCallback
     }
 
         private void update(String s, boolean b){
-            TextView paraLabel = (TextView) ((LoginActivity)context).findViewById(R.id.paraLabel);
+            TextView paraLabel = (TextView) ((HomeActivity)context).findViewById(R.id.paraLabel);
 
             paraLabel.setText(s);
         }
-
+*/
 }
 

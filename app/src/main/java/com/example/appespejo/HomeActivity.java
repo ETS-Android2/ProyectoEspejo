@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
      Button spotify,verificado;
      Dialog dialog;
      SeekBar seekBar;
+
      int ints;
 
     @Override

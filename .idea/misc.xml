@@ -3,66 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../../layout/custom_preview.xml" value="0.19270833333333334" />
-        <entry key="../../../../.gradle/caches/transforms-3/7fdb8d95fa27dc75c4828707cb6ebda6/transformed/jetified-facebook-share-4.42.0/res/drawable/com_facebook_button_send_background.xml" value="0.3765625" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/drawable/bordes_redondos.xml" value="0.26614583333333336" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/drawable/bordes_redondos_modo_luces.xml" value="0.26614583333333336" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/activity_main.xml" value="0.13360507246376813" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/activity_recuperar_contr.xml" value="0.136" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/activity_register.xml" value="0.264" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/cambiar_contra.xml" value="0.4" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/cambiar_correo.xml" value="0.2" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/content_main.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/correo_no_verificado.xml" value="0.4" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/dialog_anonimo.xml" value="0.21829710144927536" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/gallery_item.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/tab1.xml" value="0.2" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/tab3.xml" value="0.24635416666666668" />
-        <entry key="..\:/Users/Chenyi/StudioProjects/ProyectoEspejo/app/src/main/res/layout/tab4.xml" value="0.12132725430597771" />
-        <entry key="app/src/main/res/drawable/borders_redondos_dialog.xml" value="0.19074074074074074" />
-        <entry key="app/src/main/res/drawable/bordes_redondos.xml" value="0.19166666666666668" />
-        <entry key="app/src/main/res/drawable/bordes_redondos_arriba.xml" value="0.45" />
-        <entry key="app/src/main/res/drawable/bordes_redondos_botton.xml" value="0.2222222222222222" />
-        <entry key="app/src/main/res/drawable/button_rounded.xml" value="0.18802083333333333" />
-        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.2875" />
-        <entry key="app/src/main/res/drawable/ic_baseline_construction_24.xml" value="0.2875" />
-        <entry key="app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.2875" />
-        <entry key="app/src/main/res/drawable/ic_baseline_highlight_24.xml" value="0.2875" />
-        <entry key="app/src/main/res/drawable/ic_baseline_music_note_24.xml" value="0.2875" />
-        <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2875" />
-        <entry key="app/src/main/res/drawable/ic_baseline_photo_24.xml" value="0.2875" />
-        <entry key="app/src/main/res/drawable/radius_luces_home.xml" value="0.1" />
-        <entry key="app/src/main/res/layout-land/tab1.xml" value="0.11302083333333333" />
-        <entry key="app/src/main/res/layout/acercade.xml" value="0.23489583333333333" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.24444444444444444" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/acercade.xml" value="0.25" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_home.xml" value="0.176" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/elemento_lista.xml" value="0.2" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/fragment_home.xml" value="0.13385416666666666" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/informacion.xml" value="0.25" />
+        <entry key="..\:/Users/Laura/Desktop/ProyectoEspejo/app/src/main/res/layout/tab3.xml" value="0.1721014492753623" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.1787037037037037" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_prueba.xml" value="0.1859375" />
-        <entry key="app/src/main/res/layout/activity_recuperar_contr.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_verificar.xml" value="0.29375" />
-        <entry key="app/src/main/res/layout/cambiar_account.xml" value="0.3548717948717949" />
-        <entry key="app/src/main/res/layout/cambiar_apellido.xml" value="0.17592592592592593" />
-        <entry key="app/src/main/res/layout/cambiar_correo.xml" value="0.17592592592592593" />
-        <entry key="app/src/main/res/layout/cambiar_nombre.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/cambiarnombre.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/correo_no_verificado.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/dialog_anonimo.xml" value="0.24635416666666668" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/gallery_item.xml" value="0.3676923076923077" />
-        <entry key="app/src/main/res/layout/modos_layout.xml" value="0.75" />
-        <entry key="app/src/main/res/layout/nuevo_color_name.xml" value="0.3037037037037037" />
-        <entry key="app/src/main/res/layout/politica_privacidad.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/tab1.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/tab2.xml" value="0.31614583333333335" />
-        <entry key="app/src/main/res/layout/tab3.xml" value="0.31614583333333335" />
-        <entry key="app/src/main/res/layout/tab4.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/tab5.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/tareas_layout.xml" value="0.31614583333333335" />
-        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
   </component>
