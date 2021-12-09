@@ -1,0 +1,51 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <capability android:name="actions.intent.OPEN_APP_FEATURE">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.example.appespejo"
+            android:targetClass="com.example.appespejo.Tab1">
+            / o uno por tab?
+            <parameter
+                android:name="thing.name"
+                android:key="q"/>
+        </intent>
+    </capability>
+
+    <shortcut
+        android:shortcutId="open_tabs"
+        android:shortcutShortLabel="@string/abrir_tab1"
+        android:enabled="false">
+        <capability-binding
+            android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="@string/abrir_tab1" />
+        </capability-binding>
+    </shortcut>
+
+
+
+
+
+    <!--    GET THING BII
+        https://developers.google.com/assistant/app/reference/built-in-intents/common/get-thing
+
+        Be sure to replace all occurrences of PUT_YOUR_APPLICATION_ID_HERE with the
+        application ID you specified in app/build.gradle.
+    -->
+
+
+
+    <!--    OPEN APP FEATURE with inline inventory
+        https://developers.google.com/assistant/app/reference/built-in-intents/common/open-app-feature
+
+        Be sure to replace all occurrences of PUT_YOUR_APPLICATION_ID_HERE with the
+        application ID you specified in app/build.gradle.
+    -->
+
+
+
+</shortcuts>
+
+
