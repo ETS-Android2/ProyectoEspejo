@@ -20,5 +20,6 @@
     <string name="cambiarnombre">Change name</string>
     <string name="cambiarapellido">Chande surname</string>
     <string name="guardarcambios">Save changes</string>
+    <string name="abrir_tab1">Tab1</string>
 
 </resources>

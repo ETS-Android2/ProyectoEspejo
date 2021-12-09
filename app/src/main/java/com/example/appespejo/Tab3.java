@@ -36,47 +36,15 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 public class Tab3 extends Fragment {
-    /*private static final int MY_READ_PERMISSION_CODE =0 ;
-    private RecyclerView recyclerView;
-    public AdaptadorLugares adaptador;
+    private static final int MY_READ_PERMISSION_CODE =0 ;
 
-    public Tab3(){
-        // require a empty public constructor
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.tab3, container, false);
-        adaptador = ((Aplicacion) getApplication()).adaptador;
-        recyclerView = binding.content.recyclerView;
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adaptador);
-
-
-
-
-
-
-        if(ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},MY_READ_PERMISSION_CODE);
-        }
-        return v;
-    }
-
-}*/
 
     RecyclerView recyclerView;
     GalleryAdapter galleryAdapter;
     List<String> images;
     TextView gallery_number;
     Context context;
-    FirebaseFirestore db;
+
 
 
     //vars
@@ -84,7 +52,7 @@ public class Tab3 extends Fragment {
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private Uri imageUri;
 
-    private static final int MY_READ_PERMISSION_CODE=101;
+    //private static final int MY_READ_PERMISSION_CODE=101;
 
     final static int RESULT_OK = 123;
     Button camara;
@@ -133,7 +101,7 @@ public class Tab3 extends Fragment {
     });
 
     recyclerView.setAdapter(galleryAdapter);
-       // images = images.subList(0,Math.min(99, images.size()));
+        images = images.subList(0,Math.min(99, images.size()));
     gallery_number.setText("Photos("+images.size()+")");
 
     }

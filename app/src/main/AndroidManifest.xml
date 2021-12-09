@@ -77,6 +77,23 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.example.android.architecture.blueprints.appEspejo"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        /Metadatos google assistant (shortcuts)
+
+        <meta-data
+            android:name="android.app.shortcuts"
+            android:resource="@xml/shortcuts" />
+        </activity>
+
     </application>
 
 </manifest>
