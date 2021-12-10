@@ -2,6 +2,7 @@ package com.example.appespejo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,12 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.blautic.pikkuAcademyLib.PikkuAcademy;
+import com.blautic.pikkuAcademyLib.ScanInfo;
+import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
+import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
+import com.blautic.pikkuAcademyLib.callback.ScanCallback;
+
 public class Tab5 extends Fragment {
 
 
@@ -17,17 +24,12 @@ public class Tab5 extends Fragment {
     Button acercade;
     Button informacion;
     Button seguridad;
-    Button ayuda, perfil;
+    Button ayuda, perfil,pikkuBoton;
+    PikkuAcademy pikku;
 
-    /* @Override
-     public void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-     }*/
     public Tab5() {
-
         // require a empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +42,9 @@ public class Tab5 extends Fragment {
         seguridad = v.findViewById(R.id.seguridad);
         ayuda = v.findViewById(R.id.ayuda);
         perfil = v.findViewById(R.id.perfil_ajustes);
+        pikkuBoton = v.findViewById(R.id.conectarPikku);
+        pikku = PikkuAcademy.getInstance(getContext());
+        pikku.enableLog();
 
         preferences.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +88,65 @@ public class Tab5 extends Fragment {
             }
         });
 
+        pikkuBoton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pikkuBoton.getText().equals(" Escanear Pikku")){
+//
+//                    onClickScan(v);
+                    Log.d("Pikku","Pulsa el botón Pikku 1 para ser scaneado" );
+//        binding.textScan.setText("Pulsa el botón Pikku 1 para ser scaneado");
+                    pikku.scan(true, new ScanCallback() {
+                        @Override
+                        public void onScan(ScanInfo scanInfo) {
+                            pikku.saveDevice(scanInfo);
+// guardar dispositivo para futuras conexiones
+                            Log.d("Pikku", scanInfo.toString());
+                            pikkuBoton.setText(" Conectar Pikku");
+                        }
+                    });
+
+                } else if(pikkuBoton.getText().equals(" Conectar Pikku")){
+
+                    onClickConnect(v);
+                    pikkuBoton.setText(" Disconectar Pikku");
+
+                } else if(pikkuBoton.getText().equals(" Disconectar Pikku")){
+                    pikku.disconnect();
+                }
+            }
+        });
+
         return v;
 
+    }
+
+    public void onClickConnect(View view) {
+//        binding.textConnect.setText("Conectando...");
+        Log.d("Pikku","Conectando..." );
+
+        pikku.connect(new ConnectionCallback() {
+            @Override
+        public void onConnect(ConnectionState state) {
+                if (state == ConnectionState.CONNECTED) {
+//            binding.textConnect.setText("Conectado: " + pikku.getAddressDevice());
+//            binding.buttonScan.setEnabled(false);
+            Log.d("Pikku","Conectado" );
+        }
+        } });
+    }
+
+    public void onClickScan(View view) {
+        Log.d("Pikku","Pulsa el botón Pikku 1 para ser scaneado" );
+//        binding.textScan.setText("Pulsa el botón Pikku 1 para ser scaneado");
+        pikku.scan(true, new ScanCallback() {
+            @Override
+            public void onScan(ScanInfo scanInfo) {
+                pikku.saveDevice(scanInfo);
+// guardar dispositivo para futuras conexiones
+                Log.d("Pikku", scanInfo.toString());
+            }
+        });
     }
 
     public void abrirAyuda(View view) {

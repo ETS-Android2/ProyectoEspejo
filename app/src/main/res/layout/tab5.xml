@@ -82,6 +82,19 @@
             android:textColor="@color/black" />
 
         <Button
+            android:id="@+id/conectarPikku"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/pikku"
+            android:fontFamily="@font/lucidagrande"
+            android:paddingLeft="20dp"
+            android:text=" Escanear Pikku"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <Button
             android:id="@+id/informacion"
             android:layout_width="411dp"
             android:layout_height="wrap_content"

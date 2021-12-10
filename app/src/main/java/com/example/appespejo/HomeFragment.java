@@ -36,6 +36,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.blautic.pikkuAcademyLib.PikkuAcademy;
+import com.blautic.pikkuAcademyLib.ScanInfo;
+import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
+import com.blautic.pikkuAcademyLib.callback.ButtonsCallback;
+import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
+import com.blautic.pikkuAcademyLib.callback.ScanCallback;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -87,6 +93,7 @@ public class HomeFragment extends Fragment {
     String name,mAccessToken;
     Handler mainHandler = new Handler();
     ProgressDialog progressDialog;
+    private PikkuAcademy pikku;
     private final String url = "https://api.openweathermap.org/data/2.5/weather?q=Gandia&units=metric&appid=e96051f26738be95560f9d1a8d60feb6";
     private static final String CLIENT_ID = "79c5d539ac3e46d199ef6b06f3530d5c";
     private static final String REDIRECT_URI = "SpotifyTestApp://authenticationResponse";
@@ -95,17 +102,10 @@ public class HomeFragment extends Fragment {
     public static final int AUTH_TOKEN_REQUEST_CODE = 0x10;
     public static final int AUTH_CODE_REQUEST_CODE = 0x11;
 
-
-
-    /* @Override
-     public void onCreate(Bundle savedInstanceState) {
-         super.onCreate(savedInstanceState);
-     }*/
     public HomeFragment() {
 
         // require a empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -136,9 +136,8 @@ public class HomeFragment extends Fragment {
         cancion = v.findViewById(R.id.homeSpotyCancion);
         artista = v.findViewById(R.id.spotyHomeArtista);
         nuevaTarea = v.findViewById(R.id.nuevaTarea);
-
-
-
+        pikku = PikkuAcademy.getInstance(getContext());
+        pikku.enableLog();
 
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
@@ -152,7 +151,7 @@ public class HomeFragment extends Fragment {
         AuthorizationRequest request = builder.build();
         AuthorizationClient.openLoginActivity(getActivity(), REQUEST_CODE, request);
 
-         // allClicks();
+        allClicks();
 
         Date d = new Date();
         CharSequence s = DateFormat.format("d MMMM yyyy ", d.getTime());
@@ -192,11 +191,13 @@ public class HomeFragment extends Fragment {
                     grados.setText(String.valueOf(tempa) + "°C");
                     location.setText(city);
 //                    new FetchImage(url).start();
-                    Picasso.get()
-                            .load(urlfoto)
-                            .into(iconWeather);
+
+//                    Picasso.get()
+//                            .load(urlfoto)
+//                            .into(iconWeather);
+
 //                    Glide.with(getContext())
-//                            .load(url)
+//                            .load(urlfoto)
 //                            .into(iconWeather);
 
 //                    InputStream inputStream = null;
@@ -247,29 +248,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        elements.add(new TareasList("Hacer ejercicios"));
-//        elements.add(new TareasList("Acabar proyecto"));
-//        elements.add(new TareasList("Tarea 3"));
-//        elements.add(new TareasList("Tarea 4"));
-//        elements.add(new TareasList("Tarea 5"));
-//        elements.add(new TareasList("Tarea 6"));
-//        elements.add(new TareasList("Tarea 7"));
-
         nuevaTarea.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if(actionId == EditorInfo.IME_ACTION_DONE
                         || keyEvent.getAction() == KeyEvent.ACTION_DOWN
                         || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
-
-//                    elements.add(new TareasList(nuevaTarea.getText().toString()));
-//                    Toast.makeText(getContext(), "Enter", Toast.LENGTH_SHORT).show();
-
-//                    tarea.put("Prueba" + task.getResult().getData().size(), colour);
-
-//                    db.collection("Tareas")
-//                            .document(mAuth.getCurrentUser().getUid())
-//                            .update(tareas);
 
                     Map<String, Object> tareas = new HashMap<>();
                     TareasList taskk = new TareasList(nuevaTarea.getText().toString());
@@ -302,15 +286,6 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
-
-//        for(int i=0; i<elements.size(); i++){
-//            tareas.put("Tarea" + i, elements.get(i));
-//        }
-
-//        db.collection("Tareas")
-//                .document(mAuth.getCurrentUser().getUid())
-//                .set(tareas);
-
     }
 
     @Override
@@ -454,6 +429,5 @@ public class HomeFragment extends Fragment {
         Log.d("Demo", "onDestroy");
 
     }
-
 
 }

@@ -68,7 +68,7 @@
 
     <ImageView
         android:id="@+id/homeSpotyImage"
-        android:layout_width="140dp"
+        android:layout_width="130dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -124,7 +124,7 @@
 
         <Button
             android:id="@+id/spotyNext"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/next"
             app:layout_constraintBottom_toBottomOf="@+id/spotyPause"
@@ -135,7 +135,7 @@
 
         <Button
             android:id="@+id/spotyPause"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="61dp"
             android:background="@drawable/pausa"
@@ -148,7 +148,7 @@
 
         <Button
             android:id="@+id/homeSpotyPrevious"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="60dp"
             android:background="@drawable/back"
