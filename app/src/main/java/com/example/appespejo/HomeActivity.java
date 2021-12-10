@@ -33,9 +33,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.Calendar;
+import static com.example.escripn.mqtt.Mqtt.*;
+
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements MqttCallback {
 
      private BottomNavigationView bottomNavigationView;
      FirebaseAuth mAuth;
@@ -43,12 +52,12 @@ public class HomeActivity extends AppCompatActivity {
      ImageView fotoUsuario;
      FirebaseFirestore db;
      FirebaseStorage storage;
-     TextView perfilNombre,perfilApellido,perfilEmail,usuarioNombre;
+     TextView perfilNombre,perfilApellido,perfilEmail,usuarioNombre,tempaHome;
      Animation animacion2;
      Button spotify,verificado;
      Dialog dialog;
      SeekBar seekBar;
-
+     private static MqttClient client;
      int ints;
 
     @Override
@@ -57,11 +66,22 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Context context = this;
 
+        LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View homeFragment = inflater.inflate(R.layout.fragment_home, null);
+
         View tab1 = LayoutInflater.from(HomeActivity.this)
                 .inflate(R.layout.tab1,null);
 
+//        View homeFragment = LayoutInflater.from(HomeActivity.this)
+//                .inflate(R.layout.fragment_home,null);
+
         seekBar = tab1.findViewById(R.id.seekBar);
         ints = seekBar.getProgress();
+
+//        tempaHome = (TextView) this().homeFragment.findViewById(R.id.tempaHome);
+        Log.d("Text", tempaHome.getText().toString());
+        tempaHome.setText("Hola");
+        Log.d("Text", tempaHome.getText().toString());
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -105,18 +125,47 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
+        conectarMqtt();
+        suscribirMqtt("#", this);
     }
 
-    public void intencsity(View view){
-
-        View tab1 = LayoutInflater.from(HomeActivity.this)
-                .inflate(R.layout.tab1,null);
-
-        seekBar = tab1.findViewById(R.id.seekBar);
-
-        TextView textView = view.findViewById(R.id.intensidad);
-        textView.setText(seekBar.getProgress());
+    public static void conectarMqtt() {
+        try {
+            Log.i("MQTT", "Conectando al broker " + broker);
+            client = new MqttClient(broker, clientId, new MemoryPersistence());
+            MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setCleanSession(true);
+            connOpts.setKeepAliveInterval(60);
+            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
+                    qos, false);
+            client.connect(connOpts);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al conectar.", e);
+        }
     }
+
+    public static void suscribirMqtt(String topic, MqttCallback listener) {
+        try {
+            Log.i("MQTT", "Suscrito a " + topicRoot + topic);
+            client.subscribe(topicRoot + topic, qos);
+            client.setCallback(listener);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al suscribir.", e);
+        }
+    }
+
+    @Override public void connectionLost(Throwable cause) {
+        Log.d("MQTT", "Conexión perdida");
+    }
+    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+        Log.d("MQTT", "Entrega completa");
+    }
+    @Override public void messageArrived(String topic, MqttMessage message)
+            throws Exception {
+        String payload = new String(message.getPayload());
+        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+    }
+
 
     public void verificado(View view){
         if(usuario.isEmailVerified()){
