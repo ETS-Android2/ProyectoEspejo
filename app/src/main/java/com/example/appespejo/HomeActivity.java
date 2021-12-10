@@ -1,17 +1,23 @@
 package com.example.appespejo;
 
+import android.Manifest;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -22,10 +28,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.blautic.pikkuAcademyLib.PikkuAcademy;
+import com.blautic.pikkuAcademyLib.ScanInfo;
+import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
+import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
+import com.blautic.pikkuAcademyLib.callback.ScanCallback;
 import com.facebook.login.LoginManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,8 +57,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-
-public class HomeActivity extends AppCompatActivity implements MqttCallback {
+public class HomeActivity extends AppCompatActivity {
 
      private BottomNavigationView bottomNavigationView;
      FirebaseAuth mAuth;
@@ -59,6 +72,7 @@ public class HomeActivity extends AppCompatActivity implements MqttCallback {
      SeekBar seekBar;
      private static MqttClient client;
      int ints;
+     PikkuAcademy pikku;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +86,11 @@ public class HomeActivity extends AppCompatActivity implements MqttCallback {
         View tab1 = LayoutInflater.from(HomeActivity.this)
                 .inflate(R.layout.tab1,null);
 
-//        View homeFragment = LayoutInflater.from(HomeActivity.this)
-//                .inflate(R.layout.fragment_home,null);
-
         seekBar = tab1.findViewById(R.id.seekBar);
         ints = seekBar.getProgress();
 
-//        tempaHome = (TextView) this().homeFragment.findViewById(R.id.tempaHome);
-        Log.d("Text", tempaHome.getText().toString());
-        tempaHome.setText("Hola");
-        Log.d("Text", tempaHome.getText().toString());
+        pikku = PikkuAcademy.getInstance(this);
+        pikku.enableLog();
 
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -95,6 +104,7 @@ public class HomeActivity extends AppCompatActivity implements MqttCallback {
         spotify = findViewById(R.id.spotify);
         verificado = findViewById(R.id.verificado);
 
+        connect();
 //        --------------------------PARA EL ANONIMO-----------------------------
 //        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
 
@@ -125,45 +135,109 @@ public class HomeActivity extends AppCompatActivity implements MqttCallback {
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
-        conectarMqtt();
-        suscribirMqtt("#", this);
+//        readValues();
     }
 
-    public static void conectarMqtt() {
-        try {
-            Log.i("MQTT", "Conectando al broker " + broker);
-            client = new MqttClient(broker, clientId, new MemoryPersistence());
-            MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setCleanSession(true);
-            connOpts.setKeepAliveInterval(60);
-            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
-                    qos, false);
-            client.connect(connOpts);
-        } catch (MqttException e) {
-            Log.e("MQTT", "Error al conectar.", e);
+    private void checkBlePermissions() {
+        if (!pikku.isBluetoothOn()) {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Pemision")
+                    .setNegativeButton(android.R.string.cancel,
+                            (dialog, which) -> finish())
+                    .setPositiveButton(android.R.string.ok,
+                            (dialog, which) -> {
+                                pikku.enableBluetooth(this, 1002);
+                            })
+
+                    .setCancelable(false)
+                    .show();
+
+            return;
+        }
+        String permission = Manifest.permission.ACCESS_FINE_LOCATION;
+        int permissionCheck = ContextCompat.checkSelfPermission(this, permission);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            onPermissionGranted(permission);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{permission}, 1003);
+        }
+
+    }
+
+
+    private void onPermissionGranted(String permission) {
+        if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permission)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !pikku.checkGPSIsOpen(this)) {
+                new AlertDialog.Builder(this)
+                        .setMessage("GPS enable")
+                        .setNegativeButton(android.R.string.cancel,
+                                (dialog, which) -> finish())
+                        .setPositiveButton("GPS enable",
+                                (dialog, which) -> {
+                                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                    startActivityForResult(intent, 1002);
+                                })
+
+                        .setCancelable(false)
+                        .show();
+            }
         }
     }
 
-    public static void suscribirMqtt(String topic, MqttCallback listener) {
-        try {
-            Log.i("MQTT", "Suscrito a " + topicRoot + topic);
-            client.subscribe(topicRoot + topic, qos);
-            client.setCallback(listener);
-        } catch (MqttException e) {
-            Log.e("MQTT", "Error al suscribir.", e);
+    private void checkIsConnected() {
+        if (pikku.isConnected()) {
+//            updateUI(true);
+            readValues();
         }
     }
 
-    @Override public void connectionLost(Throwable cause) {
-        Log.d("MQTT", "Conexión perdida");
+    private void connect() {
+//        if (pikku.isConnected()) {
+//            pikku.disconnect();
+//            return;
+//        }
+        checkBlePermissions();
+//        binding.connectProgress.setVisibility(View.VISIBLE);
+        if (pikku.getAddressDevice().isEmpty()) {
+//            NavHostFragment.findNavController(HomeActivity.this)
+//                    .navigate(R.id.action_HomeFragment_to_ConnectFragment);
+
+        } else {
+            pikku.connect(state -> {
+                switch (state) {
+                    case CONNECTED: {
+//                        startActivity(new Intent(this, HomeActivity.class));
+                        readValues();
+                        break;
+                    }
+                    case DISCONNECTED:
+                    case FAILED: {
+//                        updateUI(false);
+                        break;
+                    }
+                }
+            });
+
+        }
     }
-    @Override public void deliveryComplete(IMqttDeliveryToken token) {
-        Log.d("MQTT", "Entrega completa");
-    }
-    @Override public void messageArrived(String topic, MqttMessage message)
-            throws Exception {
-        String payload = new String(message.getPayload());
-        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+
+    private void readValues() {
+        pikku.readButtons((nButton, pressedButton, durationMilliseconds) -> {
+            String durationSeconds = String.format("%.1f''", durationMilliseconds / 1000.0);
+            //Button 1 or 2
+            if (nButton == 1) {
+                Log.d("Pikku", "Boton1");
+                WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+                lp.screenBrightness =0.00001f;// i needed to dim the display
+                this.getWindow().setAttributes(lp);
+
+            } else {
+                Log.d("Pikku", "Boton2");
+                WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+                lp.screenBrightness =1;// i needed to dim the display
+                this.getWindow().setAttributes(lp);
+            }
+        });
     }
 
 
@@ -171,6 +245,33 @@ public class HomeActivity extends AppCompatActivity implements MqttCallback {
         if(usuario.isEmailVerified()){
 
         }
+    }
+
+    public void onClickScan(View view) {
+        pikku.scan(true, new ScanCallback() {
+            @Override
+            public void onScan(ScanInfo scanInfo) {
+                pikku.saveDevice(scanInfo);
+// guardar dispositivo para futuras conexiones
+                Log.d("Pikku", scanInfo.toString());
+            }
+        });
+    }
+
+    public void onClickConnect(View view) {
+        Log.d("Pikku", "Conectando...");
+        pikku.connect(new ConnectionCallback() {
+            @Override
+            public void onConnect(ConnectionState state) {
+                if (state == ConnectionState.CONNECTED) {
+                    Log.d("Pikku", "Conectado: " + pikku.getAddressDevice());
+                }
+            }
+        });
+    }
+
+    public void onClickDesconnect(View view){
+        pikku.disconnect();
     }
 
     public void lanzarAcercaDe(View view){

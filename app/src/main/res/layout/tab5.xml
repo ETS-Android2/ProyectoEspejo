@@ -82,15 +82,44 @@
             android:textColor="@color/black" />
 
         <Button
-            android:id="@+id/conectarPikku"
+            android:id="@+id/scanPikku"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:background="#00000000"
             android:drawableLeft="@drawable/pikku"
             android:fontFamily="@font/lucidagrande"
+            android:onClick="onClickScan"
             android:paddingLeft="20dp"
             android:text=" Escanear Pikku"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/connectPikku"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/pikku"
+            android:fontFamily="@font/lucidagrande"
+            android:onClick="onClickConnect"
+            android:paddingLeft="20dp"
+            android:text=" Connectar Pikku"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/disconnectPikku"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:background="#00000000"
+            android:drawableLeft="@drawable/pikku"
+            android:fontFamily="@font/lucidagrande"
+            android:onClick="onClickDesconnect"
+            android:paddingLeft="20dp"
+            android:text=" Desconnectar Pikku"
             android:textAlignment="viewStart"
             android:textColor="@color/black" />
 

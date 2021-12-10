@@ -78,7 +78,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment {
+import static com.example.escripn.mqtt.Mqtt.*;
+
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+
+public class HomeFragment extends Fragment implements MqttCallback{
 
     List<TareasList> elements;
     RecyclerView recyclerView;
@@ -86,7 +96,7 @@ public class HomeFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseUser usuario;
     FirebaseFirestore db;
-    TextView welcome, fecha, grados, location, cancion,artista , intensidad;
+    TextView welcome, fecha, grados, location, cancion,artista , intensidad, tempaHome;
     EditText nuevaTarea;
     ImageView iconWeather,album;
     Button pause, back, next, play,spotify;
@@ -101,6 +111,7 @@ public class HomeFragment extends Fragment {
     final int REQUEST_CODE = 1337;
     public static final int AUTH_TOKEN_REQUEST_CODE = 0x10;
     public static final int AUTH_CODE_REQUEST_CODE = 0x11;
+    private static MqttClient client;
 
     public HomeFragment() {
 
@@ -125,6 +136,7 @@ public class HomeFragment extends Fragment {
         SeekBar seekBar = tab1.findViewById(R.id.seekBar);
         intensidad = v.findViewById(R.id.intensidadLucesHome);
         intensidad.setText("Intencidad " + seekBar.getProgress() + "%");
+        tempaHome = v.findViewById(R.id.tempaHome);
 
         album = v.findViewById(R.id.homeSpotyImage);
         pause = v.findViewById(R.id.spotyPause);
@@ -138,6 +150,9 @@ public class HomeFragment extends Fragment {
         nuevaTarea = v.findViewById(R.id.nuevaTarea);
         pikku = PikkuAcademy.getInstance(getContext());
         pikku.enableLog();
+
+        conectarMqtt();
+        suscribirMqtt("#", this);
 
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
@@ -428,6 +443,45 @@ public class HomeFragment extends Fragment {
 //        mSpotifyAppRemote.getPlayerApi().pause();
         Log.d("Demo", "onDestroy");
 
+    }
+
+
+    public static void conectarMqtt() {
+        try {
+            Log.i("MQTT", "Conectando al broker " + broker);
+            client = new MqttClient(broker, clientId, new MemoryPersistence());
+            MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setCleanSession(true);
+            connOpts.setKeepAliveInterval(60);
+            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
+                    qos, false);
+            client.connect(connOpts);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al conectar.", e);
+        }
+    }
+
+    public static void suscribirMqtt(String topic, MqttCallback listener) {
+        try {
+            Log.i("MQTT", "Suscrito a " + topicRoot + topic);
+            client.subscribe(topicRoot + topic, qos);
+            client.setCallback(listener);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al suscribir.", e);
+        }
+    }
+
+    @Override public void connectionLost(Throwable cause) {
+        Log.d("MQTT", "Conexión perdida");
+    }
+    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+        Log.d("MQTT", "Entrega completa");
+    }
+    @Override public void messageArrived(String topic, MqttMessage message)
+            throws Exception {
+        String payload = new String(message.getPayload());
+        tempaHome.setText(payload + "°C");
+        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
     }
 
 }

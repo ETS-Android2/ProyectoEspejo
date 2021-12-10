@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import com.blautic.pikkuAcademyLib.ScanInfo;
 import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
 import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
 import com.blautic.pikkuAcademyLib.callback.ScanCallback;
+
 
 public class Tab5 extends Fragment {
 
@@ -42,7 +42,7 @@ public class Tab5 extends Fragment {
         seguridad = v.findViewById(R.id.seguridad);
         ayuda = v.findViewById(R.id.ayuda);
         perfil = v.findViewById(R.id.perfil_ajustes);
-        pikkuBoton = v.findViewById(R.id.conectarPikku);
+        pikkuBoton = v.findViewById(R.id.scanPikku);
         pikku = PikkuAcademy.getInstance(getContext());
         pikku.enableLog();
 
@@ -85,35 +85,6 @@ public class Tab5 extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity().getApplicationContext(), Tab4.class));
-            }
-        });
-
-        pikkuBoton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(pikkuBoton.getText().equals(" Escanear Pikku")){
-//
-//                    onClickScan(v);
-                    Log.d("Pikku","Pulsa el botón Pikku 1 para ser scaneado" );
-//        binding.textScan.setText("Pulsa el botón Pikku 1 para ser scaneado");
-                    pikku.scan(true, new ScanCallback() {
-                        @Override
-                        public void onScan(ScanInfo scanInfo) {
-                            pikku.saveDevice(scanInfo);
-// guardar dispositivo para futuras conexiones
-                            Log.d("Pikku", scanInfo.toString());
-                            pikkuBoton.setText(" Conectar Pikku");
-                        }
-                    });
-
-                } else if(pikkuBoton.getText().equals(" Conectar Pikku")){
-
-                    onClickConnect(v);
-                    pikkuBoton.setText(" Disconectar Pikku");
-
-                } else if(pikkuBoton.getText().equals(" Disconectar Pikku")){
-                    pikku.disconnect();
-                }
             }
         });
 
