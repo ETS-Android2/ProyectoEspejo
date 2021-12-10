@@ -8,7 +8,8 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.appespejo"
+        applicationId "com.appespejo.g26"
+
         minSdk 23
         targetSdk 31
         versionCode 1

@@ -24,10 +24,6 @@
         </capability-binding>
     </shortcut>
 
-
-
-
-
     <!--    GET THING BII
         https://developers.google.com/assistant/app/reference/built-in-intents/common/get-thing
 
@@ -35,16 +31,12 @@
         application ID you specified in app/build.gradle.
     -->
 
-
-
     <!--    OPEN APP FEATURE with inline inventory
         https://developers.google.com/assistant/app/reference/built-in-intents/common/open-app-feature
 
         Be sure to replace all occurrences of PUT_YOUR_APPLICATION_ID_HERE with the
         application ID you specified in app/build.gradle.
     -->
-
-
 
 </shortcuts>
 

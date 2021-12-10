@@ -2,5 +2,6 @@
 <resources>
     <array name="open_tab1_synonyms">
         <item>Tab1</item>
+        <item>Home</item>
     </array>
 </resources>
