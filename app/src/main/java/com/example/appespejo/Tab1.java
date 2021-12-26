@@ -119,8 +119,8 @@ public class Tab1 extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         elements = new ArrayList<>();
-        preferences = getContext().getSharedPreferences("Seekbar", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+//        preferences = getContext().getSharedPreferences("Seekbar", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = preferences.edit();
 
         intensidad = v.findViewById(R.id.intensidad);
         newLuces = v.findViewById(R.id.anyadirLuces);
@@ -129,7 +129,13 @@ public class Tab1 extends Fragment {
         seekBar.setProgress(pos);
         seekBar.setMax(100);
 
-        editor.apply();
+        if (savedInstanceState != null) {
+//            isEditing = savedInstanceState.getBoolean(IS_EDITING_KEY, false);
+            Log.d("Seekba", "Esta esta guardado nada");
+        } else {
+//            randomGoodDeed = viewModel.generateRandomGoodDeed();
+            Log.d("Seekba", "no esta guardado nada");
+        }
 
         seekBar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -139,22 +145,19 @@ public class Tab1 extends Fragment {
                                                   int progress, boolean fromUser) {
                         intensidad.setText("Intensidad: " + String.valueOf(progress)+" %");
                         pos = seekBar.getProgress();
-                        editor.putInt("Seekbar", seekBar.getProgress());
-                        editor.apply();
+                        Log.d("SeekbarPogess", String.valueOf(seekBar.getProgress()));
                     }
 
                     //hace un llamado  cuando se toca la perilla
                     public void onStartTrackingTouch(SeekBar seekBar) {
                         pos = seekBar.getProgress();
-                        editor.putInt("Seekbar", seekBar.getProgress());
-                        editor.apply();
+                        Log.d("SeekbarStart", String.valueOf(seekBar.getProgress()));
                     }
 
                     //hace un llamado  cuando se detiene la perilla
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         seekBar.setProgress(pos);
-                        editor.putInt("Seekbar", seekBar.getProgress());
-                        editor.apply();
+                        Log.d("SeekbarStop", String.valueOf(seekBar.getProgress()));
                     }
                 });
 
@@ -174,21 +177,12 @@ public class Tab1 extends Fragment {
 
         colorPickerView.setFlagView(new BubbleFlag(getContext()));
 
-//        recyclerView = v.findViewById(R.id.recyclerModos);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//        adaptador = new ColorListAdapter(getContext(), elements);
-//
-//        recyclerView.setAdapter(adaptador);
-
         modos(v);
-
         return v;
     }
 
     public void modos(View view){
 
-//        HashMap<String, Object> modo = new HashMap<>();
 
         db.collection("Luces")
                 .document(mAuth.getCurrentUser().getUid())
@@ -307,6 +301,13 @@ public class Tab1 extends Fragment {
         });
 
         Log.d("Demo", "Rojo " + colorR + " Green " + colorG + " Blue " + colorB);
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("SeekBar", 64);
     }
 
 }

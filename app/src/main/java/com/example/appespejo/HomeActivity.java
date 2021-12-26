@@ -135,14 +135,13 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
-//        readValues();
     }
 
     private void checkBlePermissions() {
         if (!pikku.isBluetoothOn()) {
             new MaterialAlertDialogBuilder(this)
                     .setTitle("Pemision")
-                    .setNegativeButton(android.R.string.cancel,
+                    .setNegativeButton("Cancel",
                             (dialog, which) -> finish())
                     .setPositiveButton(android.R.string.ok,
                             (dialog, which) -> {
@@ -154,6 +153,7 @@ public class HomeActivity extends AppCompatActivity {
 
             return;
         }
+
         String permission = Manifest.permission.ACCESS_FINE_LOCATION;
         int permissionCheck = ContextCompat.checkSelfPermission(this, permission);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -192,27 +192,25 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void connect() {
+
 //        if (pikku.isConnected()) {
 //            pikku.disconnect();
 //            return;
 //        }
+
         checkBlePermissions();
-//        binding.connectProgress.setVisibility(View.VISIBLE);
+
         if (pikku.getAddressDevice().isEmpty()) {
-//            NavHostFragment.findNavController(HomeActivity.this)
-//                    .navigate(R.id.action_HomeFragment_to_ConnectFragment);
 
         } else {
             pikku.connect(state -> {
                 switch (state) {
                     case CONNECTED: {
-//                        startActivity(new Intent(this, HomeActivity.class));
                         readValues();
                         break;
                     }
                     case DISCONNECTED:
                     case FAILED: {
-//                        updateUI(false);
                         break;
                     }
                 }

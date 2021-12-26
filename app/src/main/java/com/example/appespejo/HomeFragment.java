@@ -77,6 +77,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import static com.example.escripn.mqtt.Mqtt.*;
 
@@ -96,9 +97,10 @@ public class HomeFragment extends Fragment implements MqttCallback{
     FirebaseAuth mAuth;
     FirebaseUser usuario;
     FirebaseFirestore db;
-    TextView welcome, fecha, grados, location, cancion,artista , intensidad, tempaHome;
+    TextView welcome, fecha, grados, location, cancion,artista , intensidad, tempaHome, songTime;
     EditText nuevaTarea;
     ImageView iconWeather,album;
+    SeekBar songDuration;
     Button pause, back, next, play,spotify;
     String name,mAccessToken;
     Handler mainHandler = new Handler();
@@ -137,6 +139,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
         intensidad = v.findViewById(R.id.intensidadLucesHome);
         intensidad.setText("Intencidad " + seekBar.getProgress() + "%");
         tempaHome = v.findViewById(R.id.tempaHome);
+        songTime = v.findViewById(R.id.songTime);
+        songDuration = v.findViewById(R.id.songDuration);
 
         album = v.findViewById(R.id.homeSpotyImage);
         pause = v.findViewById(R.id.spotyPause);
@@ -152,7 +156,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
         pikku.enableLog();
 
         conectarMqtt();
-        suscribirMqtt("#", this);
+        suscribirMqtt("tempa", this);
 
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
@@ -250,7 +254,6 @@ public class HomeFragment extends Fragment implements MqttCallback{
                 if(task.isSuccessful()){
                     for(int i=0; i<task.getResult().getData().size(); i++){
                         leer.add(i, (HashMap) task.getResult().getData().get("Tarea"+i));
-
                     }
 
                     Log.d("Leer", leer.toString());
@@ -417,9 +420,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
 
                         cancion.setText(track.name);
                         artista.setText(track.artist.name);
-//                        if(mSpotifyAppRemote.getPlayerApi().getPlayerState().equals(mSpotifyAppRemote.getPlayerApi().pause())){
-//
-//                        }
+                        songTime.setText(String.valueOf(TimeUnit.MILLISECONDS.toMinutes(track.duration)) + ":" + String.valueOf(TimeUnit.MILLISECONDS.toSeconds(track.duration -TimeUnit.MINUTES.toMillis(TimeUnit.MILLISECONDS.toMinutes(track.duration)))));
+
                     }
                     else{
                         Log.d("Demo", "No ha pillado el track");

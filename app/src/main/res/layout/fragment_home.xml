@@ -101,8 +101,8 @@
 
     <Button
         android:id="@+id/spotyPlay"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:background="@drawable/play"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/spotyBack"
         app:layout_constraintEnd_toEndOf="@+id/spotyBack"
@@ -124,8 +124,8 @@
 
         <Button
             android:id="@+id/spotyNext"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:background="@drawable/next"
             app:layout_constraintBottom_toBottomOf="@+id/spotyPause"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,8 +135,8 @@
 
         <Button
             android:id="@+id/spotyPause"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginEnd="61dp"
             android:background="@drawable/pausa"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -148,8 +148,8 @@
 
         <Button
             android:id="@+id/homeSpotyPrevious"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginEnd="60dp"
             android:background="@drawable/back"
             app:layout_constraintBottom_toBottomOf="@+id/spotyPause"
@@ -164,7 +164,7 @@
         android:id="@+id/homeSpotyCancion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/lucidagrandebold"
         android:text="Nombre de la cancion"
         android:textColor="#020202"
@@ -176,7 +176,7 @@
         android:id="@+id/spotyHomeArtista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/lucidagrande"
         android:text="Artista"
         android:textColor="#020202"
@@ -361,5 +361,30 @@
         app:layout_constraintEnd_toStartOf="@+id/nuevaTarea"
         app:layout_constraintStart_toEndOf="@+id/homeSpotyImage2"
         app:layout_constraintTop_toTopOf="@+id/nuevaTarea" />
+
+    <SeekBar
+        android:id="@+id/songDuration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:progressBackgroundTint="#807B7B"
+        android:progressTint="#000000"
+        android:thumbTint="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/songTime"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/spotyHomeArtista" />
+
+    <TextView
+        android:id="@+id/songTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lucidagrande"
+        android:text="time"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/songDuration"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/songDuration" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

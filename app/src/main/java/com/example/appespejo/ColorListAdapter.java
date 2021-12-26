@@ -30,7 +30,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.ViewHolder> {
+
+import static com.example.escripn.mqtt.Mqtt.*;
+
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+
+public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.ViewHolder> implements MqttCallback{
 
     private Context context;
     private List<HashMap> modo;
@@ -38,6 +49,7 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
     FirebaseAuth mAuth;
     FirebaseFirestore db;
     FirebaseUser usuario;
+    private static MqttClient client;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 //        Button button;
@@ -80,6 +92,7 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.modos_layout,parent,false);
 //        usuario = FirebaseAuth.getInstance().getCurrentUser();
 //        db = FirebaseFirestore.getInstance();
+        conectarMqtt();
         return new ViewHolder(view);
     }
 
@@ -98,26 +111,44 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
                     List<Long> rojo = new ArrayList<>();
                     List<Long> verde = new ArrayList<>();
                     List<Long> azul = new ArrayList<>();
+                    List<Object> intesidad = new ArrayList<>();
 
                     for(int i=0; i<task.getResult().getData().size(); i++){
 //                        Log.d("Color", String.valueOf(task.getResult().getData().get("Prueba1")));
-                        Log.d("Modo2", modo.get(i).toString());
 
                         rojo.add(i, (Long) modo.get(i).get("red"));
                         verde.add(i, (Long) modo.get(i).get("green"));
                         azul.add(i, (Long) modo.get(i).get("blue"));
+                        intesidad.add(i, modo.get(i).get("intensidad"));
+
                     }
 //                    holder.button.setText("Modo" + (modo.indexOf(modo.get(position))+1));
                     holder.text.setText("Modo" + (modo.indexOf(modo.get(position))+1));
                     holder.button.setBackgroundColor(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
 //                    holder.button.setBackgroundResource(R.drawable.bordes_redondos_botton);
 //                    holder.button.setColorFilter(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
-                    Log.d("RedArray", rojo.toString());
 
+                    holder.button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            holder.text.getText();
+                            rojo.add(position, (Long) modo.get(position).get("red"));
+                            verde.add(position, (Long) modo.get(position).get("green"));
+                            azul.add(position, (Long) modo.get(position).get("blue"));
+                            intesidad.add(position, modo.get(position).get("intensidad"));
+
+//                             Se puede enviar en 4 topicos diferentes como: red,verde, azul y intensidad
+//                            publicarMqtt("modo","Rojo " + rojo.get(position).toString() + " verde " + verde.get(position).toString()+ " azul " + azul.get(position).toString() + " intensidad " + intesidad.get(position).toString());
+                            publicarMqtt("modo/rojo",rojo.get(position).toString());
+                            publicarMqtt("modo/verde",verde.get(position).toString());
+                            publicarMqtt("modo/azul",azul.get(position).toString());
+                            publicarMqtt("modo/intensidad",intesidad.get(position).toString());
+                            Log.d("ModosText", "Rojo" + rojo.get(position).toString() + " verde" + verde.get(position).toString()+ " azul" + azul.get(position).toString() + " intensidad " + intesidad.get(position).toString());
+                        }
+                    });
                 }
             }
         });
-
     }
 
     public void setItems(List<HashMap> items){
@@ -130,6 +161,45 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
         Blue = Blue & 0x000000FF; //Mask out anything not blue.
 
         return 0xFF000000 | Red | Green | Blue; //0xFF000000 for 100% Alpha. Bitwise OR everything together.
+    }
+
+    public static void conectarMqtt() {
+        try {
+            Log.i("MQTT", "Conectando al broker " + broker);
+            client = new MqttClient(broker, clientId, new MemoryPersistence());
+            MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setCleanSession(true);
+            connOpts.setKeepAliveInterval(60);
+            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
+                    qos, false);
+            client.connect(connOpts);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al conectar.", e);
+        }
+    }
+
+    public static void publicarMqtt(String topic, String mensageStr) {
+        try {
+            MqttMessage message = new MqttMessage(mensageStr.getBytes());
+            message.setQos(qos);
+            message.setRetained(false);
+            client.publish(topicRoot + topic, message);
+            Log.i(TAG, "Publicando mensaje: " + topic+ "->"+mensageStr);
+        } catch (MqttException e) {
+            Log.e(TAG, "Error al publicar." + e);
+        }
+    }
+
+    @Override public void connectionLost(Throwable cause) {
+        Log.d("MQTT", "Conexión perdida");
+    }
+    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+        Log.d("MQTT", "Entrega completa");
+    }
+    @Override public void messageArrived(String topic, MqttMessage message)
+            throws Exception {
+        String payload = new String(message.getPayload());
+        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
     }
 
 }

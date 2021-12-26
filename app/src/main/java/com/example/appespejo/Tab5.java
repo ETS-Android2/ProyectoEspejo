@@ -89,35 +89,6 @@ public class Tab5 extends Fragment {
         });
 
         return v;
-
-    }
-
-    public void onClickConnect(View view) {
-//        binding.textConnect.setText("Conectando...");
-        Log.d("Pikku","Conectando..." );
-
-        pikku.connect(new ConnectionCallback() {
-            @Override
-        public void onConnect(ConnectionState state) {
-                if (state == ConnectionState.CONNECTED) {
-//            binding.textConnect.setText("Conectado: " + pikku.getAddressDevice());
-//            binding.buttonScan.setEnabled(false);
-            Log.d("Pikku","Conectado" );
-        }
-        } });
-    }
-
-    public void onClickScan(View view) {
-        Log.d("Pikku","Pulsa el botón Pikku 1 para ser scaneado" );
-//        binding.textScan.setText("Pulsa el botón Pikku 1 para ser scaneado");
-        pikku.scan(true, new ScanCallback() {
-            @Override
-            public void onScan(ScanInfo scanInfo) {
-                pikku.saveDevice(scanInfo);
-// guardar dispositivo para futuras conexiones
-                Log.d("Pikku", scanInfo.toString());
-            }
-        });
     }
 
     public void abrirAyuda(View view) {

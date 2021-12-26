@@ -28,8 +28,6 @@ public class AdaptadorImagenes extends
         this.context = context.getApplicationContext();
     }
 
-
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView imagen;
         public final TextView titulo;
@@ -56,11 +54,9 @@ public class AdaptadorImagenes extends
 
         holder.tiempo.setText(prettyTime);
 
-
         Glide.with(context)
                 .load(imagen.getUrl())
                 .into(holder.imagen);
-
 
         holder.itemView.setOnClickListener(onClickListener);
     }
