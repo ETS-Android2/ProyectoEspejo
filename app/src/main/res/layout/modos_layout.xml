@@ -26,6 +26,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/bordes_redondos_botton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -1,9 +1,16 @@
 package com.example.appespejo;
 
 
+import static com.example.escripn.mqtt.Mqtt.TAG;
+import static com.example.escripn.mqtt.Mqtt.broker;
+import static com.example.escripn.mqtt.Mqtt.clientId;
+import static com.example.escripn.mqtt.Mqtt.qos;
+import static com.example.escripn.mqtt.Mqtt.topicRoot;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +53,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +73,15 @@ import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener;
 import com.skydoves.colorpickerview.listeners.ColorPickerViewListener;
 import com.skydoves.colorpickerview.sliders.AlphaSlideBar;
 import com.skydoves.colorpickerview.sliders.BrightnessSlideBar;
+
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -76,7 +93,7 @@ import java.util.Map;
 import timber.log.Timber;
 
 
-public class Tab1 extends Fragment {
+public class Tab1 extends Fragment implements MqttCallback{
     /* @Override
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -86,11 +103,13 @@ public class Tab1 extends Fragment {
     }
 
     SharedPreferences preferences;
+    private static MqttClient client;
     RecyclerView recyclerView;
     ColorListAdapter  adaptador;
     ColorPickerView colorPickerView;
     List<NuevoColor> elements;
     ImageButton newLuces;
+    ImageView apagarEncender;
     FirebaseDatabase database;
     FirebaseFirestore db;
     FirebaseUser usuario;
@@ -112,18 +131,19 @@ public class Tab1 extends Fragment {
         View v = inflater.inflate(R.layout.tab1, container, false);
         Timber.plant(new Timber.DebugTree());
 
-//        database = FirebaseDatabase.getInstance();
-//        databaseReference = database.getReference("prueba1-9bb89-default-rtdb");
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         elements = new ArrayList<>();
-//        preferences = getContext().getSharedPreferences("Seekbar", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = preferences.edit();
+        conectarMqtt();
 
         intensidad = v.findViewById(R.id.intensidad);
         newLuces = v.findViewById(R.id.anyadirLuces);
+        apagarEncender = v.findViewById(R.id.apagarEncender);
+        int tagColor = Color.rgb(100,168, 103);
+        apagarEncender.setTag("apagado");
+        apagarEncender.setColorFilter(0xFF000000);
 
         seekBar = (SeekBar) v.findViewById(R.id.seekBar);
         seekBar.setProgress(pos);
@@ -161,7 +181,6 @@ public class Tab1 extends Fragment {
                     }
                 });
 
-
         colorPickerView = v.findViewById(R.id.colorPickerView);
         BubbleFlag bubbleFlag = new BubbleFlag(getContext());
         bubbleFlag.setFlagMode(FlagMode.ALWAYS);
@@ -171,18 +190,46 @@ public class Tab1 extends Fragment {
                 (ColorEnvelopeListener)
                         (envelope, fromUser) -> {
                             Timber.d("color: %s", envelope.getHexCode());
+//                            aqui va mqtt--------------------------------------------------------------
+                            publicarMqtt("color/actual", envelope.getHexCode());
                             setColor(envelope);
-
                         });
 
         colorPickerView.setFlagView(new BubbleFlag(getContext()));
 
         modos(v);
+        conectarMqtt();
+        apagarEncender.setColorFilter(Color.rgb(100,168, 103));
+        apagarEncender.setTag("verde");
+        allclicks(v);
         return v;
     }
 
-    public void modos(View view){
+    public void allclicks(View view){
 
+        apagarEncender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (apagarEncender.getTag()=="verde"){
+                    apagarEncender.setColorFilter(Color.rgb(164,24, 22));
+                    apagarEncender.setTag("rojo");
+//                    Aqui apaga
+                    publicarMqtt("status/apagar","Apagar");
+                    Log.d("Encender",  "apagar");
+                }
+                else if (apagarEncender.getTag()=="rojo"){
+                    apagarEncender.setTag("verde");
+                    apagarEncender.setColorFilter(Color.rgb(100,168, 103));
+//                    Aqui enciende
+                    Log.d("Encender",  "encender");
+                    publicarMqtt("status/encender","Encender");
+                }
+            }
+        });
+    }
+
+    public void modos(View view){
 
         db.collection("Luces")
                 .document(mAuth.getCurrentUser().getUid())
@@ -204,7 +251,6 @@ public class Tab1 extends Fragment {
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                             adaptador = new ColorListAdapter(getContext(), prueba);
                             recyclerView.setAdapter(adaptador);
-
                         }
                     }
                 });
@@ -259,16 +305,11 @@ public class Tab1 extends Fragment {
                                     db.collection("Luces")
                                             .document(mAuth.getCurrentUser().getUid())
                                             .update(lucess);
-
                                     Toast.makeText(getContext(), "Tu nuevo modo ha sido guardado correctamente", Toast.LENGTH_SHORT).show();
-
                                 }
                             }
                         });
-
                 startActivity(new Intent(getContext(), getContext().getClass()));
-
-
 //                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
 //                View bottomSheetView = LayoutInflater.from(getContext())
 //                        .inflate(R.layout.nuevo_color_name,null);
@@ -303,11 +344,90 @@ public class Tab1 extends Fragment {
         Log.d("Demo", "Rojo " + colorR + " Green " + colorG + " Blue " + colorB);
     }
 
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putLong("SeekBar", 64);
     }
+
+    public static void conectarMqtt() {
+        try {
+            Log.i("MQTTAdapter", "Conectando al broker " + broker);
+            client = new MqttClient(broker, clientId, new MemoryPersistence());
+            MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setCleanSession(true);
+            connOpts.setKeepAliveInterval(60);
+            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
+                    qos, false);
+            client.connect(connOpts);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al conectar.", e);
+        }
+    }
+
+    public static void publicarMqtt(String topic, String mensageStr) {
+        try {
+            MqttMessage message = new MqttMessage(mensageStr.getBytes());
+            message.setQos(qos);
+            message.setRetained(false);
+            client.publish(topicRoot + topic, message);
+            Log.i(TAG, "Publicando mensaje: " + topic+ "->"+mensageStr);
+        } catch (MqttException e) {
+            Log.e(TAG, "Error al publicar." + e);
+        }
+    }
+
+//    @Override public void connectionLost(Throwable cause) {
+//        Log.d("MQTT", "Conexión perdida");
+//    }
+//    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+//        Log.d("MQTT", "Entrega completa");
+//    }
+//    @Override public void messageArrived(String topic, MqttMessage message)
+//            throws Exception {
+//        String payload = new String(message.getPayload());
+//        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+//    }
+
+
+//    public static void conectarMqtt() {
+//        try {
+//            Log.i("MQTTTab1", "Conectando al broker " + broker);
+//            client = new MqttClient(broker, clientId, new MemoryPersistence());
+//            MqttConnectOptions connOpts = new MqttConnectOptions();
+//            connOpts.setCleanSession(true);
+//            connOpts.setKeepAliveInterval(60);
+//            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
+//                    qos, false);
+//            client.connect(connOpts);
+//        } catch (MqttException e) {
+//            Log.e("MQTTTab1", "Error al conectar.", e);
+//        }
+//    }
+//
+//    public static void publicarMqtt(String topic, String mensageStr) {
+//        try {
+//            MqttMessage message = new MqttMessage(mensageStr.getBytes());
+//            message.setQos(qos);
+//            message.setRetained(false);
+//            client.publish(topicRoot + topic, message);
+//            Log.i(TAG, "Publicando mensaje: " + topic+ "->"+mensageStr);
+//        } catch (MqttException e) {
+//            Log.e(TAG, "Error al publicar." + e);
+//        }
+//    }
+
+    @Override public void connectionLost(Throwable cause) {
+        Log.d("MQTT", "Conexión perdida");
+    }
+    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+        Log.d("MQTT", "Entrega completa");
+    }
+    @Override public void messageArrived(String topic, MqttMessage message)
+            throws Exception {
+        String payload = new String(message.getPayload());
+        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+    }
+
 
 }

@@ -17,13 +17,14 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             android:fadingEdge="horizontal"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="@+id/anyadirLuces"
             app:layout_constraintEnd_toStartOf="@+id/anyadirLuces"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/anyadirLuces">
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -50,6 +51,7 @@
             android:id="@+id/anyadirLuces"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:background="@drawable/bordes_redondos_modo_luces"
@@ -57,23 +59,23 @@
             android:cropToPadding="false"
             android:drawingCacheQuality="high"
             android:fadeScrollbars="false"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-            app:layout_constraintEnd_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toTopOf="@+id/imageView6"
+            app:layout_constraintBottom_toBottomOf="@+id/apagarEncender"
+            app:layout_constraintEnd_toStartOf="@+id/apagarEncender"
+            app:layout_constraintTop_toTopOf="@+id/apagarEncender"
             app:srcCompat="@drawable/plus30" />
 
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/apagarEncender"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginTop="32dp"
-            android:background="#FFFFFF"
+            android:onClick="clickApagar"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/turn_off_on50" />
-
+            app:srcCompat="@drawable/turn_off_on50"
+            tools:srcCompat="@drawable/turn_off_on50" />
 
         <SeekBar
             android:id="@+id/seekBar"

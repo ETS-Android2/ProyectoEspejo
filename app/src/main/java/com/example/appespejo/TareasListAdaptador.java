@@ -2,6 +2,7 @@ package com.example.appespejo;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TareasListAdaptador extends RecyclerView.Adapter<TareasListAdaptador.ViewHolder> {
 
@@ -87,13 +89,42 @@ public class TareasListAdaptador extends RecyclerView.Adapter<TareasListAdaptado
     @Override
     public void onBindViewHolder( @NonNull ViewHolder holder,  int position){
 
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         List<String> tareaa = new ArrayList<>();
 //        holder.tarea.setText(tareas.get(position).getTarea());
 
         for(int i=0; i<tareas.size(); i++){
             tareaa.add(i, (String) tareas.get(i).get("tarea"));
         }
+
+        TareasList lista = new TareasList("algo");
+
+        for(int i=0; i< tareaa.size(); i++){
+            lista.setTarea(tareaa.get(i));
+        }
+
+//        updates.put("Tarea" + position, tareaa.get(position));
+
         holder.tarea.setText(tareaa.get(position).toString());
+        holder.tarea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tareaa.remove(position);
+                Map<String,Object> updates = new HashMap<>();
+                for(int i=0; i<tareaa.size(); i++){
+                    updates.put("Tarea" + tareaa.size(), tareaa.get(i));
+                }
+
+//                db.collection("Tareas").document(mAuth.getUid())
+//                        .update(updates);
+
+                Log.d("Tarea", "Pinchado " + tareaa.remove(position) );
+                Log.d("Tarea", "Pinchado " + tareaa );
+                Log.d("Tarea", "Pinchado " + updates );
+            }
+        });
 
 
 

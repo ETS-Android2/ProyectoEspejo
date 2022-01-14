@@ -73,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
      private static MqttClient client;
      int ints;
      PikkuAcademy pikku;
+     ImageView apagarEncender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class HomeActivity extends AppCompatActivity {
                 .inflate(R.layout.tab1,null);
 
         seekBar = tab1.findViewById(R.id.seekBar);
+        apagarEncender = tab1.findViewById(R.id.apagarEncender);
         ints = seekBar.getProgress();
 
         pikku = PikkuAcademy.getInstance(this);
@@ -104,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         spotify = findViewById(R.id.spotify);
         verificado = findViewById(R.id.verificado);
 
+        conectarMqtt();
         connect();
 //        --------------------------PARA EL ANONIMO-----------------------------
 //        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
@@ -134,7 +137,6 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
-
     }
 
     private void checkBlePermissions() {
@@ -164,6 +166,10 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    public void clickApagar(View view){
+        publicarMqtt("modo/apagar", "Apagar");
+        Log.d("Encender",  "Holaa");
+    }
 
     private void onPermissionGranted(String permission) {
         if (Manifest.permission.ACCESS_FINE_LOCATION.equals(permission)) {
@@ -177,12 +183,61 @@ public class HomeActivity extends AppCompatActivity {
                                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                                     startActivityForResult(intent, 1002);
                                 })
-
                         .setCancelable(false)
                         .show();
             }
         }
     }
+
+    public static void conectarMqtt() {
+        try {
+            Log.i("MQTT", "Conectando al broker " + broker);
+            client = new MqttClient(broker, clientId, new MemoryPersistence());
+            MqttConnectOptions connOpts = new MqttConnectOptions();
+            connOpts.setCleanSession(true);
+            connOpts.setKeepAliveInterval(60);
+            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
+                    qos, false);
+            client.connect(connOpts);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al conectar.", e);
+        }
+    }
+
+    public static void publicarMqtt(String topic, String mensageStr) {
+        try {
+            MqttMessage message = new MqttMessage(mensageStr.getBytes());
+            message.setQos(qos);
+            message.setRetained(false);
+            client.publish(topicRoot + topic, message);
+            Log.i(TAG, "Publicando mensaje: " + topic+ "->"+mensageStr);
+        } catch (MqttException e) {
+            Log.e(TAG, "Error al publicar." + e);
+        }
+    }
+
+    public static void suscribirMqtt(String topic, MqttCallback listener) {
+        try {
+            Log.i("MQTT", "Suscrito a " + topicRoot + topic);
+            client.subscribe(topicRoot + topic, qos);
+            client.setCallback(listener);
+        } catch (MqttException e) {
+            Log.e("MQTT", "Error al suscribir.", e);
+        }
+    }
+
+//    @Override public void connectionLost(Throwable cause) {
+//        Log.d("MQTTTab1", "Conexión perdida");
+//    }
+//    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+//        Log.d("MQTT", "Entrega completa");
+//    }
+//    @Override public void messageArrived(String topic, MqttMessage message)
+//            throws Exception {
+//        String payload = new String(message.getPayload());
+//        tempaHome.setText(payload + "°C");
+//        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+//    }
 
     private void checkIsConnected() {
         if (pikku.isConnected()) {
@@ -237,7 +292,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void verificado(View view){
         if(usuario.isEmailVerified()){

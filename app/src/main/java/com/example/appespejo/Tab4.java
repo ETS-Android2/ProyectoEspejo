@@ -92,8 +92,7 @@ public class Tab4 extends AppCompatActivity {
         Log.d("Demo", "isEmailVerified() en onCreateView  " + usuario.isEmailVerified());
 
         setOnClick();
-
-
+        
 //        -----------------------------------------------------------------------------------
 //      Para mostrar por la pantalla los datos del usuario
 //        -----------------------------------------------------------------------------------

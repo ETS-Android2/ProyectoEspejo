@@ -89,7 +89,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-public class HomeFragment extends Fragment implements MqttCallback{
+public class HomeFragment extends Fragment {
 
     List<TareasList> elements;
     RecyclerView recyclerView;
@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
     public static final int AUTH_TOKEN_REQUEST_CODE = 0x10;
     public static final int AUTH_CODE_REQUEST_CODE = 0x11;
     private static MqttClient client;
+    Thread updateseekbar;
 
     public HomeFragment() {
 
@@ -156,7 +157,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
         pikku.enableLog();
 
         conectarMqtt();
-        suscribirMqtt("tempa", this);
+//        suscribirMqtt("tempa", this);
+
 
         // Request code will be used to verify if result comes from the login activity.
         // Can be set to any integer.
@@ -306,18 +308,6 @@ public class HomeFragment extends Fragment implements MqttCallback{
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("Pause", "pausa");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("Resume", "resume");
-    }
-
     private void allClicks() {
 
         pause.setOnClickListener(new View.OnClickListener() {
@@ -353,6 +343,55 @@ public class HomeFragment extends Fragment implements MqttCallback{
             }
         });
 
+//        if(mSpotifyAppRemote.isConnected()){
+//            mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(playerState ->{
+//                final Track track = playerState.track;
+//                if (track != null){
+//
+//
+//                    updateseekbar = new Thread(){
+//                        @Override
+//                        public void run() {
+//                            long totalDuration = track.duration;
+//                            long currrentpos = 0;
+//
+//                            while(currrentpos < totalDuration){
+//                                try{
+//                                    sleep(1000);
+//                                    currrentpos = playerState.playbackPosition;
+//                                    songDuration.setProgress((int) currrentpos);
+//                                }
+//                                catch(InterruptedException | IllegalStateException e){
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }
+//                    };
+//
+//                    songDuration.setMax((int) track.duration);
+//                    updateseekbar.start();
+//                    songDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//                        @Override
+//                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+////                                songDuration.setProgress(songDuration.getProgress());
+////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
+//                            seekBar.setProgress(seekBar.getProgress());
+//                        }
+//
+//                        @Override
+//                        public void onStartTrackingTouch(SeekBar seekBar) {
+////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
+//                        }
+//
+//                        @Override
+//                        public void onStopTrackingTouch(SeekBar seekBar) {
+//                            mSpotifyAppRemote.getPlayerApi().seekTo(seekBar.getProgress());
+//                            seekBar.setProgress(seekBar.getProgress());
+//                        }
+//                    });
+//                }
+//            });
+//        }
     }
 
     @Override
@@ -389,8 +428,6 @@ public class HomeFragment extends Fragment implements MqttCallback{
                         Log.d("Demo", "No se ha connectado con el spotify");
                     }
                 });
-
-
     }
 
     //        -----------------------------------------------------------------------------------
@@ -417,36 +454,62 @@ public class HomeFragment extends Fragment implements MqttCallback{
                                         album.setImageBitmap(bitmap);
                                     }
                                 });
+//
+//                        updateseekbar = new Thread(){
+//                            @Override
+//                            public void run() {
+//                                long totalDuration = track.duration;
+//                                long currrentpos = 0;
+//
+//                                while(currrentpos < totalDuration){
+//                                    try{
+//                                        sleep(1000);
+//                                        currrentpos = playerState.playbackPosition;
+//                                        songDuration.setProgress((int) currrentpos);
+//                                    }
+//                                    catch(InterruptedException | IllegalStateException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+
+                        if(playerState.isPaused){
+                            pause.setVisibility(View.INVISIBLE);
+                            play.setVisibility(View.VISIBLE);
+                        }
+//                        songDuration.setMax((int) track.duration);
+//                        updateseekbar.start();
+
+//                        songDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//                            @Override
+//                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+////                                songDuration.setProgress(songDuration.getProgress());
+////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
+//                                seekBar.setProgress(seekBar.getProgress());
+//                            }
+//
+//                            @Override
+//                            public void onStartTrackingTouch(SeekBar seekBar) {
+////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
+//                            }
+//
+//                            @Override
+//                            public void onStopTrackingTouch(SeekBar seekBar) {
+//                                mSpotifyAppRemote.getPlayerApi().seekTo(seekBar.getProgress());
+//                                seekBar.setProgress(seekBar.getProgress());
+//                            }
+//                        });
 
                         cancion.setText(track.name);
                         artista.setText(track.artist.name);
                         songTime.setText(String.valueOf(TimeUnit.MILLISECONDS.toMinutes(track.duration)) + ":" + String.valueOf(TimeUnit.MILLISECONDS.toSeconds(track.duration -TimeUnit.MINUTES.toMillis(TimeUnit.MILLISECONDS.toMinutes(track.duration)))));
-
                     }
                     else{
                         Log.d("Demo", "No ha pillado el track");
                     }
                 });
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-//        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
-//        mSpotifyAppRemote.getPlayerApi().pause();
-        Log.d("Demo", "onStop");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        //SpotifyAppRemote.disconnect(mSpotifyAppRemote);
-//        mSpotifyAppRemote.getPlayerApi().pause();
-        Log.d("Demo", "onDestroy");
-
-    }
-
 
     public static void conectarMqtt() {
         try {
@@ -473,17 +536,17 @@ public class HomeFragment extends Fragment implements MqttCallback{
         }
     }
 
-    @Override public void connectionLost(Throwable cause) {
-        Log.d("MQTT", "Conexión perdida");
-    }
-    @Override public void deliveryComplete(IMqttDeliveryToken token) {
-        Log.d("MQTT", "Entrega completa");
-    }
-    @Override public void messageArrived(String topic, MqttMessage message)
-            throws Exception {
-        String payload = new String(message.getPayload());
-        tempaHome.setText(payload + "°C");
-        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
-    }
+//    @Override public void connectionLost(Throwable cause) {
+//        Log.d("MQTTTab1", "Conexión perdida");
+//    }
+//    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+//        Log.d("MQTT", "Entrega completa");
+//    }
+//    @Override public void messageArrived(String topic, MqttMessage message)
+//            throws Exception {
+//        String payload = new String(message.getPayload());
+//        tempaHome.setText(payload + "°C");
+//        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+//    }
 
 }
