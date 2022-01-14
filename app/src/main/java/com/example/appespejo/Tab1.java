@@ -191,7 +191,17 @@ public class Tab1 extends Fragment implements MqttCallback{
                         (envelope, fromUser) -> {
                             Timber.d("color: %s", envelope.getHexCode());
 //                            aqui va mqtt--------------------------------------------------------------
-                            publicarMqtt("color/actual", envelope.getHexCode());
+//                            publicarMqtt("color/actual", envelope.getHexCode());
+
+                            int i = Integer.decode(String.valueOf(envelope.getColor()));
+                            int colorR = Color.red(i);
+                            int colorG = Color.green(i);
+                            int colorB = Color.blue(i);
+
+                            publicarMqtt("color/rojo", String.valueOf(colorR));
+                            publicarMqtt("color/verde", String.valueOf(colorG));
+                            publicarMqtt("color/azul", String.valueOf(colorB));
+
                             setColor(envelope);
                         });
 
@@ -204,6 +214,7 @@ public class Tab1 extends Fragment implements MqttCallback{
         allclicks(v);
         return v;
     }
+
 
     public void allclicks(View view){
 
@@ -366,6 +377,18 @@ public class Tab1 extends Fragment implements MqttCallback{
     }
 
     public static void publicarMqtt(String topic, String mensageStr) {
+        try {
+            MqttMessage message = new MqttMessage(mensageStr.getBytes());
+            message.setQos(qos);
+            message.setRetained(false);
+            client.publish(topicRoot + topic, message);
+            Log.i(TAG, "Publicando mensaje: " + topic+ "->"+mensageStr);
+        } catch (MqttException e) {
+            Log.e(TAG, "Error al publicar." + e);
+        }
+    }
+
+    public static void publicarMqttInt(String topic, String mensageStr) {
         try {
             MqttMessage message = new MqttMessage(mensageStr.getBytes());
             message.setQos(qos);

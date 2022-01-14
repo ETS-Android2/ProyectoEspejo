@@ -89,7 +89,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements MqttCallback{
 
     List<TareasList> elements;
     RecyclerView recyclerView;
@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment {
         pikku.enableLog();
 
         conectarMqtt();
-//        suscribirMqtt("tempa", this);
+        suscribirMqtt("tempa", this);
 
 
         // Request code will be used to verify if result comes from the login activity.
@@ -536,17 +536,17 @@ public class HomeFragment extends Fragment {
         }
     }
 
-//    @Override public void connectionLost(Throwable cause) {
-//        Log.d("MQTTTab1", "Conexión perdida");
-//    }
-//    @Override public void deliveryComplete(IMqttDeliveryToken token) {
-//        Log.d("MQTT", "Entrega completa");
-//    }
-//    @Override public void messageArrived(String topic, MqttMessage message)
-//            throws Exception {
-//        String payload = new String(message.getPayload());
-//        tempaHome.setText(payload + "°C");
-//        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
-//    }
+    @Override public void connectionLost(Throwable cause) {
+        Log.d("MQTTTab1", "Conexión perdida");
+    }
+    @Override public void deliveryComplete(IMqttDeliveryToken token) {
+        Log.d("MQTT", "Entrega completa");
+    }
+    @Override public void messageArrived(String topic, MqttMessage message)
+            throws Exception {
+        String payload = new String(message.getPayload());
+        tempaHome.setText(payload + "°C");
+        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+    }
 
 }
