@@ -389,4 +389,15 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/songDuration" />
 
+    <TextView
+        android:id="@+id/aquiTareas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/lucidagrande"
+        android:text="Aqui puedes ver tus tareas"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/nestedScrollView2"
+        app:layout_constraintTop_toTopOf="@+id/nestedScrollView2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

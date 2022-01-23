@@ -1,6 +1,9 @@
 package com.example.appespejo;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -29,7 +33,7 @@ import java.util.Map;
 public class TareasListAdaptador extends RecyclerView.Adapter<TareasListAdaptador.ViewHolder> {
 
     private Context context;
-    private List<HashMap> tareas;
+    private List<String> tareas;
     private LayoutInflater mInflates;
     FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -58,14 +62,11 @@ public class TareasListAdaptador extends RecyclerView.Adapter<TareasListAdaptado
         }
 
         void bindData(final TareasList item ){
-//            db.collection("Users").document(mAuth)
             tarea.setText(item.getTarea());
         }
-
-
     }
 
-    public TareasListAdaptador(Context context, List<HashMap> tareas) {
+    public TareasListAdaptador(Context context, List<String> tareas) {
         this.context = context;
         this.tareas = tareas;
     }
@@ -79,7 +80,6 @@ public class TareasListAdaptador extends RecyclerView.Adapter<TareasListAdaptado
 //        PARA ACTIVAR Y DESACTIVAR BOTON
 //        -----------------------------------------------------------------------------------
 
-
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tareas_layout,parent,false);
@@ -87,81 +87,43 @@ public class TareasListAdaptador extends RecyclerView.Adapter<TareasListAdaptado
     }
 
     @Override
-    public void onBindViewHolder( @NonNull ViewHolder holder,  int position){
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position){
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         List<String> tareaa = new ArrayList<>();
-//        holder.tarea.setText(tareas.get(position).getTarea());
+        if(tareas!=null){
+            holder.tarea.setText((String) tareas.get(position));
+        }
 
         for(int i=0; i<tareas.size(); i++){
-            tareaa.add(i, (String) tareas.get(i).get("tarea"));
+            tareaa.add(i, tareas.get(i));
         }
 
-        TareasList lista = new TareasList("algo");
-
-        for(int i=0; i< tareaa.size(); i++){
-            lista.setTarea(tareaa.get(i));
-        }
-
-//        updates.put("Tarea" + position, tareaa.get(position));
-
-        holder.tarea.setText(tareaa.get(position).toString());
         holder.tarea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Map<String,Object> updatess = new HashMap<>();
+                List<String> updates = new ArrayList<>();
+
                 tareaa.remove(position);
-                Map<String,Object> updates = new HashMap<>();
+
                 for(int i=0; i<tareaa.size(); i++){
-                    updates.put("Tarea" + tareaa.size(), tareaa.get(i));
+                    updatess.put("Tarea" + i, tareaa.get(i));
+                    updates.add(tareaa.get(i));
                 }
 
-//                db.collection("Tareas").document(mAuth.getUid())
-//                        .update(updates);
+                db.collection("Tareas")
+                        .document(mAuth.getUid()).set(updatess);
 
-                Log.d("Tarea", "Pinchado " + tareaa.remove(position) );
-                Log.d("Tarea", "Pinchado " + tareaa );
                 Log.d("Tarea", "Pinchado " + updates );
+                Log.d("Tarea", "Pinchado " + updatess );
+
+                context.startActivity(new Intent(context, context.getClass()));
+                Toast.makeText(context, "Tu tarea ha sido eliminada correctamente", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-//        db.collection("Tareas")
-//                .document(mAuth.getCurrentUser().getUid())
-//                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @RequiresApi(api = Build.VERSION_CODES.O)
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if(task.isComplete()){
-//
-//                    List<String> tareaa = new ArrayList<>();
-////                    List<Long> verde = new ArrayList<>();
-////                    List<Long> azul = new ArrayList<>();
-//
-//                    for(int i=0; i<task.getResult().getData().size(); i++){
-////                        Log.d("Color", String.valueOf(task.getResult().getData().get("Prueba1")));
-////                        Log.d("Modo2", modo.get(i).toString());
-//
-//                        tareaa.add(i, (String) tareas.get(i).get("tarea"));
-////                        verde.add(i, (Long) modo.get(i).get("green"));
-////                        azul.add(i, (Long) modo.get(i).get("blue"));
-//                    }
-////                    holder.button.setText("Modo" + (modo.indexOf(modo.get(position))+1));
-////                    holder.text.setText("Modo" + (modo.indexOf(modo.get(position))+1));
-////                    holder.button.setBackgroundColor(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
-////                    holder.button.setBackgroundResource(R.drawable.bordes_redondos_botton);
-////                    holder.button.setColorFilter(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
-//                    holder.tarea.setText(tareaa.get(position).toString());
-////                    Log.d("RedArray", rojo.toString());
-//
-//                }
-//            }
-
-
     }
-
-    public void setItems(List<HashMap> items){tareas = items;}
-
+    public void setItems(List<String> items){tareas = items;}
 }

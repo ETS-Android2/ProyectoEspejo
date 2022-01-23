@@ -79,18 +79,10 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
         this.modo = color;
     }
 
-
-
     @Override
     public int getItemCount() {
         return modo.size();
     }
-
-
-
-    //        -----------------------------------------------------------------------------------
-//        PARA ACTIVAR Y DESACTIVAR BOTON
-//        -----------------------------------------------------------------------------------
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
@@ -129,6 +121,9 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
                     }
 //                    holder.button.setText("Modo" + (modo.indexOf(modo.get(position))+1));
                     holder.text.setText("Modo" + (modo.indexOf(modo.get(position))+1));
+//                    holder.button.setColorFilter(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
+
+//                    holder.button.setOutlineAmbientShadowColor(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
                     holder.button.setBackgroundColor(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));
 //                    holder.button.setBackgroundResource(R.drawable.bordes_redondos_botton);
 //                    holder.button.setColorFilter(getIntFromColor(Math.toIntExact(rojo.get(position)), Math.toIntExact(verde.get(position)), Math.toIntExact(azul.get(position))));

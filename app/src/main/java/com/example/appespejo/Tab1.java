@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -141,7 +142,6 @@ public class Tab1 extends Fragment implements MqttCallback{
         intensidad = v.findViewById(R.id.intensidad);
         newLuces = v.findViewById(R.id.anyadirLuces);
         apagarEncender = v.findViewById(R.id.apagarEncender);
-        int tagColor = Color.rgb(100,168, 103);
         apagarEncender.setTag("apagado");
         apagarEncender.setColorFilter(0xFF000000);
 
@@ -209,8 +209,34 @@ public class Tab1 extends Fragment implements MqttCallback{
 
         modos(v);
         conectarMqtt();
-        apagarEncender.setColorFilter(Color.rgb(100,168, 103));
-        apagarEncender.setTag("verde");
+//        apagarEncender.setColorFilter(Color.rgb(100,168, 103));
+        apagarEncender.setTag("rojo");
+//        if(apagarEncender.getTag()=="verde"){
+//            publicarMqtt("status/encender","Encender");
+//        }
+
+        if (savedInstanceState != null) {
+            Log.d("Saved", "hay algo" + savedInstanceState);
+            apagarEncender.setTag(savedInstanceState.getString("TagBoton"));
+        } else {
+            Log.d("Saved", "No hay nada");
+        }
+
+        if (apagarEncender.getTag()=="verde"){
+            apagarEncender.setColorFilter(Color.rgb(164,24, 22));
+            apagarEncender.setTag("rojo");
+//                    Aqui apaga
+            publicarMqtt("status/apagar","Apagar");
+            Log.d("Encender",  "apagar");
+        }
+        else if (apagarEncender.getTag()=="rojo"){
+            apagarEncender.setTag("verde");
+            apagarEncender.setColorFilter(Color.rgb(100,168, 103));
+//                    Aqui enciende
+            Log.d("Encender",  "encender");
+            publicarMqtt("status/encender","Encender");
+        }
+
         allclicks(v);
         return v;
     }
@@ -359,7 +385,10 @@ public class Tab1 extends Fragment implements MqttCallback{
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putLong("SeekBar", 64);
+        outState.putString("TagBoton", apagarEncender.getTag().toString());
+//        outState.putString("TagBoton", "verde");
     }
+
 
     public static void conectarMqtt() {
         try {
@@ -400,52 +429,14 @@ public class Tab1 extends Fragment implements MqttCallback{
         }
     }
 
-//    @Override public void connectionLost(Throwable cause) {
-//        Log.d("MQTT", "Conexión perdida");
-//    }
-//    @Override public void deliveryComplete(IMqttDeliveryToken token) {
-//        Log.d("MQTT", "Entrega completa");
-//    }
-//    @Override public void messageArrived(String topic, MqttMessage message)
-//            throws Exception {
-//        String payload = new String(message.getPayload());
-//        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
-//    }
-
-
-//    public static void conectarMqtt() {
-//        try {
-//            Log.i("MQTTTab1", "Conectando al broker " + broker);
-//            client = new MqttClient(broker, clientId, new MemoryPersistence());
-//            MqttConnectOptions connOpts = new MqttConnectOptions();
-//            connOpts.setCleanSession(true);
-//            connOpts.setKeepAliveInterval(60);
-//            connOpts.setWill(topicRoot+"WillTopic","App desconectada".getBytes(),
-//                    qos, false);
-//            client.connect(connOpts);
-//        } catch (MqttException e) {
-//            Log.e("MQTTTab1", "Error al conectar.", e);
-//        }
-//    }
-//
-//    public static void publicarMqtt(String topic, String mensageStr) {
-//        try {
-//            MqttMessage message = new MqttMessage(mensageStr.getBytes());
-//            message.setQos(qos);
-//            message.setRetained(false);
-//            client.publish(topicRoot + topic, message);
-//            Log.i(TAG, "Publicando mensaje: " + topic+ "->"+mensageStr);
-//        } catch (MqttException e) {
-//            Log.e(TAG, "Error al publicar." + e);
-//        }
-//    }
-
     @Override public void connectionLost(Throwable cause) {
         Log.d("MQTT", "Conexión perdida");
     }
+
     @Override public void deliveryComplete(IMqttDeliveryToken token) {
         Log.d("MQTT", "Entrega completa");
     }
+
     @Override public void messageArrived(String topic, MqttMessage message)
             throws Exception {
         String payload = new String(message.getPayload());

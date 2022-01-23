@@ -3,9 +3,6 @@ package com.example.appespejo;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.hardware.fingerprint.FingerprintManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -27,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,13 +35,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.blautic.pikkuAcademyLib.PikkuAcademy;
-import com.blautic.pikkuAcademyLib.ScanInfo;
-import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
-import com.blautic.pikkuAcademyLib.callback.ButtonsCallback;
-import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
-import com.blautic.pikkuAcademyLib.callback.ScanCallback;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,24 +50,16 @@ import com.spotify.protocol.types.Track;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.escripn.mqtt.Mqtt.*;
@@ -103,6 +86,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
     SeekBar songDuration;
     Button pause, back, next, play,spotify;
     String name,mAccessToken;
+    Switch switchLuz;
     Handler mainHandler = new Handler();
     ProgressDialog progressDialog;
     private PikkuAcademy pikku;
@@ -142,6 +126,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
         tempaHome = v.findViewById(R.id.tempaHome);
         songTime = v.findViewById(R.id.songTime);
         songDuration = v.findViewById(R.id.songDuration);
+        switchLuz = v.findViewById(R.id.switchLuces);
 
         album = v.findViewById(R.id.homeSpotyImage);
         pause = v.findViewById(R.id.spotyPause);
@@ -158,6 +143,17 @@ public class HomeFragment extends Fragment implements MqttCallback{
 
         conectarMqtt();
         suscribirMqtt("tempa", this);
+
+        switchLuz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(switchLuz.isChecked()){
+                    Log.d("Switch", "true");
+                } else{
+                    Log.d("Switch", "false");
+                }
+            }
+        });
 
 
         // Request code will be used to verify if result comes from the login activity.
@@ -179,6 +175,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
         fecha.setText(s);
 
 
+//        Poner el welcome usuario arriba de la pagina
         db.collection("Users")
                 .document(mAuth.getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -193,6 +190,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
             }
         });
 
+
+//        API del tiempo arriba de la pagina
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -246,7 +245,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
     public void setup(View view){
 
         elements = new ArrayList<>();
-        List<HashMap> leer = new ArrayList<>();
+        List<String> leer = new ArrayList<>();
 
         db.collection("Tareas")
                 .document(mAuth.getCurrentUser().getUid())
@@ -254,16 +253,26 @@ public class HomeFragment extends Fragment implements MqttCallback{
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
-                    for(int i=0; i<task.getResult().getData().size(); i++){
-                        leer.add(i, (HashMap) task.getResult().getData().get("Tarea"+i));
+
+                    if(task.getResult().getData().size()>0){
+                        for(int i=0; i<task.getResult().getData().size(); i++){
+                            leer.add(i, task.getResult().getString("Tarea"+i));
+                        }
+
+                        TextView tareas = view.findViewById(R.id.aquiTareas);
+                        tareas.setVisibility(View.GONE);
+                        Log.d("Leer", leer.toString());
+                        Log.d("Tareas", String.valueOf(task.getResult().getData().size()));
+
+                        recyclerView = view.findViewById(R.id.recycleTareas);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        adaptador = new TareasListAdaptador(getContext(), leer);
+                        recyclerView.setAdapter(adaptador);
+                    } else{
+                        Log.d("Tareas", "No hay tareas disponibles");
+                        Log.d("Tareas", String.valueOf(task.getResult().getData().size()));
+
                     }
-
-                    Log.d("Leer", leer.toString());
-
-                    recyclerView = view.findViewById(R.id.recycleTareas);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    adaptador = new TareasListAdaptador(getContext(), leer);
-                    recyclerView.setAdapter(adaptador);
                 }
             }
         });
@@ -276,6 +285,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
                         || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     Map<String, Object> tareas = new HashMap<>();
+
                     TareasList taskk = new TareasList(nuevaTarea.getText().toString());
 
                     db.collection("Tareas")
@@ -288,14 +298,13 @@ public class HomeFragment extends Fragment implements MqttCallback{
 //                Codigo para sacar el documento
                                     if(task.isSuccessful()){
 //                    Coge el nombre de objetos, no index
-                                        tareas.put("Tarea" + task.getResult().getData().size(), taskk);
+                                        tareas.put("Tarea" + task.getResult().getData().size(), nuevaTarea.getText().toString());
 
                                         db.collection("Tareas")
                                                 .document(mAuth.getCurrentUser().getUid())
                                                 .update(tareas);
 
                                         Toast.makeText(getContext(), "Tu nueva tarea ha sido agregada correctamente", Toast.LENGTH_SHORT).show();
-
                                     }
                                 }
                             });
@@ -342,6 +351,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
                 mSpotifyAppRemote.getPlayerApi().skipNext();
             }
         });
+
+//        Para la linea con tiempo de la cancion
 
 //        if(mSpotifyAppRemote.isConnected()){
 //            mSpotifyAppRemote.getPlayerApi().subscribeToPlayerState().setEventCallback(playerState ->{
@@ -513,7 +524,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
 
     public static void conectarMqtt() {
         try {
-            Log.i("MQTT", "Conectando al broker " + broker);
+            Log.i("MQTTHome", "Conectando al broker " + broker);
             client = new MqttClient(broker, clientId, new MemoryPersistence());
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
@@ -522,31 +533,31 @@ public class HomeFragment extends Fragment implements MqttCallback{
                     qos, false);
             client.connect(connOpts);
         } catch (MqttException e) {
-            Log.e("MQTT", "Error al conectar.", e);
+            Log.e("MQTTHome", "Error al conectar.", e);
         }
     }
 
     public static void suscribirMqtt(String topic, MqttCallback listener) {
         try {
-            Log.i("MQTT", "Suscrito a " + topicRoot + topic);
+            Log.i("MQTTHome", "Suscrito a " + topicRoot + topic);
             client.subscribe(topicRoot + topic, qos);
             client.setCallback(listener);
         } catch (MqttException e) {
-            Log.e("MQTT", "Error al suscribir.", e);
+            Log.e("MQTTHome", "Error al suscribir.", e);
         }
     }
 
     @Override public void connectionLost(Throwable cause) {
-        Log.d("MQTTTab1", "Conexión perdida");
+        Log.d("MQTTHome", "Conexión perdida");
     }
     @Override public void deliveryComplete(IMqttDeliveryToken token) {
-        Log.d("MQTT", "Entrega completa");
+        Log.d("MQTTHome", "Entrega completa");
     }
     @Override public void messageArrived(String topic, MqttMessage message)
             throws Exception {
         String payload = new String(message.getPayload());
         tempaHome.setText(payload + "°C");
-        Log.d("MQTT", "Recibiendo: " + topic + "->" + payload);
+        Log.d("MQTTHome", "Recibiendo: " + topic + "->" + payload);
     }
 
 }
