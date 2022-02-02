@@ -41,6 +41,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+
+
 public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.ViewHolder> {
 
     private Context context;
@@ -89,7 +91,7 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.modos_layout,parent,false);
 //        usuario = FirebaseAuth.getInstance().getCurrentUser();
 //        db = FirebaseFirestore.getInstance();
-//        conectarMqtt();
+        conectarMqtt();
         return new ViewHolder(view);
     }
 
@@ -138,7 +140,7 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
                             intesidad.add(position, modo.get(position).get("intensidad"));
 
 //                             Se puede enviar en 4 topicos diferentes como: red,verde, azul y intensidad
-//                            publicarMqtt("modo","Rojo " + rojo.get(position).toString() + " verde " + verde.get(position).toString()+ " azul " + azul.get(position).toString() + " intensidad " + intesidad.get(position).toString());
+                            publicarMqtt("modo","Rojo " + rojo.get(position).toString() + " verde " + verde.get(position).toString()+ " azul " + azul.get(position).toString() + " intensidad " + intesidad.get(position).toString());
                             publicarMqtt("modo/rojo",rojo.get(position).toString());
                             publicarMqtt("modo/verde",verde.get(position).toString());
                             publicarMqtt("modo/azul",azul.get(position).toString());

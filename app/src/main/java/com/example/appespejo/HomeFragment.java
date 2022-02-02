@@ -1,7 +1,9 @@
 package com.example.appespejo;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,6 +74,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+
 public class HomeFragment extends Fragment implements MqttCallback{
 
     List<TareasList> elements;
@@ -98,6 +101,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
     public static final int AUTH_TOKEN_REQUEST_CODE = 0x10;
     public static final int AUTH_CODE_REQUEST_CODE = 0x11;
     private static MqttClient client;
+    ImageView apagarEncenderr;
     Thread updateseekbar;
 
     public HomeFragment() {
@@ -111,6 +115,10 @@ public class HomeFragment extends Fragment implements MqttCallback{
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         View tab1 = inflater.inflate(R.layout.tab1, container,false);
 
+//        apagarEncenderr = tabb1.findViewById(R.id.apagarEncender);
+//        apagarEncenderr.getTag().toString();
+//        Log.d("ApagarOn", apagarEncenderr.getTag().toString());
+
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -122,7 +130,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
         iconWeather = v.findViewById(R.id.iconWeather);
         SeekBar seekBar = tab1.findViewById(R.id.seekBar);
         intensidad = v.findViewById(R.id.intensidadLucesHome);
-        intensidad.setText("Intencidad " + seekBar.getProgress() + "%");
+
+        intensidad.setText("Intencidad 100%");
         tempaHome = v.findViewById(R.id.tempaHome);
         songTime = v.findViewById(R.id.songTime);
         songDuration = v.findViewById(R.id.songDuration);
@@ -141,19 +150,40 @@ public class HomeFragment extends Fragment implements MqttCallback{
         pikku = PikkuAcademy.getInstance(getContext());
         pikku.enableLog();
 
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
         conectarMqtt();
         suscribirMqtt("tempa", this);
+
+
+        switchLuz.setChecked(sharedPref.getBoolean("switchLuz", true));
+        if(switchLuz.isChecked()){
+            publicarMqtt("status/encender","Encender");
+        } else{
+            publicarMqtt("status/apagar","Apagar");
+        }
 
         switchLuz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(switchLuz.isChecked()){
+//                    Sera encendida
                     Log.d("Switch", "true");
+                    editor.putBoolean("switchLuz", switchLuz.isChecked());
+                    editor.apply();
+                    publicarMqtt("status/encender","Encender");
+
                 } else{
+//                    Apagada
                     Log.d("Switch", "false");
+                    editor.putBoolean("switchLuz", switchLuz.isChecked());
+                    editor.apply();
+                    publicarMqtt("status/apagar","Apagar");
                 }
             }
         });
+
 
 
         // Request code will be used to verify if result comes from the login activity.
@@ -210,20 +240,6 @@ public class HomeFragment extends Fragment implements MqttCallback{
 
                     grados.setText(String.valueOf(tempa) + "°C");
                     location.setText(city);
-//                    new FetchImage(url).start();
-
-//                    Picasso.get()
-//                            .load(urlfoto)
-//                            .into(iconWeather);
-
-//                    Glide.with(getContext())
-//                            .load(urlfoto)
-//                            .into(iconWeather);
-
-//                    InputStream inputStream = null;
-//                    inputStream = new URL(url).openStream();
-//                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-//                    iconWeather.setImageBitmap(bitmap);
                     
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -536,6 +552,19 @@ public class HomeFragment extends Fragment implements MqttCallback{
             Log.e("MQTTHome", "Error al conectar.", e);
         }
     }
+
+    public static void publicarMqtt(String topic, String mensageStr) {
+        try {
+            MqttMessage message = new MqttMessage(mensageStr.getBytes());
+            message.setQos(qos);
+            message.setRetained(false);
+            client.publish(topicRoot + topic, message);
+            Log.i(TAG, "Publicando mensaje: " + topic+ "->"+mensageStr);
+        } catch (MqttException e) {
+            Log.e(TAG, "Error al publicar." + e);
+        }
+    }
+
 
     public static void suscribirMqtt(String topic, MqttCallback listener) {
         try {

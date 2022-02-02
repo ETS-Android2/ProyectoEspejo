@@ -17,8 +17,11 @@
         <entry key="app/src/main/res/layout/elemento_lista.xml" value="0.2359375" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.335" />
         <entry key="app/src/main/res/layout/modos_layout.xml" value="0.2359375" />
+        <entry key="app/src/main/res/layout/modos_recycler.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/nuevo_color_name.xml" value="0.18385416666666668" />
         <entry key="app/src/main/res/layout/tab1.xml" value="0.24367088607594936" />
+        <entry key="app/src/main/res/layout/tab3.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/tab4.xml" value="0.1" />
         <entry key="app/src/main/res/layout/tab5.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/tareas_layout.xml" value="0.1" />
       </map>

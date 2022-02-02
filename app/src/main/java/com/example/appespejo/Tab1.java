@@ -132,30 +132,31 @@ public class Tab1 extends Fragment implements MqttCallback{
         View v = inflater.inflate(R.layout.tab1, container, false);
         Timber.plant(new Timber.DebugTree());
 
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         elements = new ArrayList<>();
-        conectarMqtt();
+
+        newLuces = v.findViewById(R.id.anyadirLuces);
+
+        apagarEncender = v.findViewById(R.id.apagarEncender);
+        apagarEncender.setTag((Object) sharedPref.getString("botonON", "rojo"));
+        Log.d("Algos", apagarEncender.getTag().toString());
+        Log.d("Algos", sharedPref.getString("botonON", "rojo"));
+//        apagarEncender.setColorFilter(0xFF000000);
 
         intensidad = v.findViewById(R.id.intensidad);
-        newLuces = v.findViewById(R.id.anyadirLuces);
-        apagarEncender = v.findViewById(R.id.apagarEncender);
-        apagarEncender.setTag("apagado");
-        apagarEncender.setColorFilter(0xFF000000);
+        intensidad.setText("Intensidad: " + String.valueOf(sharedPref.getInt("seekbar", 100))+" %");
 
         seekBar = (SeekBar) v.findViewById(R.id.seekBar);
-        seekBar.setProgress(pos);
+        seekBar.setProgress(sharedPref.getInt("seekbar", 100));
         seekBar.setMax(100);
 
-        if (savedInstanceState != null) {
-//            isEditing = savedInstanceState.getBoolean(IS_EDITING_KEY, false);
-            Log.d("Seekba", "Esta esta guardado nada");
-        } else {
-//            randomGoodDeed = viewModel.generateRandomGoodDeed();
-            Log.d("Seekba", "no esta guardado nada");
-        }
+        Log.d("Algo", String.valueOf(sharedPref.getInt("seekbar", 100)));
 
         seekBar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -165,19 +166,22 @@ public class Tab1 extends Fragment implements MqttCallback{
                                                   int progress, boolean fromUser) {
                         intensidad.setText("Intensidad: " + String.valueOf(progress)+" %");
                         pos = seekBar.getProgress();
-                        Log.d("SeekbarPogess", String.valueOf(seekBar.getProgress()));
+//                        Log.d("SeekbarPogess", String.valueOf(seekBar.getProgress()));
+                        editor.putInt("seekbar", seekBar.getProgress());
+                        editor.apply();
+                        publicarMqtt("color/intensidad", String.valueOf(seekBar.getProgress()));
                     }
 
                     //hace un llamado  cuando se toca la perilla
                     public void onStartTrackingTouch(SeekBar seekBar) {
                         pos = seekBar.getProgress();
-                        Log.d("SeekbarStart", String.valueOf(seekBar.getProgress()));
+//                        Log.d("SeekbarStart", String.valueOf(seekBar.getProgress()));
                     }
 
                     //hace un llamado  cuando se detiene la perilla
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         seekBar.setProgress(pos);
-                        Log.d("SeekbarStop", String.valueOf(seekBar.getProgress()));
+//                        Log.d("SeekbarStop", String.valueOf(seekBar.getProgress()));
                     }
                 });
 
@@ -209,29 +213,21 @@ public class Tab1 extends Fragment implements MqttCallback{
 
         modos(v);
         conectarMqtt();
-//        apagarEncender.setColorFilter(Color.rgb(100,168, 103));
-        apagarEncender.setTag("rojo");
-//        if(apagarEncender.getTag()=="verde"){
-//            publicarMqtt("status/encender","Encender");
-//        }
 
-        if (savedInstanceState != null) {
-            Log.d("Saved", "hay algo" + savedInstanceState);
-            apagarEncender.setTag(savedInstanceState.getString("TagBoton"));
-        } else {
-            Log.d("Saved", "No hay nada");
-        }
-
-        if (apagarEncender.getTag()=="verde"){
+        if (apagarEncender.getTag().equals("verde")){
             apagarEncender.setColorFilter(Color.rgb(164,24, 22));
             apagarEncender.setTag("rojo");
+            editor.putString("botonON", apagarEncender.getTag().toString());
+            editor.apply();
 //                    Aqui apaga
             publicarMqtt("status/apagar","Apagar");
             Log.d("Encender",  "apagar");
         }
-        else if (apagarEncender.getTag()=="rojo"){
+        else if (apagarEncender.getTag().equals("rojo")){
             apagarEncender.setTag("verde");
             apagarEncender.setColorFilter(Color.rgb(100,168, 103));
+            editor.putString("botonON", apagarEncender.getTag().toString());
+            editor.apply();
 //                    Aqui enciende
             Log.d("Encender",  "encender");
             publicarMqtt("status/encender","Encender");
@@ -268,29 +264,49 @@ public class Tab1 extends Fragment implements MqttCallback{
 
     public void modos(View view){
 
-        db.collection("Luces")
-                .document(mAuth.getCurrentUser().getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                Codigo para sacar el documento
-                        if(task.isSuccessful()){
-                            List<HashMap> prueba = new ArrayList<HashMap>();
-//                    Coge el nombre de objetos, no index
-                            for(int i=0; i<task.getResult().getData().size(); i++) {
-                                prueba.add(i, (HashMap) task.getResult().getData().get("Prueba"+i));
-                            }
-                            Log.d("PruebaArray", prueba.toString());
+        //  Dialog para cambier el correo
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        View bottomSheetView = LayoutInflater.from(this.getContext())
+                .inflate(R.layout.modos_recycler,null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-                            recyclerView = view.findViewById(R.id.recyclerModos);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                            adaptador = new ColorListAdapter(getContext(), prueba);
-                            recyclerView.setAdapter(adaptador);
-                        }
-                    }
-                });
+
+
+        TextView prueba = view.findViewById(R.id.textView40);
+        prueba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.show();
+
+                db.collection("Luces")
+                        .document(mAuth.getCurrentUser().getUid())
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                Codigo para sacar el documento
+                                if(task.isSuccessful()){
+                                    List<HashMap> prueba = new ArrayList<HashMap>();
+//                    Coge el nombre de objetos, no index
+                                    for(int i=0; i<task.getResult().getData().size(); i++) {
+                                        prueba.add(i, (HashMap) task.getResult().getData().get("Prueba"+i));
+                                    }
+                                    Log.d("PruebaArray", prueba.toString());
+
+                                    recyclerView = bottomSheetView.findViewById(R.id.recyclerModos);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                                    adaptador = new ColorListAdapter(getContext(), prueba);
+                                    recyclerView.setAdapter(adaptador);
+                                }
+                            }
+                        });
+
+            }
+        });
+
+
     }
 
     @Override
@@ -389,6 +405,15 @@ public class Tab1 extends Fragment implements MqttCallback{
 //        outState.putString("TagBoton", "verde");
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if(savedInstanceState!= null){
+            Log.d("Guardado", "Hay algo guardado");
+        } else{
+            Log.d("Guardado", "Que te den");
+        }
+    }
 
     public static void conectarMqtt() {
         try {

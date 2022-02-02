@@ -36,6 +36,7 @@
     <string name="cambiarapellido">Cambiar apellido</string>
     <string name="guardarcambios">Guardar cambios</string>
     <string name="nuevomodo">Nombre de nuevo modo</string>
+    <string name="saved_high_score_key">seekbar</string>
 
     <string name="accesoDenegado">Acceso denegado</string>
     <string name="confirmarCorreo">Confirmar correo electrónico</string>

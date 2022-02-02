@@ -89,6 +89,8 @@ public class HomeActivity extends AppCompatActivity {
 
         seekBar = tab1.findViewById(R.id.seekBar);
         apagarEncender = tab1.findViewById(R.id.apagarEncender);
+        apagarEncender.setTag("rojo");
+        Log.d("Mierda", apagarEncender.getTag().toString());
         ints = seekBar.getProgress();
 
         pikku = PikkuAcademy.getInstance(this);
@@ -106,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
         spotify = findViewById(R.id.spotify);
         verificado = findViewById(R.id.verificado);
 
-        conectarMqtt();
+//        conectarMqtt();
         connect();
 //        --------------------------PARA EL ANONIMO-----------------------------
 //        usuarioNombre = (TextView) findViewById(R.id.usuarioNombre);
