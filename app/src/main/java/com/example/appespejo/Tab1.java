@@ -126,6 +126,7 @@ public class Tab1 extends Fragment implements MqttCallback{
     private boolean FLAG_SELECTOR = false;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -234,6 +235,7 @@ public class Tab1 extends Fragment implements MqttCallback{
         }
 
         allclicks(v);
+
         return v;
     }
 
@@ -262,6 +264,7 @@ public class Tab1 extends Fragment implements MqttCallback{
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     public void modos(View view){
 
         //  Dialog para cambier el correo
@@ -269,9 +272,7 @@ public class Tab1 extends Fragment implements MqttCallback{
         View bottomSheetView = LayoutInflater.from(this.getContext())
                 .inflate(R.layout.modos_recycler,null);
         bottomSheetDialog.setContentView(bottomSheetView);
-        bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-
+        bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
 
         TextView prueba = view.findViewById(R.id.textView40);
         prueba.setOnClickListener(new View.OnClickListener() {
@@ -293,16 +294,22 @@ public class Tab1 extends Fragment implements MqttCallback{
                                     for(int i=0; i<task.getResult().getData().size(); i++) {
                                         prueba.add(i, (HashMap) task.getResult().getData().get("Prueba"+i));
                                     }
-                                    Log.d("PruebaArray", prueba.toString());
+                                    Log.d("PruebaArray", String.valueOf(prueba.size()));
+                                    TextView text = bottomSheetView.findViewById(R.id.textView44);
 
-                                    recyclerView = bottomSheetView.findViewById(R.id.recyclerModos);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                                    adaptador = new ColorListAdapter(getContext(), prueba);
-                                    recyclerView.setAdapter(adaptador);
+                                    if (prueba.size() != 0) {
+                                        text.setVisibility(View.GONE);
+                                        recyclerView = bottomSheetView.findViewById(R.id.recyclerModos);
+                                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                                        adaptador = new ColorListAdapter(getContext(), prueba);
+                                        recyclerView.setAdapter(adaptador);
+                                    }
+
+                                } else{
+                                    Toast.makeText(getContext(), "Ha ocurrido error al leer base de datos", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
             }
         });
 

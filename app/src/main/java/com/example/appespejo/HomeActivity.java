@@ -169,7 +169,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void clickApagar(View view){
-        publicarMqtt("modo/apagar", "Apagar");
+//        publicarMqtt("modo/apagar", "Apagar");
         Log.d("Encender",  "Holaa");
     }
 

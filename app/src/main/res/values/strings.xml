@@ -37,6 +37,7 @@
     <string name="guardarcambios">Guardar cambios</string>
     <string name="nuevomodo">Nombre de nuevo modo</string>
     <string name="saved_high_score_key">seekbar</string>
+    <string name="tieneModos">Aun no tienes ningun modo guardado. Para esto: \n\n1. Elige color que te guste \n\n2. Elige intensidad de la luz \n\n3. Dale a la cruz para guardar el modo \n\n </string>
 
     <string name="accesoDenegado">Acceso denegado</string>
     <string name="confirmarCorreo">Confirmar correo electrónico</string>
