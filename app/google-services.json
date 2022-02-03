@@ -8,6 +8,46 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:974130529147:android:336acdd76ccfa9325fb3de",
+        "android_client_info": {
+          "package_name": "com.example.appespejo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974130529147-8mhfj52ua00j2d0lsnrm7f1dv8rihj42.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appespejo",
+            "certificate_hash": "b3b76f924adc78b4ce055c9d350e56e6183a2e08"
+          }
+        },
+        {
+          "client_id": "974130529147-keh6p726cuvq819vgbu42bgjfj44n020.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArHu5EsTDLkgdmKvKNYfpwi6fU9CBpoKI"
+        },
+        {
+          "current_key": "AIzaSyCU8yhCIaBWX7CcEjA6vyjeezJNAS-qQcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974130529147-keh6p726cuvq819vgbu42bgjfj44n020.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:974130529147:android:c93214d70d90a4735fb3de",
         "android_client_info": {
           "package_name": "com.example.raspberry"
@@ -28,6 +68,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyArHu5EsTDLkgdmKvKNYfpwi6fU9CBpoKI"
+        },
         {
           "current_key": "AIzaSyCU8yhCIaBWX7CcEjA6vyjeezJNAS-qQcY"
         }

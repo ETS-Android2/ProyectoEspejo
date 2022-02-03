@@ -141,10 +141,10 @@ public class ColorListAdapter extends RecyclerView.Adapter<ColorListAdapter.View
 
 //                             Se puede enviar en 4 topicos diferentes como: red,verde, azul y intensidad
                             publicarMqtt("modo","Rojo " + rojo.get(position).toString() + " verde " + verde.get(position).toString()+ " azul " + azul.get(position).toString() + " intensidad " + intesidad.get(position).toString());
-                            publicarMqtt("modo/rojo",rojo.get(position).toString());
-                            publicarMqtt("modo/verde",verde.get(position).toString());
-                            publicarMqtt("modo/azul",azul.get(position).toString());
-                            publicarMqtt("modo/intensidad",intesidad.get(position).toString());
+                            publicarMqtt("color/rojo",rojo.get(position).toString());
+                            publicarMqtt("color/verde",verde.get(position).toString());
+                            publicarMqtt("color/azul",azul.get(position).toString());
+                            publicarMqtt("color/intensidad",intesidad.get(position).toString());
                             Log.d("ModosText", "Rojo" + rojo.get(position).toString() + " verde" + verde.get(position).toString()+ " azul" + azul.get(position).toString() + " intensidad " + intesidad.get(position).toString());
                         }
                     });

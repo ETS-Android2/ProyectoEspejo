@@ -40,8 +40,9 @@
     <string name="tieneModos">Aun no tienes ningun modo guardado. Para esto: \n\n1. Elige color que te guste \n\n2. Elige intensidad de la luz \n\n3. Dale a la cruz para guardar el modo \n\n </string>
 
     <string name="accesoDenegado">Acceso denegado</string>
+    <string name="correoEnviado">Prueba</string>
     <string name="confirmarCorreo">Confirmar correo electrónico</string>
-    <string name="correoEnviado">Se le ha enviado un correo para verificar dicho cambio. Es posible que el mensaje haya sido enviado en la bandeja de SPAM o similar.</string>
+<!--    <string name="correoEnviado">Se le ha enviado un correo para verificar dicho cambio. Es posible que el mensaje haya sido enviado en la bandeja de SPAM o similar.</string>-->
     <string name="paraAcceder">Para acceder a este contenido necesita registrarse</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

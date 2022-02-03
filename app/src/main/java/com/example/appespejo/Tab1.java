@@ -8,6 +8,7 @@ import static com.example.escripn.mqtt.Mqtt.qos;
 import static com.example.escripn.mqtt.Mqtt.topicRoot;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -274,6 +275,16 @@ public class Tab1 extends Fragment implements MqttCallback{
         bottomSheetDialog.setContentView(bottomSheetView);
         bottomSheetDialog.getWindow().setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
 
+
+        bottomSheetDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                conectarMqtt();
+                Log.d("Vida", "On cancel");
+            }
+        });
+
+
         TextView prueba = view.findViewById(R.id.textView40);
         prueba.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,17 +330,20 @@ public class Tab1 extends Fragment implements MqttCallback{
     @Override
     public void onStop() {
         super.onStop();
-//        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-//        int defaultValue = getResources().getInteger(seekBar.getProgress());
-//        seekBar.setProgress(defaultValue);
+        Log.d("Vida", "onStop");
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("Vida", "onPause");
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
-//        modos(v);
-//        int defaultValue = getResources().getInteger(seekBar.getProgress());
-//        seekBar.setProgress(defaultValue);
+        Log.d("Vida", "onResume");
     }
 
     @SuppressLint("SetTextI18n")
@@ -402,6 +416,12 @@ public class Tab1 extends Fragment implements MqttCallback{
         });
 
         Log.d("Demo", "Rojo " + colorR + " Green " + colorG + " Blue " + colorB);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("Vida", "onStart");
     }
 
     @Override
