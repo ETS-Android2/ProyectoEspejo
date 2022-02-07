@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -153,15 +155,15 @@ public class HomeFragment extends Fragment implements MqttCallback{
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-//        conectarMqtt();
-//        suscribirMqtt("tempa", this);
+        conectarMqtt();
+        suscribirMqtt("tempa", this);
 
 
         switchLuz.setChecked(sharedPref.getBoolean("switchLuz", true));
         if(switchLuz.isChecked()){
-//            publicarMqtt("status/encender","Encender");
+            publicarMqtt("status/encender","Encender");
         } else{
-//            publicarMqtt("status/apagar","Apagar");
+            publicarMqtt("status/apagar","Apagar");
         }
 
         switchLuz.setOnClickListener(new View.OnClickListener() {
@@ -172,14 +174,14 @@ public class HomeFragment extends Fragment implements MqttCallback{
                     Log.d("Switch", "true");
                     editor.putBoolean("switchLuz", switchLuz.isChecked());
                     editor.apply();
-//                    publicarMqtt("status/encender","Encender");
+                    publicarMqtt("status/encender","Encender");
 
                 } else{
 //                    Apagada
                     Log.d("Switch", "false");
                     editor.putBoolean("switchLuz", switchLuz.isChecked());
                     editor.apply();
-//                    publicarMqtt("status/apagar","Apagar");
+                    publicarMqtt("status/apagar","Apagar");
                 }
             }
         });
@@ -421,122 +423,122 @@ public class HomeFragment extends Fragment implements MqttCallback{
 //        }
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // We will start writing our code here.
-//
-//        // Set the connection parameters
-//
-//        ConnectionParams connectionParams =
-//                new ConnectionParams.Builder(CLIENT_ID)
-//                        .setRedirectUri(REDIRECT_URI)
-//                        .showAuthView(true)
-//                        .build();
-//
-//        SpotifyAppRemote.connect(getContext(), connectionParams,
-//                new Connector.ConnectionListener() {
-//
-//                    @Override
-//                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
-//                        mSpotifyAppRemote = spotifyAppRemote;
-//                        Log.d("Demo", "Connected! Yay!");
-//
-//                        // Now you can start interacting with App Remote
-////                        connected();
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Throwable throwable) {
-//                        Log.e("Demo", throwable.getMessage(), throwable);
-//
-//                        // Something went wrong when attempting to connect! Handle errors here
-//
-//                        Log.d("Demo", "No se ha connectado con el spotify");
-//                    }
-//                });
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // We will start writing our code here.
 
-    //        -----------------------------------------------------------------------------------
+        // Set the connection parameters
+
+        ConnectionParams connectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .showAuthView(true)
+                        .build();
+
+        SpotifyAppRemote.connect(getContext(), connectionParams,
+                new Connector.ConnectionListener() {
+
+                    @Override
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Log.d("Demo", "Connected! Yay!");
+
+                        // Now you can start interacting with App Remote
+                        connected();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.e("Demo", throwable.getMessage(), throwable);
+
+                        // Something went wrong when attempting to connect! Handle errors here
+
+                        Log.d("Demo", "No se ha connectado con el spotify");
+                    }
+                });
+    }
+
+//            -----------------------------------------------------------------------------------
 //        Para mostrar por la pantalla los datos de la cancion
 //        -----------------------------------------------------------------------------------
-//    private void connected() {
-//        // Then we will write some more code here.
-//        // Play a playlist
+    private void connected() {
+        // Then we will write some more code here.
+        // Play a playlist
+
+        // Subscribe to PlayerState
+        mSpotifyAppRemote.getPlayerApi()
+                .subscribeToPlayerState()
+                .setEventCallback(playerState -> {
+                    final Track track = playerState.track;
+                    if (track != null) {
+                        Log.d("Demo", track.name + " by " + track.artist.name);
+//        -----------------------------------------------------------------------------------
+//        Para sacar los datos necesarios de la cancion
+//        -----------------------------------------------------------------------------------
+                        mSpotifyAppRemote.getImagesApi()
+                                .getImage(track.imageUri, Image.Dimension.MEDIUM)
+                                .setResultCallback(new CallResult.ResultCallback<Bitmap>(){
+                                    @Override public void onResult(Bitmap bitmap) {
+                                        album.setImageBitmap(bitmap);
+                                    }
+                                });
 //
-//        // Subscribe to PlayerState
-//        mSpotifyAppRemote.getPlayerApi()
-//                .subscribeToPlayerState()
-//                .setEventCallback(playerState -> {
-//                    final Track track = playerState.track;
-//                    if (track != null) {
-//                        Log.d("Demo", track.name + " by " + track.artist.name);
-////        -----------------------------------------------------------------------------------
-////        Para sacar los datos necesarios de la cancion
-////        -----------------------------------------------------------------------------------
-//                        mSpotifyAppRemote.getImagesApi()
-//                                .getImage(track.imageUri, Image.Dimension.MEDIUM)
-//                                .setResultCallback(new CallResult.ResultCallback<Bitmap>(){
-//                                    @Override public void onResult(Bitmap bitmap) {
-//                                        album.setImageBitmap(bitmap);
+//                        updateseekbar = new Thread(){
+//                            @Override
+//                            public void run() {
+//                                long totalDuration = track.duration;
+//                                long currrentpos = 0;
+//
+//                                while(currrentpos < totalDuration){
+//                                    try{
+//                                        sleep(1000);
+//                                        currrentpos = playerState.playbackPosition;
+//                                        songDuration.setProgress((int) currrentpos);
 //                                    }
-//                                });
-////
-////                        updateseekbar = new Thread(){
-////                            @Override
-////                            public void run() {
-////                                long totalDuration = track.duration;
-////                                long currrentpos = 0;
-////
-////                                while(currrentpos < totalDuration){
-////                                    try{
-////                                        sleep(1000);
-////                                        currrentpos = playerState.playbackPosition;
-////                                        songDuration.setProgress((int) currrentpos);
-////                                    }
-////                                    catch(InterruptedException | IllegalStateException e){
-////                                        e.printStackTrace();
-////                                    }
-////                                }
-////                            }
-////                        };
+//                                    catch(InterruptedException | IllegalStateException e){
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//                            }
+//                        };
+
+                        if(playerState.isPaused){
+                            pause.setVisibility(View.INVISIBLE);
+                            play.setVisibility(View.VISIBLE);
+                        }
+//                        songDuration.setMax((int) track.duration);
+//                        updateseekbar.start();
+
+//                        songDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//                            @Override
+//                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+////                                songDuration.setProgress(songDuration.getProgress());
+////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
+//                                seekBar.setProgress(seekBar.getProgress());
+//                            }
 //
-//                        if(playerState.isPaused){
-//                            pause.setVisibility(View.INVISIBLE);
-//                            play.setVisibility(View.VISIBLE);
-//                        }
-////                        songDuration.setMax((int) track.duration);
-////                        updateseekbar.start();
+//                            @Override
+//                            public void onStartTrackingTouch(SeekBar seekBar) {
+////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
+//                            }
 //
-////                        songDuration.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-////                            @Override
-////                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//////                                songDuration.setProgress(songDuration.getProgress());
-//////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
-////                                seekBar.setProgress(seekBar.getProgress());
-////                            }
-////
-////                            @Override
-////                            public void onStartTrackingTouch(SeekBar seekBar) {
-//////                                mSpotifyAppRemote.getPlayerApi().seekTo(songDuration.getProgress());
-////                            }
-////
-////                            @Override
-////                            public void onStopTrackingTouch(SeekBar seekBar) {
-////                                mSpotifyAppRemote.getPlayerApi().seekTo(seekBar.getProgress());
-////                                seekBar.setProgress(seekBar.getProgress());
-////                            }
-////                        });
-//
-//                        cancion.setText(track.name);
-//                        artista.setText(track.artist.name);
-//                        songTime.setText(String.valueOf(TimeUnit.MILLISECONDS.toMinutes(track.duration)) + ":" + String.valueOf(TimeUnit.MILLISECONDS.toSeconds(track.duration -TimeUnit.MINUTES.toMillis(TimeUnit.MILLISECONDS.toMinutes(track.duration)))));
-//                    }
-//                    else{
-//                        Log.d("Demo", "No ha pillado el track");
-//                    }
-//                });
-//    }
+//                            @Override
+//                            public void onStopTrackingTouch(SeekBar seekBar) {
+//                                mSpotifyAppRemote.getPlayerApi().seekTo(seekBar.getProgress());
+//                                seekBar.setProgress(seekBar.getProgress());
+//                            }
+//                        });
+
+                        cancion.setText(track.name);
+                        artista.setText(track.artist.name);
+                        songTime.setText(String.valueOf(TimeUnit.MILLISECONDS.toMinutes(track.duration)) + ":" + String.valueOf(TimeUnit.MILLISECONDS.toSeconds(track.duration -TimeUnit.MINUTES.toMillis(TimeUnit.MILLISECONDS.toMinutes(track.duration)))));
+                    }
+                    else{
+                        Log.d("Demo", "No ha pillado el track");
+                    }
+                });
+    }
 
     public static void conectarMqtt() {
         try {
@@ -564,7 +566,6 @@ public class HomeFragment extends Fragment implements MqttCallback{
             Log.e(TAG, "Error al publicar." + e);
         }
     }
-
 
     public static void suscribirMqtt(String topic, MqttCallback listener) {
         try {

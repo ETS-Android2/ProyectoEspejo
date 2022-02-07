@@ -263,6 +263,7 @@ public class HomeActivity extends AppCompatActivity {
             pikku.connect(state -> {
                 switch (state) {
                     case CONNECTED: {
+                        Log.d("Pikku", "connected");
                         readValues();
                         break;
                     }
