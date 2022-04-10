@@ -272,7 +272,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
 
-                    if(task.getResult().getData().size()>0){
+                    if(task.getResult().getString("Tarea0") != null){
                         for(int i=0; i<task.getResult().getData().size(); i++){
                             leer.add(i, task.getResult().getString("Tarea"+i));
                         }
@@ -287,9 +287,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
                         adaptador = new TareasListAdaptador(getContext(), leer);
                         recyclerView.setAdapter(adaptador);
                     } else{
-                        Log.d("Tareas", "No hay tareas disponibles");
-                        Log.d("Tareas", String.valueOf(task.getResult().getData().size()));
 
+                        Log.d("Tareas", "No hay tareas disponibles");
                     }
                 }
             }
@@ -316,12 +315,20 @@ public class HomeFragment extends Fragment implements MqttCallback{
 //                Codigo para sacar el documento
                                     if(task.isSuccessful()){
 //                    Coge el nombre de objetos, no index
-                                        tareas.put("Tarea" + task.getResult().getData().size(), nuevaTarea.getText().toString());
+//                                        Si el documento aun no existe
+                                        if(task.getResult().getData() == null){
+                                            Map<String, Object> fisrtTarea = new HashMap<>();
+                                            fisrtTarea.put("Tarea0", nuevaTarea.getText().toString());
+                                            db.collection("Tareas")
+                                                    .document(mAuth.getInstance().getCurrentUser().getUid())
+                                                    .set(fisrtTarea);
+                                        } else {
+                                            tareas.put("Tarea" + task.getResult().getData().size(), nuevaTarea.getText().toString());
 
-                                        db.collection("Tareas")
-                                                .document(mAuth.getCurrentUser().getUid())
-                                                .update(tareas);
-
+                                            db.collection("Tareas")
+                                                    .document(mAuth.getCurrentUser().getUid())
+                                                    .update(tareas);
+                                        }
                                         Toast.makeText(getContext(), "Tu nueva tarea ha sido agregada correctamente", Toast.LENGTH_SHORT).show();
                                     }
                                 }

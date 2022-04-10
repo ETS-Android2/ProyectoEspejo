@@ -300,21 +300,29 @@ public class Tab1 extends Fragment implements MqttCallback{
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 //                Codigo para sacar el documento
                                 if(task.isSuccessful()){
-                                    List<HashMap> prueba = new ArrayList<HashMap>();
-//                    Coge el nombre de objetos, no index
-                                    for(int i=0; i<task.getResult().getData().size(); i++) {
-                                        prueba.add(i, (HashMap) task.getResult().getData().get("Prueba"+i));
-                                    }
-                                    Log.d("PruebaArray", String.valueOf(prueba.size()));
-                                    TextView text = bottomSheetView.findViewById(R.id.textView44);
 
-                                    if (prueba.size() != 0) {
-                                        text.setVisibility(View.GONE);
-                                        recyclerView = bottomSheetView.findViewById(R.id.recyclerModos);
-                                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                                        adaptador = new ColorListAdapter(getContext(), prueba);
-                                        recyclerView.setAdapter(adaptador);
+                                    if(task.getResult().getData() == null){
+
+                                    } else {
+                                        TextView instrucciones = bottomSheetView.findViewById(R.id.textView44);
+                                        instrucciones.setVisibility(View.GONE);
+                                        List<HashMap> prueba = new ArrayList<HashMap>();
+//                    Coge el nombre de objetos, no index
+                                        for(int i=0; i<task.getResult().getData().size(); i++) {
+                                            prueba.add(i, (HashMap) task.getResult().getData().get("Prueba"+i));
+                                        }
+                                        Log.d("PruebaArray", String.valueOf(prueba.size()));
+                                        TextView text = bottomSheetView.findViewById(R.id.textView44);
+
+                                        if (prueba.size() != 0) {
+                                            text.setVisibility(View.GONE);
+                                            recyclerView = bottomSheetView.findViewById(R.id.recyclerModos);
+                                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                                            adaptador = new ColorListAdapter(getContext(), prueba);
+                                            recyclerView.setAdapter(adaptador);
+                                        }
                                     }
+
 
                                 } else{
                                     Toast.makeText(getContext(), "Ha ocurrido error al leer base de datos", Toast.LENGTH_SHORT).show();
@@ -374,11 +382,20 @@ public class Tab1 extends Fragment implements MqttCallback{
 //                Codigo para sacar el documento
                                 if(task.isSuccessful()){
 //                    Coge el nombre de objetos, no index
-                                    lucess.put("Prueba" + task.getResult().getData().size(), colour);
+                                    if(task.getResult().getData() == null){
+                                        Map<String, Object> firstModo = new HashMap<>();
+                                        firstModo.put("Prueba0", colour);
+                                        db.collection("Luces")
+                                                .document(mAuth.getCurrentUser().getUid())
+                                                .set(firstModo);
+                                    } else {
+                                        lucess.put("Prueba" + task.getResult().getData().size(), colour);
 
-                                    db.collection("Luces")
-                                            .document(mAuth.getCurrentUser().getUid())
-                                            .update(lucess);
+                                        db.collection("Luces")
+                                                .document(mAuth.getCurrentUser().getUid())
+                                                .update(lucess);
+                                    }
+
                                     Toast.makeText(getContext(), "Tu nuevo modo ha sido guardado correctamente", Toast.LENGTH_SHORT).show();
                                 }
                             }
