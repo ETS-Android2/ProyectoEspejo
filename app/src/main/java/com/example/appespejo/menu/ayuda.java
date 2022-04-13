@@ -1,4 +1,4 @@
-package com.example.appespejo;
+package com.example.appespejo.menu;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.example.appespejo.R;
+import com.example.appespejo.Tab5;
 
 public class ayuda extends AppCompatActivity {
 

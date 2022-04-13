@@ -1,4 +1,4 @@
-package com.example.appespejo;
+package com.example.appespejo.menu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.appespejo.CambiarContra;
+import com.example.appespejo.R;
 
 public class seguridad extends AppCompatActivity {
 

@@ -156,14 +156,17 @@ public class HomeFragment extends Fragment implements MqttCallback{
         SharedPreferences.Editor editor = sharedPref.edit();
 
         conectarMqtt();
-        suscribirMqtt("tempa", this);
+//        suscribirMqtt("tempa", this);
 
 
         switchLuz.setChecked(sharedPref.getBoolean("switchLuz", true));
         if(switchLuz.isChecked()){
             publicarMqtt("status/encender","Encender");
+//            TODO coger la intensidad de la luz
+//            intensidad.setText("Intensidad " + variablePorcentaje.toString());
         } else{
             publicarMqtt("status/apagar","Apagar");
+            intensidad.setText("Intensidad 0%");
         }
 
         switchLuz.setOnClickListener(new View.OnClickListener() {

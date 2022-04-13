@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:contentDescription="background"
-    tools:context=".LoginActivity">
+    tools:context=".no_autorizado.LoginActivity">
 
 
     <Button

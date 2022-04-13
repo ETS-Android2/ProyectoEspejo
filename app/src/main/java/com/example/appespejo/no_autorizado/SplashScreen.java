@@ -1,4 +1,4 @@
-package com.example.appespejo;
+package com.example.appespejo.no_autorizado;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.appespejo.R;
+import com.example.appespejo.ServicioNotificacion;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Calendar;

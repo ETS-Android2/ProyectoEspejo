@@ -1,13 +1,15 @@
-package com.example.appespejo;
+package com.example.appespejo.menu;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class politica_de_datos extends AppCompatActivity {
+import com.example.appespejo.R;
+
+public class condiciones_de_uso extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.politica_de_datos);
+        setContentView(R.layout.condiciones_de_uso);
     }
 }

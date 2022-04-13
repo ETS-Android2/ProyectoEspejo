@@ -2,7 +2,6 @@ package com.example.appespejo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,9 @@ import com.blautic.pikkuAcademyLib.ScanInfo;
 import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
 import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
 import com.blautic.pikkuAcademyLib.callback.ScanCallback;
+import com.example.appespejo.menu.AcercaDeActivity;
+import com.example.appespejo.menu.Informacion;
+import com.example.appespejo.menu.Preferencias;
 
 
 public class Tab5 extends Fragment {
@@ -92,7 +94,7 @@ public class Tab5 extends Fragment {
     }
 
     public void abrirAyuda(View view) {
-        Intent i = new Intent(getActivity().getApplicationContext(), ayuda.class);
+        Intent i = new Intent(getActivity().getApplicationContext(), com.example.appespejo.menu.ayuda.class);
         startActivity(i);
     }
 
@@ -102,7 +104,7 @@ public class Tab5 extends Fragment {
     }
 
     public void abrirSeguridad(View view) {
-        Intent i = new Intent(getActivity().getApplicationContext(), seguridad.class);
+        Intent i = new Intent(getActivity().getApplicationContext(), com.example.appespejo.menu.seguridad.class);
         startActivity(i);
     }
 

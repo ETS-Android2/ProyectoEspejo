@@ -1,11 +1,10 @@
-package com.example.appespejo;
+package com.example.appespejo.menu;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.appespejo.menu.PreferenciasFragment;
 
 public class Preferencias extends AppCompatActivity {
 

@@ -1,7 +1,6 @@
-package com.example.appespejo;
+package com.example.appespejo.no_autorizado;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -20,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.firebase.ui.auth.AuthUI;
+import com.example.appespejo.HomeActivity;
+import com.example.appespejo.R;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -51,10 +52,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
-
-import java.util.Arrays;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -109,22 +106,12 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         preferences = getSharedPreferences("Preferences", MODE_PRIVATE);
         FacebookSdk.sdkInitialize(LoginActivity.this);
-        //HUELLA
-        /*fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
-        mParaLabel = (TextView) findViewById(R.id.paraLabel);
-
-        if (fingerprintManager.isHardwareDetected()){
-            mParaLabel.setText("Put finger");
-            FingerprintHandle fingerprintHandler = new FingerprintHandle(this);
-            fingerprintHandler.startAuth(fingerprintManager,null);
-        }
-
-         */
 
 //        --------------Si usuario ya esta logeado te envia directamente a Home--------------
         if(usuarioo!=null && usuarioo.isEmailVerified())
         {
             startActivity(new Intent(this, HomeActivity.class));
+            finish();
             Toast.makeText(LoginActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
             Log.d("Demo" , mAuth.getCurrentUser().getEmail());
             SharedPreferences.Editor editor = preferences.edit();

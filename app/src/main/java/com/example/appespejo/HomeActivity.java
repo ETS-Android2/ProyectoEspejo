@@ -1,15 +1,12 @@
 package com.example.appespejo;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -24,7 +21,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +33,8 @@ import com.blautic.pikkuAcademyLib.ScanInfo;
 import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
 import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
 import com.blautic.pikkuAcademyLib.callback.ScanCallback;
-import com.facebook.login.LoginManager;
+import com.example.appespejo.menu.AcercaDeActivity;
+import com.example.appespejo.no_autorizado.RegisterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
@@ -46,16 +43,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.util.Calendar;
-import static com.example.escripn.mqtt.Mqtt.*;
-
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -204,7 +192,7 @@ public class HomeActivity extends AppCompatActivity {
 //            return;
 //        }
 
-        checkBlePermissions();
+//        checkBlePermissions();
 
         if (pikku.getAddressDevice().isEmpty()) {
 
@@ -285,7 +273,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void registrarAnonimo(View view){
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+        startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
     }
 
     private NavigationBarView.OnItemSelectedListener bottomNavMethod = new
@@ -304,7 +292,7 @@ public class HomeActivity extends AppCompatActivity {
 //                        break;
 
                         case R.id.photo:
-                            fragment=new Tab3();
+                            fragment=new Galeria();
                         break;
 
                         case R.id.menu_home:

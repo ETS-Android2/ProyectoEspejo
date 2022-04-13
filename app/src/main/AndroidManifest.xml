@@ -35,23 +35,23 @@
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".seguridad"
+            android:name=".menu.seguridad"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".RecuperarContr"
+            android:name=".no_autorizado.RecuperarContr"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".no_autorizado.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".no_autorizado.RegisterActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Preferencias"
+            android:name=".menu.Preferencias"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
@@ -59,22 +59,22 @@
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Informacion"
+            android:name=".menu.Informacion"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ayuda"
+            android:name=".menu.ayuda"
             android:exported="true"
             android:screenOrientation="portrait"/>
-        <activity android:name=".mapa"
+        <activity android:name=".menu.mapa"
             android:exported="true"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".politica_de_datos"
+        <activity android:name=".menu.politica_de_datos"
             android:exported="true"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".condiciones_de_uso"
+        <activity android:name=".menu.condiciones_de_uso"
             android:exported="true"
             android:screenOrientation="portrait"
             />
@@ -83,7 +83,7 @@
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".SplashScreen"
+            android:name=".no_autorizado.SplashScreen"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -93,7 +93,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AcercaDeActivity"
+            android:name=".menu.AcercaDeActivity"
             android:label="Acerca de ..."
             android:screenOrientation="portrait"/>
 

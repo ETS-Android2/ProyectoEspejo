@@ -1,4 +1,4 @@
-package com.example.appespejo;
+package com.example.appespejo.menu;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.appespejo.R;
 
 public class Informacion extends AppCompatActivity {
 
@@ -57,7 +59,7 @@ public class Informacion extends AppCompatActivity {
     }
 
     public void abrirMapa(View view){
-        Intent i = new Intent(this, mapa.class);
+        Intent i = new Intent(this, com.example.appespejo.menu.mapa.class);
         startActivity(i);
     }
 }

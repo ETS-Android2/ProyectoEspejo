@@ -112,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        tools:ignore="TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -135,7 +135,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/spotyPause"
-            app:layout_constraintTop_toTopOf="@+id/spotyPause" />
+            app:layout_constraintTop_toTopOf="@+id/spotyPause"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/spotyPause"
@@ -148,7 +149,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/homeSpotyPrevious"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/homeSpotyPrevious"
@@ -161,7 +162,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/spotyPause"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -246,7 +247,8 @@
         android:textColor="#8A8A8A"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/nombreLampara"
-        app:layout_constraintTop_toBottomOf="@+id/nombreLampara" />
+        app:layout_constraintTop_toBottomOf="@+id/nombreLampara"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tempaHome"
@@ -353,7 +355,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView54" />
+        app:layout_constraintTop_toBottomOf="@+id/textView54"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView11"
