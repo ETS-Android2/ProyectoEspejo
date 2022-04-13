@@ -33,6 +33,7 @@ import com.blautic.pikkuAcademyLib.ScanInfo;
 import com.blautic.pikkuAcademyLib.ble.gatt.ConnectionState;
 import com.blautic.pikkuAcademyLib.callback.ConnectionCallback;
 import com.blautic.pikkuAcademyLib.callback.ScanCallback;
+import com.example.appespejo.galeria.Galeria;
 import com.example.appespejo.menu.AcercaDeActivity;
 import com.example.appespejo.no_autorizado.RegisterActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

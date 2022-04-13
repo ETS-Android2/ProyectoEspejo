@@ -22,11 +22,7 @@ import com.example.appespejo.menu.Preferencias;
 public class Tab5 extends Fragment {
 
 
-    Button preferences;
-    Button acercade;
-    Button informacion;
-    Button seguridad;
-    Button ayuda, perfil,pikkuBoton;
+    Button preferences,acercade, informacion, seguridad, ayuda, perfil, pikkuBoton;
     PikkuAcademy pikku;
 
     public Tab5() {
