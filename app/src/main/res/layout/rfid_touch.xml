@@ -8,16 +8,18 @@
 
     <ImageView
         android:id="@+id/imageView12"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/borders_redondos_dialog"
-        android:cropToPadding="false"
+        android:cropToPadding="true"
+        android:foregroundGravity="center_vertical|center_horizontal"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/textView46"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/fondo_perfil" />

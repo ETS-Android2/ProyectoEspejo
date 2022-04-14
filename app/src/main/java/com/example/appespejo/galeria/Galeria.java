@@ -62,6 +62,7 @@ public class Galeria extends Fragment implements MqttCallback  {
     FirebaseFirestore db;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     Context context;
+    TextView galeryNull;
     List<Uri> fotos = new ArrayList<>();
     private static MqttClient client;
     private static final int GALLERY_INTENT = 1;
@@ -80,7 +81,9 @@ public class Galeria extends Fragment implements MqttCallback  {
         View v = inflater.inflate(R.layout.tab3, container, false);
 
         conectarMqtt();
-        suscribirMqtt("rfid", this);
+        suscribirMqtt("rfid/switch_user", this);
+
+        galeryNull = v.findViewById(R.id.galeryNull);
 
         make_foto = v.findViewById(R.id.make_foto);
         make_foto.setOnClickListener(new View.OnClickListener() {
@@ -155,54 +158,62 @@ public class Galeria extends Fragment implements MqttCallback  {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference pathReference = storageRef.child("prueba/");
+        StorageReference pathReference = storageRef.child(mAuth.getCurrentUser().getUid());
         Map<String, Object> fotoMap = new HashMap<>();
         List<String> fotosbd = new ArrayList<>();
         int varAux = 0;
 
             Log.d("Foto", "Asincronia antes" );
-            pathReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                @Override
-                public void onSuccess(ListResult listResult) {
-                    Log.d("Foto", "listResult" + listResult.toString());
+            if(pathReference == null){
+                galeryNull.setVisibility(View.VISIBLE);
+            } else {
+                pathReference.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+                        Log.d("Foto", "listResult" + listResult.toString());
+                        if(listResult.getItems().size() == 0){
+                            galeryNull.setVisibility(View.VISIBLE);
+                        } else {
+                            Log.d("Foto", "Antes de sleep");
+                            for (int i=0; i<listResult.getItems().size(); i++){
+                                int finalAux = i;
+                                listResult.getItems().get(i).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
 
-                    Log.d("Foto", "Antes de sleep");
-                    for (int i=0; i<listResult.getItems().size(); i++){
-                        int finalAux = i;
-                        listResult.getItems().get(i).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                                        fotoMap.put("Foto" + finalAux, uri.toString());
+                                        fotosbd.add(uri.toString());
 
-                                fotoMap.put("Foto" + finalAux, uri.toString());
-                                fotosbd.add(uri.toString());
+                                        if(fotosbd.size() == listResult.getItems().size() && fotoMap.size() == listResult.getItems().size()){
 
-                                if(fotosbd.size() == listResult.getItems().size() && fotoMap.size() == listResult.getItems().size()){
+                                            Log.d("Foto", "Ha entrado en un if");
+                                            Log.d("Foto", "la fotomap " + fotoMap.toString() );
 
-                                    Log.d("Foto", "Ha entrado en un if");
-                                    Log.d("Foto", "la fotomap " + fotoMap.toString() );
+                                            db.collection("Fotos")
+                                                    .document(mAuth.getCurrentUser().getUid())
+                                                    .set(fotoMap);
 
-                                    db.collection("Fotos")
-                                            .document(mAuth.getCurrentUser().getUid())
-                                            .set(fotoMap);
-
-                                    if(fotosbd.size() != 0){
-                                        recyclerView = v.findViewById(R.id.recyclerFotos);
+                                            if(fotosbd.size() != 0){
+                                                recyclerView = v.findViewById(R.id.recyclerFotos);
 //        La captura de como rellenarlo completo esta en es escritorio.
-                                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-                                        recyclerView.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
-                                        adaptador = new AdaptadorImagenes(getContext(), fotosbd);
-                                        recyclerView.setAdapter(adaptador);
-                                    } else{
-                                        TextView galeryNull = v.findViewById(R.id.galeryNull);
-                                        galeryNull.setVisibility(View.VISIBLE);
-                                    }
+                                                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                                                recyclerView.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
+                                                adaptador = new AdaptadorImagenes(getContext(), fotosbd);
+                                                recyclerView.setAdapter(adaptador);
+                                            } else{
+                                                TextView galeryNull = v.findViewById(R.id.galeryNull);
+                                                galeryNull.setVisibility(View.VISIBLE);
+                                            }
 
-                                }
+                                        }
+                                    }
+                                });
                             }
-                        });
+                        }
+
                     }
-                }
-            });
+                });
+            }
 
         Log.d("Foto", "Size list fotos " + fotos.size());
 
@@ -287,6 +298,9 @@ public class Galeria extends Fragment implements MqttCallback  {
             throws Exception {
         String payload = new String(message.getPayload());
         Log.d("MQTTGaleria", "Recibiendo: " + topic + "->" + payload);
+//        Cierra dialog window
+//        vuelve a anrir bottom
+//        pone el nombre del user que acaba de coger
         idUserMqtt = payload;
     }
 }

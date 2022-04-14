@@ -29,6 +29,13 @@ public class AdaptadorImagenes extends RecyclerView.Adapter<AdaptadorImagenes.Vi
         public ViewHolder (@NonNull View itemView){
             super(itemView);
             imageFotoBd = itemView.findViewById(R.id.imageView6);
+
+            imageFotoBd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    bottomSHeetDialog para eliminar?
+                }
+            });
         }
 
         void bindData(final Imagenes item ){
