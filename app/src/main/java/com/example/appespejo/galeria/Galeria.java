@@ -67,6 +67,7 @@ public class Galeria extends Fragment implements MqttCallback  {
     private static MqttClient client;
     private static final int GALLERY_INTENT = 1;
     String idUserMqtt = mAuth.getCurrentUser().getUid();
+    Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +82,10 @@ public class Galeria extends Fragment implements MqttCallback  {
         View v = inflater.inflate(R.layout.tab3, container, false);
 
         conectarMqtt();
-        suscribirMqtt("rfid/switch_user", this);
+        suscribirMqtt("rfid/user_foto/rp", this);
 
         galeryNull = v.findViewById(R.id.galeryNull);
+        dialog = new Dialog(getContext());
 
         make_foto = v.findViewById(R.id.make_foto);
         make_foto.setOnClickListener(new View.OnClickListener() {
@@ -118,8 +120,12 @@ public class Galeria extends Fragment implements MqttCallback  {
                     public void onClick(View v) {
 //                        Ultimo mqtt
 //                        Hacer la funcion de mqtt para los dos e ir llamandola
+                        publicarMqtt("rfid/user_foto/rp",mAuth.getCurrentUser().getUid());
                         Log.d("SiUser", idUserMqtt);
-//
+                        bottomSheetDialog.cancel();
+//                        ------------------------------------------------------------
+//                        todo Lo de mira la camara
+//                        ------------------------------------------------------------
                     }
                 });
 
@@ -128,7 +134,7 @@ public class Galeria extends Fragment implements MqttCallback  {
                     public void onClick(View v) {
 
                         bottomSheetDialog.cancel();
-                        Dialog dialog = new Dialog(getContext());
+
                         View dialogView = LayoutInflater.from(getContext())
                                 .inflate(R.layout.rfid_touch,null);
                         dialog.setContentView(dialogView);
@@ -298,10 +304,17 @@ public class Galeria extends Fragment implements MqttCallback  {
             throws Exception {
         String payload = new String(message.getPayload());
         Log.d("MQTTGaleria", "Recibiendo: " + topic + "->" + payload);
+        if(topic.equals("eskrip/practica/rfid/user_foto/rp")){
+            dialog.cancel();
+//            ------------------------------------------------------------
+//            todo Lo de mira la camara
+//            ------------------------------------------------------------
+        }
 //        Cierra dialog window
 //        vuelve a anrir bottom
 //        pone el nombre del user que acaba de coger
         idUserMqtt = payload;
     }
+
 }
 

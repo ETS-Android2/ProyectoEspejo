@@ -40,8 +40,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.blautic.pikkuAcademyLib.PikkuAcademy;
+import com.example.appespejo.no_autorizado.SplashScreen;
+import com.facebook.login.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -166,6 +169,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
         conectarMqtt();
         suscribirMqtt("tempa", this);
         suscribirMqtt("color/intensidad", this);
+        suscribirMqtt("rfid/user_foto", this);
 
         switchLuz.setChecked(sharedPref.getBoolean("switchLuz", true));
 
@@ -501,25 +505,6 @@ public class HomeFragment extends Fragment implements MqttCallback{
                                         album.setImageBitmap(bitmap);
                                     }
                                 });
-//
-//                        updateseekbar = new Thread(){
-//                            @Override
-//                            public void run() {
-//                                long totalDuration = track.duration;
-//                                long currrentpos = 0;
-//
-//                                while(currrentpos < totalDuration){
-//                                    try{
-//                                        sleep(1000);
-//                                        currrentpos = playerState.playbackPosition;
-//                                        songDuration.setProgress((int) currrentpos);
-//                                    }
-//                                    catch(InterruptedException | IllegalStateException e){
-//                                        e.printStackTrace();
-//                                    }
-//                                }
-//                            }
-//                        };
 
                         if(playerState.isPaused){
                             pause.setVisibility(View.INVISIBLE);
@@ -560,6 +545,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
 
     public static void conectarMqtt() {
         try {
+
             Log.i("MQTTHome", "Conectando al broker " + broker);
             client = new MqttClient(broker, clientId, new MemoryPersistence());
             MqttConnectOptions connOpts = new MqttConnectOptions();
@@ -608,6 +594,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
         sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
+        String[] name = new String[1];
+        String[] pass = new String[1];
         if(topic.equals("eskrip/practica/tempa")){
                 temperaturaMqtt = payload;
                 tempaHome.setText("Temperatura " + temperaturaMqtt + "ºC");
@@ -626,8 +614,52 @@ public class HomeFragment extends Fragment implements MqttCallback{
                 editor.apply();
             }
         }
+        if(topic.equals("eskrip/practica/rfid/user_foto")){
+
+//            if(!payload.equals(mAuth.getCurrentUser().getUid())){
+                db.collection("Users").document(payload).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        name[0] = task.getResult().get("Email").toString();
+                        pass[0] = task.getResult().get("Contrasena").toString();
+
+                        Map<String, Object> idaux = new HashMap<>();
+                        idaux.put("UID", payload.toString());
+                        db.collection("Tareas").document(payload).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                for(int i=0; i<task.getResult().getData().size(); i++){
+                                    idaux.put("Tarea" + i, task.getResult().getString("Tarea"+i));
+                                }
+
+                                db.collection("Aux").document("aux").set(idaux);
+                                FirebaseAuth.getInstance().signOut();
+
+                                if(mAuth.getCurrentUser() == null){
+                                    mAuth.signInWithEmailAndPassword(name[0], pass[0]).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                    }
+                });
+                startActivity(new Intent(getActivity(), SplashScreen.class));
+//            }
+
+
+
+        }
 
         Log.d("MQTTHome", "Recibiendo: " + topic + "->" + payload);
+    }
+
+    public void userMqtt(String uid){
+//        Pantalla para preguntar si quiere cambiar del usuario
+
     }
 
     @Override
