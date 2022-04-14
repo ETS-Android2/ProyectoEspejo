@@ -52,7 +52,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Galeria extends Fragment implements MqttCallback {
+public class Galeria extends Fragment implements MqttCallback  {
 
     StorageReference storageRef;
     AdaptadorImagenes adaptador;
@@ -185,12 +185,17 @@ public class Galeria extends Fragment implements MqttCallback {
                                             .document(mAuth.getCurrentUser().getUid())
                                             .set(fotoMap);
 
-                                    recyclerView = v.findViewById(R.id.recyclerFotos);
+                                    if(fotosbd.size() != 0){
+                                        recyclerView = v.findViewById(R.id.recyclerFotos);
 //        La captura de como rellenarlo completo esta en es escritorio.
-                                    recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-                                    recyclerView.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
-                                    adaptador = new AdaptadorImagenes(getContext(), fotosbd);
-                                    recyclerView.setAdapter(adaptador);
+                                        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+                                        recyclerView.setForegroundGravity(View.TEXT_ALIGNMENT_CENTER);
+                                        adaptador = new AdaptadorImagenes(getContext(), fotosbd);
+                                        recyclerView.setAdapter(adaptador);
+                                    } else{
+                                        TextView galeryNull = v.findViewById(R.id.galeryNull);
+                                        galeryNull.setVisibility(View.VISIBLE);
+                                    }
 
                                 }
                             }
@@ -223,55 +228,15 @@ public class Galeria extends Fragment implements MqttCallback {
         }
     }
 
+
     @Override public void onStart() {
         super.onStart();
 //        adaptador.startListening();
-//        db = FirebaseFirestore.getInstance();
-//        mAuth = FirebaseAuth.getInstance();
-//        Map<String, Object> mapFotos = new HashMap<>();
-//        db.collection("Fotos").document(mAuth.getCurrentUser().getUid())
-//                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                for(int i=0; i<task.getResult().getData().size(); i++){
-//                    mapFotos.put("Foto",task.getResult().get("Foto"+i));
-//                }
-//            }
-//        });
-
-
-//        recyclerView = findViewById(R.id.recyclerModos);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        adaptador = new ColorListAdapter(getContext(), prueba);
-//        recyclerView.setAdapter(adaptador);
     }
     @Override public void onStop() {
         super.onStop();
 //        adaptador.stopListening();
     }
-
-/*private void subirFichero(Uri fichero, String referencia) {
-        final StorageReference ref = storageRef.child(referencia);
-        UploadTask uploadTask = ref.putFile(fichero);
-        Task<Uri> urlTask = uploadTask.continueWithTask(new
-                                                                Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                                                                    @Override public Task<Uri> then(@NonNull
-                                                                                                            Task<UploadTask.TaskSnapshot> task) throws Exception {
-                                                                        if (!task.isSuccessful()) throw task.getException();
-                                                                        return ref.getDownloadUrl();
-                                                                    }
-                                                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-                    Log.d("Almacenamiento", "URL: " + downloadUri.toString());
-                    registrarImagen("Subida por Móvil", downloadUri.toString());
-                } else {
-                    Log.e("Almacenamiento", "ERROR: subiendo fichero");
-                }
-            }
-        });
-    }*/
 
     public static void conectarMqtt() {
         try {

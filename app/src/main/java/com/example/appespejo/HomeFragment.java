@@ -13,6 +13,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,6 +65,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.escripn.mqtt.Mqtt.*;
@@ -90,7 +92,7 @@ public class HomeFragment extends Fragment implements MqttCallback{
     ImageView iconWeather,album;
     SeekBar songDuration;
     Button pause, back, next, play,spotify;
-    String name,mAccessToken;
+    String name,mAccessToken, intensidadMqtt, temperaturaMqtt;
     Switch switchLuz;
     Handler mainHandler = new Handler();
     ProgressDialog progressDialog;
@@ -105,6 +107,8 @@ public class HomeFragment extends Fragment implements MqttCallback{
     private static MqttClient client;
     ImageView apagarEncenderr;
     Thread updateseekbar;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     public HomeFragment() {
 
@@ -121,6 +125,9 @@ public class HomeFragment extends Fragment implements MqttCallback{
 //        apagarEncenderr.getTag().toString();
 //        Log.d("ApagarOn", apagarEncenderr.getTag().toString());
 
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
         usuario = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -132,9 +139,10 @@ public class HomeFragment extends Fragment implements MqttCallback{
         iconWeather = v.findViewById(R.id.iconWeather);
         SeekBar seekBar = tab1.findViewById(R.id.seekBar);
         intensidad = v.findViewById(R.id.intensidadLucesHome);
-
-        intensidad.setText("Intencidad 100%");
+        intensidadMqtt = sharedPref.getString("intensidadMqtt", "60");
+        intensidad.setText("Intensidad " + intensidadMqtt + "%");
         tempaHome = v.findViewById(R.id.tempaHome);
+        tempaHome.setText("Temperatura " + sharedPref.getString("tempaMqtt", "18") + "ºC");
         songTime = v.findViewById(R.id.songTime);
         songDuration = v.findViewById(R.id.songDuration);
         switchLuz = v.findViewById(R.id.switchLuces);
@@ -156,16 +164,14 @@ public class HomeFragment extends Fragment implements MqttCallback{
         SharedPreferences.Editor editor = sharedPref.edit();
 
         conectarMqtt();
-//        suscribirMqtt("tempa", this);
-
+        suscribirMqtt("tempa", this);
+        suscribirMqtt("color/intensidad", this);
 
         switchLuz.setChecked(sharedPref.getBoolean("switchLuz", true));
+
         if(switchLuz.isChecked()){
-            publicarMqtt("status/encender","Encender");
-//            TODO coger la intensidad de la luz
-//            intensidad.setText("Intensidad " + variablePorcentaje.toString());
-        } else{
-            publicarMqtt("status/apagar","Apagar");
+            intensidad.setText("Intensidad " + intensidadMqtt + "%");
+        } else if(!switchLuz.isChecked()){
             intensidad.setText("Intensidad 0%");
         }
 
@@ -178,13 +184,15 @@ public class HomeFragment extends Fragment implements MqttCallback{
                     editor.putBoolean("switchLuz", switchLuz.isChecked());
                     editor.apply();
                     publicarMqtt("status/encender","Encender");
+                    intensidad.setText("Intensidad " + intensidadMqtt + "%");
 
-                } else{
+                } else if(!switchLuz.isChecked()){
 //                    Apagada
                     Log.d("Switch", "false");
                     editor.putBoolean("switchLuz", switchLuz.isChecked());
                     editor.apply();
                     publicarMqtt("status/apagar","Apagar");
+                    intensidad.setText("Intensidad 0%");
                 }
             }
         });
@@ -596,8 +604,36 @@ public class HomeFragment extends Fragment implements MqttCallback{
     @Override public void messageArrived(String topic, MqttMessage message)
             throws Exception {
         String payload = new String(message.getPayload());
-        tempaHome.setText(payload + "°C");
+
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
+        if(topic.equals("eskrip/practica/tempa")){
+                temperaturaMqtt = payload;
+                tempaHome.setText("Temperatura " + temperaturaMqtt + "ºC");
+                Log.d("MQTTHome", "Hola: " + topic + "->" + payload);
+                editor.putString("tempaMqtt", temperaturaMqtt);
+                editor.apply();
+        }
+        if(topic.equals("eskrip/practica/color/intensidad")){
+            if(!payload.equals(null)){
+                intensidadMqtt = payload;
+                if(switchLuz.isChecked()){
+                    intensidad.setText("Intensidad " + intensidadMqtt + "%");
+                }
+                Log.d("MQTTHome", "Hola: " + topic + "->" + payload);
+                editor.putString("intensidadMqtt", intensidadMqtt);
+                editor.apply();
+            }
+        }
+
         Log.d("MQTTHome", "Recibiendo: " + topic + "->" + payload);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("tempaMqtt",temperaturaMqtt);
+        outState.putString("intensidadMqtt",intensidadMqtt);
+    }
 }

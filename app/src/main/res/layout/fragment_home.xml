@@ -238,7 +238,7 @@
 
     <TextView
         android:id="@+id/intensidadLucesHome"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/lucidagrande"
@@ -246,18 +246,20 @@
         android:text="Intensidad"
         android:textColor="#8A8A8A"
         android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/homeSpotyImage2"
         app:layout_constraintStart_toStartOf="@+id/nombreLampara"
         app:layout_constraintTop_toBottomOf="@+id/nombreLampara"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/tempaHome"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/lucidagrande"
         android:text="temperature"
         android:textColor="#8A8A8A"
         android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/homeSpotyImage3"
         app:layout_constraintStart_toStartOf="@+id/textView52"
         app:layout_constraintTop_toBottomOf="@+id/textView52" />
 
