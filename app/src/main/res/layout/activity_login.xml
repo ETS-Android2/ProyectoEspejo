@@ -17,7 +17,8 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="148dp"
-        android:background="#000003"
+        android:background="@drawable/bordes_redondos_botton"
+        android:backgroundTint="#000000"
         android:fontFamily="@font/lucidagrande"
         android:text="@string/login"
         android:textColor="#FFFFFF"
@@ -69,11 +70,12 @@
         android:id="@+id/googleLogin"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
         android:background="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/facebook"
+        app:layout_constraintEnd_toStartOf="@+id/login_button"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         app:srcCompat="@drawable/google45"
         app:tint="#000000"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -87,6 +89,7 @@
         android:layout_marginEnd="32dp"
         android:animateLayoutChanges="true"
         android:animationCache="true"
+        android:background="@drawable/bordes_redondos_botton"
         android:textColor="#000000"
         android:textColorHint="#7D7B7B"
         app:counterEnabled="false"
@@ -105,7 +108,7 @@
         app:placeholderTextColor="#32435C">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login"
+            android:id="@+id/correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#34445B"
@@ -127,7 +130,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#32435C"
+        android:background="@drawable/bordes_redondos_botton"
         android:textColor="#000000"
         android:textColorHint="#7D7B7B"
         app:hintAnimationEnabled="false"
@@ -135,7 +138,7 @@
         app:hintTextColor="#8F949B"
         app:layout_constraintBottom_toTopOf="@+id/signUpButton"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
         app:passwordToggleEnabled="true"
@@ -144,7 +147,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:backgroundTint="#32435C"
@@ -184,20 +187,6 @@
         app:layout_constraintStart_toStartOf="@+id/divider"
         app:layout_constraintTop_toTopOf="@+id/divider" />
 
-    <ImageButton
-        android:id="@+id/facebook"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="#FBFBFB"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/googleLogin"
-        app:srcCompat="@drawable/fb45"
-        tools:ignore="DuplicateClickableBoundsCheck,DuplicateClickableBoundsCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         style="@style/com_facebook_button"
@@ -213,24 +202,11 @@
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/facebook"
-        app:layout_constraintEnd_toEndOf="@+id/facebook"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/facebook"
-        tools:ignore="DuplicateClickableBoundsCheck" />
-
-    <TextView
-        android:id="@+id/anonimo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:fontFamily="@font/lucidagrande"
-        android:text="@string/anonimo"
-        android:textColor="#000000"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/googleLogin"
+        app:layout_constraintTop_toTopOf="@+id/googleLogin"
+        tools:ignore="DuplicateClickableBoundsCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

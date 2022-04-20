@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.appespejo.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -21,7 +22,7 @@ public class RecuperarContr extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     private ProgressDialog mDialog;
-    private EditText emaill;
+    private TextInputEditText emaill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

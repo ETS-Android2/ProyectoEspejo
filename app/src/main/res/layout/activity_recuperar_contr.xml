@@ -7,29 +7,53 @@
     android:background="#FFFFFF"
     tools:context=".no_autorizado.RecuperarContr">
 
-    <EditText
-        android:id="@+id/correo"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#5A595B"
-        android:ems="10"
-        android:fontFamily="@font/lucidagrande"
-        android:hint="Su correo elecrtonico*"
-        android:inputType="textPersonName"
-        android:textColorHint="#5A595B"
+        android:animateLayoutChanges="true"
+        android:animationCache="true"
+        android:background="@drawable/bordes_redondos_botton"
+        android:textColor="#000000"
+        android:textColorHint="#7D7B7B"
+        app:counterEnabled="false"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:hintTextColor="#8F949B"
         app:layout_constraintBottom_toTopOf="@+id/enviar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
-        tools:ignore="TouchTargetSizeCheck"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_chainStyle="packed"
+        app:passwordToggleContentDescription="Clear camp"
+        app:passwordToggleEnabled="false"
+        app:passwordToggleTint="#97000000"
+        app:placeholderTextColor="#32435C">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/correo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#34445B"
+            android:drawableLeft="@drawable/correo24"
+            android:fontFamily="@font/lucidagrande"
+            android:hint="Su correo electronico"
+            android:inputType="textEmailAddress"
+            android:textColor="#000000"
+            android:textColorHighlight="#2F435E"
+            android:textColorHint="#7C7A7A"
+            android:textColorLink="#448AFF"
+            app:hintTextColor="#FFFFFF"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/enviar"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:background="#000000"
+        android:background="@drawable/bordes_redondos_botton"
+        android:backgroundTint="#000000"
         android:fontFamily="@font/lucidagrande"
         android:text="Cambiar contraseña"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -80,5 +104,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="497dp" />
+        app:layout_constraintGuide_begin="524dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
